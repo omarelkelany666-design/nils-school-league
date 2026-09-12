@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 streamlit
 streamlit-cookies-manager-v2==0.3.1
->>>>>>> 76b865f (Fix cookies manager for Streamlit Cloud)
+
