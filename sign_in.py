@@ -38,7 +38,6 @@ ACCOUNTS_FILE = "accounts.json"
 
 
 def load_accounts():
-
     if not os.path.exists(ACCOUNTS_FILE):
         return {}
 
@@ -47,18 +46,15 @@ def load_accounts():
         "r",
         encoding="utf-8"
     ) as file:
-
         return json.load(file)
 
 
 def save_accounts(accounts):
-
     with open(
         ACCOUNTS_FILE,
         "w",
         encoding="utf-8"
     ) as file:
-
         json.dump(
             accounts,
             file,
@@ -86,22 +82,15 @@ if "username" not in st.session_state:
 # --------------------------------------------------
 
 if not st.session_state.logged_in:
-
     saved_username = cookies.get("username")
 
     if saved_username:
-
         accounts = load_accounts()
 
         if saved_username in accounts:
-
             st.session_state.logged_in = True
-
             st.session_state.username = saved_username
-
-            st.session_state.role = (
-                accounts[saved_username]["role"]
-            )
+            st.session_state.role = accounts[saved_username]["role"]
 
 
 # --------------------------------------------------
@@ -140,9 +129,9 @@ manager_page = st.Page(
 )
 
 
-# --------------------------------------------------
+# ==================================================
 # LOGIN SCREEN
-# --------------------------------------------------
+# ==================================================
 
 if not st.session_state.logged_in:
 
@@ -288,15 +277,12 @@ if not st.session_state.logged_in:
                 else:
 
                     if role == "student":
-
                         saved_role = "student"
 
                     elif teacher_type == "Manager":
-
                         saved_role = "manager"
 
                     else:
-
                         saved_role = "teacher"
 
 
@@ -388,7 +374,6 @@ if not st.session_state.logged_in:
                 # --------------------------------------------------
 
                 cookies["username"] = username
-
                 cookies.save()
 
 
@@ -399,26 +384,21 @@ if not st.session_state.logged_in:
                 st.rerun()
 
 
-# --------------------------------------------------
+# ==================================================
 # NAVIGATION AFTER LOGIN
-# --------------------------------------------------
+# ==================================================
 
 else:
 
-    # ==================================================
-    # STUDENT
-    # ==================================================
+    # --------------------------------------------------
+    # Create Navigation
+    # --------------------------------------------------
 
     if st.session_state.role == "student":
 
         pg = st.navigation([
             main_page
         ])
-
-
-    # ==================================================
-    # NORMAL TEACHER
-    # ==================================================
 
     elif st.session_state.role == "teacher":
 
@@ -427,11 +407,6 @@ else:
             more_info_page
         ])
 
-
-    # ==================================================
-    # MANAGER
-    # ==================================================
-
     elif st.session_state.role == "manager":
 
         pg = st.navigation([
@@ -439,11 +414,6 @@ else:
             more_info_page,
             manager_page
         ])
-
-
-    # ==================================================
-    # UNKNOWN ROLE
-    # ==================================================
 
     else:
 
@@ -455,22 +425,11 @@ else:
         st.session_state.role = "guest"
         st.session_state.username = ""
 
-
         if cookies.get("username"):
-
             del cookies["username"]
-
             cookies.save()
 
-
-        st.rerun()
-
-
-    # --------------------------------------------------
-    # Run Selected Page
-    # --------------------------------------------------
-
-    pg.run()
+        st.stop()
 
 
     # --------------------------------------------------
@@ -537,22 +496,28 @@ else:
 
     if st.sidebar.button("🚪 Sign Out"):
 
+        # Clear session
         st.session_state.logged_in = False
-
         st.session_state.role = "guest"
-
         st.session_state.username = ""
 
 
-        # --------------------------------------------------
-        # Delete Persistent Login
-        # --------------------------------------------------
-
-        if cookies.get("username"):
-
+        # Delete persistent cookie
+        try:
             del cookies["username"]
+        except KeyError:
+            pass
 
-            cookies.save()
+        cookies.save()
 
 
-        st.rerun()
+        # Stop this run so the old page
+        # cannot continue displaying
+        st.stop()
+
+
+    # --------------------------------------------------
+    # Run Selected Page
+    # --------------------------------------------------
+
+    pg.run()
