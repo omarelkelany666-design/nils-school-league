@@ -165,7 +165,7 @@ if not st.session_state.logged_in:
     if login_type == "Sign Up":
 
         st.header("Create an account")
-        st.subheader("dont enter your :red[*gmail*]or :red[your *personal information*]only your :green[name] and :green[choose your password]")
+        st.subheader("dont enter your :red[*gmail*]or :red[your *personal information*]only your :green[*name*] and :green[choose your [*password*]")
 
         name = st.text_input("Name")
 
