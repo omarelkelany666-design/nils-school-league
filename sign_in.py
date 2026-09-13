@@ -3,7 +3,6 @@ import json
 import os
 from streamlit_cookies_manager import EncryptedCookieManager
 
-
 # --------------------------------------------------
 # Page Config
 # --------------------------------------------------
@@ -12,7 +11,6 @@ st.set_page_config(
     page_title="N.I.L.S League",
     page_icon="⚽"
 )
-
 
 # --------------------------------------------------
 # Persistent Login Cookie
@@ -29,13 +27,11 @@ cookies = EncryptedCookieManager(
 if not cookies.ready():
     st.stop()
 
-
 # --------------------------------------------------
 # Accounts JSON File
 # --------------------------------------------------
 
 ACCOUNTS_FILE = "accounts.json"
-
 
 def load_accounts():
     if not os.path.exists(ACCOUNTS_FILE):
@@ -62,7 +58,6 @@ def save_accounts(accounts):
             ensure_ascii=False
         )
 
-
 # --------------------------------------------------
 # Session State
 # --------------------------------------------------
@@ -76,12 +71,18 @@ if "role" not in st.session_state:
 if "username" not in st.session_state:
     st.session_state.username = ""
 
+# NEW: Prevent old cookie from logging in again after Sign Out
+if "skip_cookie_restore" not in st.session_state:
+    st.session_state.skip_cookie_restore = False
 
 # --------------------------------------------------
 # Restore Login From Cookie
 # --------------------------------------------------
 
-if not st.session_state.logged_in:
+if (
+    not st.session_state.logged_in
+    and not st.session_state.skip_cookie_restore
+):
     saved_username = cookies.get("username")
 
     if saved_username:
@@ -90,8 +91,9 @@ if not st.session_state.logged_in:
         if saved_username in accounts:
             st.session_state.logged_in = True
             st.session_state.username = saved_username
-            st.session_state.role = accounts[saved_username]["role"]
-
+            st.session_state.role = (
+                accounts[saved_username]["role"]
+            )
 
 # --------------------------------------------------
 # Teacher Passwords From Streamlit Secrets
@@ -104,7 +106,6 @@ NORMAL_TEACHER_PASSWORD = st.secrets[
 MANAGER_PASSWORD = st.secrets[
     "MANAGER_PASSWORD"
 ]
-
 
 # --------------------------------------------------
 # Pages
@@ -128,10 +129,9 @@ manager_page = st.Page(
     icon="👨‍💼"
 )
 
-
-# ==================================================
+# --------------------------------------------------
 # LOGIN SCREEN
-# ==================================================
+# --------------------------------------------------
 
 if not st.session_state.logged_in:
 
@@ -158,7 +158,6 @@ if not st.session_state.logged_in:
         horizontal=True
     )
 
-
     # ==================================================
     # SIGN UP
     # ==================================================
@@ -183,7 +182,6 @@ if not st.session_state.logged_in:
         teacher_type = None
         teacher_password = ""
 
-
         # --------------------------------------------------
         # Teacher Type
         # --------------------------------------------------
@@ -200,7 +198,6 @@ if not st.session_state.logged_in:
                 "Teacher Verification Password",
                 type="password"
             )
-
 
         # --------------------------------------------------
         # SIGN UP BUTTON
@@ -277,14 +274,16 @@ if not st.session_state.logged_in:
                 else:
 
                     if role == "student":
+
                         saved_role = "student"
 
                     elif teacher_type == "Manager":
+
                         saved_role = "manager"
 
                     else:
-                        saved_role = "teacher"
 
+                        saved_role = "teacher"
 
                     accounts[name.strip()] = {
                         "password": password,
@@ -302,7 +301,6 @@ if not st.session_state.logged_in:
                         "You can now Sign In."
                     )
 
-
     # ==================================================
     # SIGN IN
     # ==================================================
@@ -318,11 +316,9 @@ if not st.session_state.logged_in:
             type="password"
         )
 
-
         if st.button("Sign In"):
 
             accounts = load_accounts()
-
 
             if not name.strip():
 
@@ -355,7 +351,6 @@ if not st.session_state.logged_in:
 
                 username = name.strip()
 
-
                 # --------------------------------------------------
                 # Session Login
                 # --------------------------------------------------
@@ -368,6 +363,8 @@ if not st.session_state.logged_in:
 
                 st.session_state.username = username
 
+                # Allow cookie restore again after login
+                st.session_state.skip_cookie_restore = False
 
                 # --------------------------------------------------
                 # Save Persistent Login
@@ -376,29 +373,31 @@ if not st.session_state.logged_in:
                 cookies["username"] = username
                 cookies.save()
 
-
                 st.success(
                     "Signed in successfully!"
                 )
 
                 st.rerun()
 
-
-# ==================================================
+# --------------------------------------------------
 # NAVIGATION AFTER LOGIN
-# ==================================================
+# --------------------------------------------------
 
 else:
 
-    # --------------------------------------------------
-    # Create Navigation
-    # --------------------------------------------------
+    # ==================================================
+    # STUDENT
+    # ==================================================
 
     if st.session_state.role == "student":
 
         pg = st.navigation([
             main_page
         ])
+
+    # ==================================================
+    # NORMAL TEACHER
+    # ==================================================
 
     elif st.session_state.role == "teacher":
 
@@ -407,6 +406,10 @@ else:
             more_info_page
         ])
 
+    # ==================================================
+    # MANAGER
+    # ==================================================
+
     elif st.session_state.role == "manager":
 
         pg = st.navigation([
@@ -414,6 +417,10 @@ else:
             more_info_page,
             manager_page
         ])
+
+    # ==================================================
+    # UNKNOWN ROLE
+    # ==================================================
 
     else:
 
@@ -426,11 +433,17 @@ else:
         st.session_state.username = ""
 
         if cookies.get("username"):
+
             del cookies["username"]
             cookies.save()
 
-        st.stop()
+        st.rerun()
 
+    # --------------------------------------------------
+    # Run Selected Page
+    # --------------------------------------------------
+
+    pg.run()
 
     # --------------------------------------------------
     # Sidebar User Information
@@ -439,7 +452,6 @@ else:
     st.sidebar.write(
         f"👤 {st.session_state.username}"
     )
-
 
     # --------------------------------------------------
     # Role Name
@@ -461,11 +473,9 @@ else:
 
         role_name = "Guest"
 
-
     st.sidebar.write(
         f"Role: {role_name}"
     )
-
 
     # --------------------------------------------------
     # Role Message
@@ -489,35 +499,24 @@ else:
             "🎓 Student Mode"
         )
 
-
     # --------------------------------------------------
     # Sign Out
     # --------------------------------------------------
 
     if st.sidebar.button("🚪 Sign Out"):
 
-        # Clear session
         st.session_state.logged_in = False
         st.session_state.role = "guest"
         st.session_state.username = ""
 
+        # Prevent the old cookie from logging in again
+        st.session_state.skip_cookie_restore = True
 
-        # Delete persistent cookie
-        try:
-            del cookies["username"]
-        except KeyError:
-            pass
+        # --------------------------------------------------
+        # Delete Persistent Login
+        # --------------------------------------------------
 
+        cookies["username"] = ""
         cookies.save()
 
-
-        # Stop this run so the old page
-        # cannot continue displaying
-        st.stop()
-
-
-    # --------------------------------------------------
-    # Run Selected Page
-    # --------------------------------------------------
-
-    pg.run()
+        st.rerun()
