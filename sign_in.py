@@ -1,7 +1,10 @@
 import streamlit as st
 import json
 import os
+
 from streamlit_cookies_manager import EncryptedCookieManager
+from supabase import create_client
+
 
 # --------------------------------------------------
 # Page Config
@@ -11,6 +14,20 @@ st.set_page_config(
     page_title="N.I.L.S League",
     page_icon="⚽"
 )
+
+
+# --------------------------------------------------
+# Supabase
+# --------------------------------------------------
+
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_SERVICE_ROLE_KEY = st.secrets["SUPABASE_SERVICE_ROLE_KEY"]
+
+supabase = create_client(
+    SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY
+)
+
 
 # --------------------------------------------------
 # Persistent Login Cookie
@@ -27,25 +44,32 @@ cookies = EncryptedCookieManager(
 if not cookies.ready():
     st.stop()
 
+
 # --------------------------------------------------
 # Accounts JSON File
+# Backup / Migration
 # --------------------------------------------------
 
 ACCOUNTS_FILE = "accounts.json"
 
-def load_accounts():
+
+def load_json_accounts():
     if not os.path.exists(ACCOUNTS_FILE):
         return {}
 
-    with open(
-        ACCOUNTS_FILE,
-        "r",
-        encoding="utf-8"
-    ) as file:
-        return json.load(file)
+    try:
+        with open(
+            ACCOUNTS_FILE,
+            "r",
+            encoding="utf-8"
+        ) as file:
+            return json.load(file)
+
+    except (json.JSONDecodeError, OSError):
+        return {}
 
 
-def save_accounts(accounts):
+def save_json_accounts(accounts):
     with open(
         ACCOUNTS_FILE,
         "w",
@@ -57,6 +81,90 @@ def save_accounts(accounts):
             indent=4,
             ensure_ascii=False
         )
+
+
+# --------------------------------------------------
+# Supabase Account Functions
+# --------------------------------------------------
+
+def get_account(username):
+    try:
+        response = (
+            supabase
+            .table("accounts")
+            .select("username, password, role")
+            .eq("username", username)
+            .execute()
+        )
+
+        if response.data:
+            return response.data[0]
+
+        return None
+
+    except Exception as error:
+        st.error(f"Database error: {error}")
+        return None
+
+
+def create_account(username, password, role):
+    try:
+        response = (
+            supabase
+            .table("accounts")
+            .insert({
+                "username": username,
+                "password": password,
+                "role": role
+            })
+            .execute()
+        )
+
+        st.success("Database insert successful!")
+        return True
+
+    except Exception as error:
+        st.error(f"Database insert failed: {error}")
+        return False
+
+
+def migrate_json_accounts_to_supabase():
+    """
+    Copies old accounts.json accounts to Supabase
+    without deleting anything from accounts.json.
+    """
+
+    json_accounts = load_json_accounts()
+
+    if not json_accounts:
+        return
+
+    for username, account in json_accounts.items():
+
+        existing = get_account(username)
+
+        if existing is None:
+
+            create_account(
+                username,
+                account["password"],
+                account["role"]
+            )
+
+
+# --------------------------------------------------
+# Migrate Old Accounts
+# --------------------------------------------------
+
+if "accounts_migrated" not in st.session_state:
+
+    try:
+        migrate_json_accounts_to_supabase()
+    except Exception:
+        pass
+
+    st.session_state.accounts_migrated = True
+
 
 # --------------------------------------------------
 # Session State
@@ -71,9 +179,9 @@ if "role" not in st.session_state:
 if "username" not in st.session_state:
     st.session_state.username = ""
 
-# NEW: Prevent old cookie from logging in again after Sign Out
 if "skip_cookie_restore" not in st.session_state:
     st.session_state.skip_cookie_restore = False
+
 
 # --------------------------------------------------
 # Restore Login From Cookie
@@ -83,17 +191,21 @@ if (
     not st.session_state.logged_in
     and not st.session_state.skip_cookie_restore
 ):
+
     saved_username = cookies.get("username")
 
     if saved_username:
-        accounts = load_accounts()
 
-        if saved_username in accounts:
+        account = get_account(saved_username)
+
+        if account:
+
             st.session_state.logged_in = True
+
             st.session_state.username = saved_username
-            st.session_state.role = (
-                accounts[saved_username]["role"]
-            )
+
+            st.session_state.role = account["role"]
+
 
 # --------------------------------------------------
 # Teacher Passwords From Streamlit Secrets
@@ -106,6 +218,7 @@ NORMAL_TEACHER_PASSWORD = st.secrets[
 MANAGER_PASSWORD = st.secrets[
     "MANAGER_PASSWORD"
 ]
+
 
 # --------------------------------------------------
 # Pages
@@ -128,6 +241,7 @@ manager_page = st.Page(
     title="Manager",
     icon="👨‍💼"
 )
+
 
 # --------------------------------------------------
 # LOGIN SCREEN
@@ -158,6 +272,7 @@ if not st.session_state.logged_in:
         horizontal=True
     )
 
+
     # ==================================================
     # SIGN UP
     # ==================================================
@@ -165,7 +280,13 @@ if not st.session_state.logged_in:
     if login_type == "Sign Up":
 
         st.header("Create an account")
-        st.subheader("dont enter your :red[*gmail*]or :red[your *personal information*] only your :green[*name*] and :green[choose your *password*]")
+
+        st.subheader(
+            "dont enter your :red[*gmail*] "
+            "or your :red[*personal information*] "
+            "only your :green[*name*] "
+            "and :green[choose your *password*]"
+        )
 
         name = st.text_input("Name")
 
@@ -183,6 +304,7 @@ if not st.session_state.logged_in:
         teacher_type = None
         teacher_password = ""
 
+
         # --------------------------------------------------
         # Teacher Type
         # --------------------------------------------------
@@ -199,6 +321,7 @@ if not st.session_state.logged_in:
                 "Teacher Verification Password",
                 type="password"
             )
+
 
         # --------------------------------------------------
         # SIGN UP BUTTON
@@ -264,9 +387,15 @@ if not st.session_state.logged_in:
 
             else:
 
-                accounts = load_accounts()
+                username = name.strip()
 
-                if name.strip() in accounts:
+                # --------------------------------------------------
+                # Check Account In Supabase
+                # --------------------------------------------------
+
+                existing_account = get_account(username)
+
+                if existing_account:
 
                     st.error(
                         "This name is already registered."
@@ -286,21 +415,40 @@ if not st.session_state.logged_in:
 
                         saved_role = "teacher"
 
-                    accounts[name.strip()] = {
-                        "password": password,
-                        "role": saved_role
-                    }
 
-                    save_accounts(accounts)
+                    # --------------------------------------------------
+                    # Save Account To Supabase
+                    # --------------------------------------------------
 
-                    st.success(
-                        "Account created successfully!"
+                    account_created = create_account(
+                        username,
+                        password,
+                        saved_role
                     )
 
-                    st.info(
-                        "Your account has been saved. "
-                        "You can now Sign In."
-                    )
+
+                    if account_created:
+
+                        # Also save locally as backup
+                        accounts = load_json_accounts()
+
+                        accounts[username] = {
+                            "password": password,
+                            "role": saved_role
+                        }
+
+                        save_json_accounts(accounts)
+
+
+                        st.success(
+                            "Account created successfully!"
+                        )
+
+                        st.info(
+                            "Your account has been saved. "
+                            "You can now Sign In."
+                        )
+
 
     # ==================================================
     # SIGN IN
@@ -317,11 +465,13 @@ if not st.session_state.logged_in:
             type="password"
         )
 
+
         if st.button("Sign In"):
 
-            accounts = load_accounts()
+            username = name.strip()
 
-            if not name.strip():
+
+            if not username:
 
                 st.error(
                     "Name cannot be empty."
@@ -333,52 +483,59 @@ if not st.session_state.logged_in:
                     "Password cannot be empty."
                 )
 
-            elif name.strip() not in accounts:
-
-                st.error(
-                    "Account not found."
-                )
-
-            elif (
-                accounts[name.strip()]["password"]
-                != password
-            ):
-
-                st.error(
-                    "Wrong password."
-                )
-
             else:
 
-                username = name.strip()
-
                 # --------------------------------------------------
-                # Session Login
+                # Get Account From Supabase
                 # --------------------------------------------------
 
-                st.session_state.logged_in = True
+                account = get_account(username)
 
-                st.session_state.role = (
-                    accounts[username]["role"]
-                )
 
-                st.session_state.username = username
+                if not account:
 
-                # Allow cookie restore again after login
-                st.session_state.skip_cookie_restore = False
+                    st.error(
+                        "Account not found."
+                    )
 
-                # --------------------------------------------------
-                # Save Persistent Login
-                # --------------------------------------------------
+                elif account["password"] != password:
 
-                cookies["username"] = username
-                cookies.save()
+                    st.error(
+                        "Wrong password."
+                    )
 
-                st.success(
-                    "Signed in successfully!"
-                )
+                else:
 
-                st.rerun()
+                    # --------------------------------------------------
+                    # Session Login
+                    # --------------------------------------------------
+
+                    st.session_state.logged_in = True
+
+                    st.session_state.role = (
+                        account["role"]
+                    )
+
+                    st.session_state.username = username
+
+                    st.session_state.skip_cookie_restore = False
+
+
+                    # --------------------------------------------------
+                    # Save Persistent Login
+                    # --------------------------------------------------
+
+                    cookies["username"] = username
+
+                    cookies.save()
+
+
+                    st.success(
+                        "Signed in successfully!"
+                    )
+
+                    st.rerun()
+
 
 # --------------------------------------------------
 # NAVIGATION AFTER LOGIN
@@ -396,6 +553,7 @@ else:
             main_page
         ])
 
+
     # ==================================================
     # NORMAL TEACHER
     # ==================================================
@@ -406,6 +564,7 @@ else:
             main_page,
             more_info_page
         ])
+
 
     # ==================================================
     # MANAGER
@@ -418,6 +577,7 @@ else:
             more_info_page,
             manager_page
         ])
+
 
     # ==================================================
     # UNKNOWN ROLE
@@ -436,15 +596,18 @@ else:
         if cookies.get("username"):
 
             del cookies["username"]
+
             cookies.save()
 
         st.rerun()
+
 
     # --------------------------------------------------
     # Run Selected Page
     # --------------------------------------------------
 
     pg.run()
+
 
     # --------------------------------------------------
     # Sidebar User Information
@@ -453,6 +616,7 @@ else:
     st.sidebar.write(
         f"👤 {st.session_state.username}"
     )
+
 
     # --------------------------------------------------
     # Role Name
@@ -474,9 +638,11 @@ else:
 
         role_name = "Guest"
 
+
     st.sidebar.write(
         f"Role: {role_name}"
     )
+
 
     # --------------------------------------------------
     # Role Message
@@ -500,6 +666,7 @@ else:
             "🎓 Student Mode"
         )
 
+
     # --------------------------------------------------
     # Sign Out
     # --------------------------------------------------
@@ -507,17 +674,20 @@ else:
     if st.sidebar.button("🚪 Sign Out"):
 
         st.session_state.logged_in = False
+
         st.session_state.role = "guest"
+
         st.session_state.username = ""
 
-        # Prevent the old cookie from logging in again
         st.session_state.skip_cookie_restore = True
+
 
         # --------------------------------------------------
         # Delete Persistent Login
         # --------------------------------------------------
 
         cookies["username"] = ""
+
         cookies.save()
 
         st.rerun()
