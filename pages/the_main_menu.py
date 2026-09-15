@@ -5,9 +5,29 @@ import json
 import os
 
 from streamlit_option_menu import option_menu
+<<<<<<< ours
 
 
 # ==============================================================
+=======
+from supabase import create_client
+
+
+# ==============================================================
+# SUPABASE
+# ==============================================================
+
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_SERVICE_ROLE_KEY = st.secrets["SUPABASE_SERVICE_ROLE_KEY"]
+
+supabase = create_client(
+    SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY
+)
+
+
+# ==============================================================
+>>>>>>> theirs
 # JSON FILE PATHS
 # ==============================================================
 
@@ -149,6 +169,7 @@ with st.sidebar:
         if student_suggestion.strip():
 
             # --------------------------------------------------
+<<<<<<< ours
             # Load suggestions
             # --------------------------------------------------
 
@@ -157,6 +178,8 @@ with st.sidebar:
             )
 
             # --------------------------------------------------
+=======
+>>>>>>> theirs
             # Username
             # --------------------------------------------------
 
@@ -166,16 +189,16 @@ with st.sidebar:
             )
 
             # --------------------------------------------------
+<<<<<<< ours
             # Add suggestion
+=======
+            # Save suggestion to Supabase
+>>>>>>> theirs
             # --------------------------------------------------
 
-            suggestions.append(
-                {
-                    "user": username,
-                    "ideas": student_suggestion.strip()
-                }
-            )
+            try:
 
+<<<<<<< ours
             # --------------------------------------------------
             # Save suggestion
             # --------------------------------------------------
@@ -184,10 +207,24 @@ with st.sidebar:
                 SUGGESTIONS_FILE,
                 suggestions
             )
+=======
+                supabase.table("suggestions").insert(
+                    {
+                        "username": username,
+                        "idea": student_suggestion.strip()
+                    }
+                ).execute()
 
-            st.success(
-                "تم إرسال اقتراحك للمدرسين بنجاح! 🎉"
-            )
+                st.success(
+                    "تم إرسال اقتراحك للمدرسين بنجاح! 🎉"
+                )
+>>>>>>> theirs
+
+            except Exception as error:
+
+                st.error(
+                    f"حدث خطأ أثناء حفظ الاقتراح: {error}"
+                )
 
         else:
             st.warning(
@@ -367,8 +404,11 @@ if a2:
     st.image("2a_logo.png", width=100)
 
     st.header(":yellow[2A] status")
+
     st.subheader(":yellow[leader:] ######")
+
     st.subheader(":yellow[2 PREP]")
+
     st.caption("made by :green[omar.w.e]")
 
     st.subheader(":yellow[2A] chart:-")
@@ -414,8 +454,11 @@ if b2:
     st.image("2a_logo.png", width=100)
 
     st.header(":yellow[2B] status")
+
     st.subheader(":yellow[leader:] ######")
+
     st.subheader(":yellow[2 PREP]")
+
     st.caption("made by :green[omar.w.e]")
 
     st.subheader(":yellow[2B] chart:-")
@@ -461,8 +504,11 @@ if c2:
     st.image("2a_logo.png", width=100)
 
     st.header(":yellow[2C] status")
+
     st.subheader(":yellow[leader:] ######")
+
     st.subheader(":yellow[2 PREP]")
+
     st.caption("made by :green[omar.w.e]")
 
     st.subheader(":yellow[2C] chart:-")
@@ -511,8 +557,11 @@ if d2:
     )
 
     st.header(":red[2D] status")
+
     st.subheader(":red[leader:] ######")
+
     st.subheader(":red[2 PREP]")
+
     st.caption("made by :green[omar.w.e]")
 
     st.subheader(":red[2D] chart:-")
@@ -690,26 +739,38 @@ if matches_time:
         matches_table,
         hide_index=True
     )
-
-
 # ==============================================================
 # NEWS
 # ==============================================================
 
 if news:
-
     st.title("NEWS")
 
-    announcements = load_json_file(
-        ANNOUNCEMENTS_FILE
-    )
+    # ----------------------------------------------------------
+    # Load announcements from Supabase
+    # ----------------------------------------------------------
+    try:
+        response = (
+            supabase
+            .table("announcements")
+            .select("*")
+            .order("created_at", desc=True)
+            .execute()
+        )
+        announcements = response.data
 
+    except Exception as error:
+        st.error(
+            f"حدث خطأ أثناء تحميل الأخبار: {error}"
+        )
+        announcements = []
+
+    # ----------------------------------------------------------
+    # Display announcements
+    # ----------------------------------------------------------
     if announcements:
-
         for announcement in announcements:
-
             if isinstance(announcement, dict):
-
                 text = announcement.get(
                     "text",
                     ""
@@ -730,13 +791,7 @@ if news:
                         f"📢 {text}"
                     )
 
-            else:
-                st.info(
-                    f"📢 {announcement}"
-                )
-
     else:
-
         st.write(
             "there is no news for now"
         )
