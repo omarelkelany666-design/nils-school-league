@@ -96,7 +96,7 @@ elif user_role == "student":
 # SIDEBAR
 # ==============================================================
 
-user_role = st.session_state.get("role", "guest")
+
 
 with st.sidebar:
 
@@ -104,16 +104,7 @@ with st.sidebar:
     # ROLE
     # ----------------------------------------------------------
 
-    if user_role == "manager":
-        st.success("👨‍💼 Manager Mode")
 
-    elif user_role == "teacher":
-        st.info("👨‍🏫 Normal Teacher")
-
-    elif user_role == "student":
-        st.info("🎓 Student")
-
-    st.image("2a_logo.png", width=70)
 
     st.markdown("## ⚽ N.I.L.S LEAGUE")
 
@@ -166,13 +157,12 @@ with st.sidebar:
 
     selected_team = option_menu(
         menu_title="TEAMS",
-        options=[
-            "No Team",
-            "2A",
-            "2B",
-            "2C",
-            "2D"
-        ],
+    options=[
+        "2A",
+        "2B",
+        "2C",
+        "2D"
+    ],
         icons=[
             "dash-circle",
             "1-circle",
