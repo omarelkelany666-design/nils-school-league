@@ -2,79 +2,212 @@ import streamlit as st
 import json
 import os
 
-# 1. حماية الصفحة (للمدرسين والـ Manager فقط)
 
-if not st.session_state.get("logged_in", False) or st.session_state.get("role") not in ["teacher", "manager"]:
-    st.error("🚫 غير مسموح لك بالدخول لهذه الصفحة! هذه الصفحة مخصصة للمعلمين والـ Manager فقط.")
+# ==========================================================
+# PROJECT ROOT
+# ==========================================================
 
-    if st.button("العودة للصفحة الرئيسية"):
-        st.switch_page("sign_in.py")
+PROJECT_ROOT = os.path.dirname(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    )
+)
+
+
+# ==========================================================
+# JSON FILES
+# ==========================================================
+
+ANNOUNCEMENTS_FILE = os.path.join(
+    PROJECT_ROOT,
+    "announcements.json"
+)
+
+SUGGESTIONS_FILE = os.path.join(
+    PROJECT_ROOT,
+    "suggestions.json"
+)
+
+
+# ==========================================================
+# PROTECTION
+# ==========================================================
+
+if (
+    not st.session_state.get(
+        "logged_in",
+        False
+    )
+    or st.session_state.get(
+        "role"
+    ) not in [
+        "teacher",
+        "manager"
+    ]
+):
+
+    st.error(
+        "🚫 غير مسموح لك بالدخول لهذه الصفحة! "
+        "هذه الصفحة مخصصة للمعلمين والـ Manager فقط."
+    )
+
+    if st.button(
+        "العودة للصفحة الرئيسية"
+    ):
+
+        st.switch_page(
+            "sign_in.py"
+        )
 
     st.stop()
 
 
-st.title("🔒 لوحة تحكم المعلمين - الإدارة والاقتراحات")
+# ==========================================================
+# FUNCTIONS
+# ==========================================================
+
+def load_json_file(
+    file_path,
+    default
+):
+
+    if not os.path.exists(
+        file_path
+    ):
+        return default
+
+    if os.path.getsize(
+        file_path
+    ) == 0:
+        return default
+
+    try:
+
+        with open(
+            file_path,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            data = json.load(file)
+
+            return data
+
+    except (
+        json.JSONDecodeError,
+        OSError
+    ):
+
+        return default
 
 
-# تقسيم الصفحة لتبويبين عشان التنظيم
+def save_json_file(
+    file_path,
+    data
+):
 
-tab1, tab2 = st.tabs([
-    "📢 لوحة الإعلانات",
-    "💡 صندوق اقتراحات الطلاب"
-])
+    with open(
+        file_path,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        json.dump(
+            data,
+            file,
+            ensure_ascii=False,
+            indent=4
+        )
 
 
-# --- التبويب الأول: لوحة الإعلانات والتنبيهات ---
+# ==========================================================
+# PAGE TITLE
+# ==========================================================
+
+st.title(
+    "🔒 لوحة تحكم المعلمين"
+)
+
+
+# ==========================================================
+# TABS
+# ==========================================================
+
+tab1, tab2 = st.tabs(
+    [
+        "📢 لوحة الإعلانات",
+        "💡 صندوق اقتراحات الطلاب"
+    ]
+)
+
+
+# ==========================================================
+# TAB 1
+# ANNOUNCEMENTS
+# ==========================================================
 
 with tab1:
 
-    st.subheader("إضافة إعلان جديد للطلاب")
+    st.subheader(
+        "إضافة إعلان جديد للطلاب"
+    )
 
-    new_announcement = st.text_input(
+    new_announcement = st.text_area(
         "اكتب نص الإعلان أو التنبيه هنا:"
     )
 
-    if st.button("نشر الإعلان"):
+    if st.button(
+        "📢 نشر الإعلان"
+    ):
 
         if new_announcement.strip():
 
-            announcements = []
+            # --------------------------------------------------
+            # Load announcements
+            # --------------------------------------------------
 
-            if (
-                os.path.exists("announcements.json")
-                and os.path.getsize("announcements.json") > 0
-            ):
+            announcements = load_json_file(
+                ANNOUNCEMENTS_FILE,
+                []
+            )
 
-                try:
+            # --------------------------------------------------
+            # Get current username
+            # --------------------------------------------------
 
-                    with open(
-                        "announcements.json",
-                        "r",
-                        encoding="utf-8"
-                    ) as f:
+            username = st.session_state.get(
+                "username",
+                "Teacher"
+            )
 
-                        announcements = json.load(f)
+            # --------------------------------------------------
+            # Create announcement
+            # --------------------------------------------------
 
-                except json.JSONDecodeError:
+            new_data = {
+                "text": new_announcement.strip(),
+                "author": username
+            }
 
-                    announcements = []
+            # --------------------------------------------------
+            # Add
+            # --------------------------------------------------
 
-            announcements.append(new_announcement)
+            announcements.append(
+                new_data
+            )
 
-            with open(
-                "announcements.json",
-                "w",
-                encoding="utf-8"
-            ) as f:
+            # --------------------------------------------------
+            # Save
+            # --------------------------------------------------
 
-                json.dump(
-                    announcements,
-                    f,
-                    ensure_ascii=False
-                )
+            save_json_file(
+                ANNOUNCEMENTS_FILE,
+                announcements
+            )
 
             st.success(
-                "تم نشر الإعلان بنجاح وسيظهر للطلاب الآن!"
+                "✅ تم نشر الإعلان بنجاح!"
             )
 
             st.rerun()
@@ -86,41 +219,52 @@ with tab1:
             )
 
 
+    # ======================================================
+    # CURRENT ANNOUNCEMENTS
+    # ======================================================
+
     st.divider()
 
-    st.subheader("الإعلانات الحالية المنشورة:")
+    st.subheader(
+        "📢 الإعلانات الحالية المنشورة:"
+    )
 
-    announcements = []
-
-    if (
-        os.path.exists("announcements.json")
-        and os.path.getsize("announcements.json") > 0
-    ):
-
-        try:
-
-            with open(
-                "announcements.json",
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                announcements = json.load(f)
-
-        except json.JSONDecodeError:
-
-            announcements = []
-
+    announcements = load_json_file(
+        ANNOUNCEMENTS_FILE,
+        []
+    )
 
     if announcements:
 
-        for i, ann in enumerate(
+        for i, announcement in enumerate(
             reversed(announcements)
         ):
 
-            st.info(
-                f"إعلان #{len(announcements)-i}: {ann}"
-            )
+            if isinstance(
+                announcement,
+                dict
+            ):
+
+                text = announcement.get(
+                    "text",
+                    ""
+                )
+
+                author = announcement.get(
+                    "author",
+                    "Teacher"
+                )
+
+                st.info(
+                    f"📢 {text}\n\n"
+                    f"👤 بواسطة: {author}"
+                )
+
+            else:
+
+                st.info(
+                    f"📢 {announcement}"
+                )
 
     else:
 
@@ -129,45 +273,54 @@ with tab1:
         )
 
 
-# --- التبويب الثاني: صندوق اقتراحات الطلاب ---
+# ==========================================================
+# TAB 2
+# SUGGESTIONS
+# ==========================================================
 
 with tab2:
 
     st.subheader(
-        "متابعة اقتراحات وأفكار الطلاب لتطوير الموقع"
+        "💡 متابعة اقتراحات وأفكار الطلاب"
     )
 
-    suggestions = []
-
-    if (
-        os.path.exists("suggestions.json")
-        and os.path.getsize("suggestions.json") > 0
-    ):
-
-        try:
-
-            with open(
-                "suggestions.json",
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                suggestions = json.load(f)
-
-        except json.JSONDecodeError:
-
-            suggestions = []
-
+    suggestions = load_json_file(
+        SUGGESTIONS_FILE,
+        []
+    )
 
     if suggestions:
 
-        for i, sug in enumerate(
+        for i, suggestion in enumerate(
             reversed(suggestions)
         ):
 
-            st.success(
-                f"اقتراح #{len(suggestions)-i}: {sug}"
-            )
+            if isinstance(
+                suggestion,
+                dict
+            ):
+
+                user = suggestion.get(
+                    "user",
+                    "unknown"
+                )
+
+                idea = suggestion.get(
+                    "ideas",
+                    ""
+                )
+
+                st.success(
+                    f"💡 اقتراح #{len(suggestions)-i}\n\n"
+                    f"👤 الطالب: {user}\n\n"
+                    f"📝 الاقتراح: {idea}"
+                )
+
+            else:
+
+                st.success(
+                    str(suggestion)
+                )
 
     else:
 
@@ -176,13 +329,20 @@ with tab2:
         )
 
 
-# زرار تسجيل خروج في أسفل الصفحة
+# ==========================================================
+# LOGOUT
+# ==========================================================
 
 st.divider()
 
-if st.button("تسجيل خروج من الحساب"):
+if st.button(
+    "🚪 تسجيل خروج من الحساب"
+):
 
     st.session_state.logged_in = False
     st.session_state.role = "guest"
+    st.session_state.username = ""
 
-    st.switch_page("sign_in.py")
+    st.switch_page(
+        "sign_in.py"
+    )

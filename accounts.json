@@ -1,7 +1,10 @@
 {
     "admin": {
-        "password": "$$$",
+        "password": "$$$admin@@@124",
         "role": "manager"
-        
+    },
+    "test12390": {
+        "password": "123456789010",
+        "role": "student"
     }
 }

@@ -2,43 +2,86 @@ import streamlit as st
 import json
 import os
 
-# --------------------------------------------------
-# Manager Chat Protection
-# --------------------------------------------------
+
+# ==========================================================
+# PROJECT ROOT
+# ==========================================================
+
+PROJECT_ROOT = os.path.dirname(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    )
+)
+
+
+# ==========================================================
+# MANAGER CHAT FILE
+# ==========================================================
+
+CHAT_FILE = os.path.join(
+    PROJECT_ROOT,
+    "manager_chat.json"
+)
+
+
+# ==========================================================
+# MANAGER CHAT PROTECTION
+# ==========================================================
 
 if (
-    not st.session_state.get("logged_in", False)
-    or st.session_state.get("role") != "manager"
-):
-    st.error("🚫 هذه الصفحة مخصصة للـ Managers فقط.")
+    not st.session_state.get(
+        "logged_in",
+        False
+    )
 
-    if st.button("العودة للصفحة الرئيسية"):
-        st.switch_page("sign_in.py")
+    or st.session_state.get(
+        "role"
+    ) != "manager"
+):
+
+    st.error(
+        "🚫 هذه الصفحة مخصصة للـ Managers فقط."
+    )
+
+    if st.button(
+        "العودة للصفحة الرئيسية"
+    ):
+
+        st.switch_page(
+            "sign_in.py"
+        )
 
     st.stop()
 
 
-# --------------------------------------------------
-# Page Title
-# --------------------------------------------------
+# ==========================================================
+# PAGE TITLE
+# ==========================================================
 
-st.title("👨‍💼 Manager Chat")
+st.title(
+    "👨‍💼 Manager Chat"
+)
 
 
-# --------------------------------------------------
-# Chat File
-# --------------------------------------------------
-
-CHAT_FILE = "manager_chat.json"
-
+# ==========================================================
+# FUNCTIONS
+# ==========================================================
 
 def load_messages():
 
-    if not os.path.exists(CHAT_FILE):
+    if not os.path.exists(
+        CHAT_FILE
+    ):
+
         return []
 
-    if os.path.getsize(CHAT_FILE) == 0:
+
+    if os.path.getsize(
+        CHAT_FILE
+    ) == 0:
+
         return []
+
 
     try:
 
@@ -50,7 +93,10 @@ def load_messages():
 
             return json.load(file)
 
-    except json.JSONDecodeError:
+    except (
+        json.JSONDecodeError,
+        OSError
+    ):
 
         return []
 
@@ -71,23 +117,33 @@ def save_messages(messages):
         )
 
 
-# --------------------------------------------------
-# Load Chat
-# --------------------------------------------------
+# ==========================================================
+# LOAD CHAT
+# ==========================================================
 
 messages = load_messages()
 
 
-# --------------------------------------------------
-# Display Messages
-# --------------------------------------------------
+# ==========================================================
+# DISPLAY MESSAGES
+# ==========================================================
 
 if messages:
 
     for message in messages:
 
+        name = message.get(
+            "name",
+            "Unknown"
+        )
+
+        text = message.get(
+            "text",
+            ""
+        )
+
         st.write(
-            f"**{message['name']}:** {message['text']}"
+            f"**{name}:** {text}"
         )
 
 else:
@@ -97,28 +153,47 @@ else:
     )
 
 
-# --------------------------------------------------
-# Send Message
-# --------------------------------------------------
+# ==========================================================
+# SEND MESSAGE
+# ==========================================================
 
 st.divider()
+
 
 message = st.text_input(
     "اكتب رسالتك..."
 )
 
-if st.button("إرسال"):
+
+if st.button(
+    "إرسال"
+):
 
     if message.strip():
 
         new_message = {
-            "name": st.session_state.username,
+            "name": st.session_state.get(
+                "username",
+                "Manager"
+            ),
+
             "text": message.strip()
         }
 
-        messages.append(new_message)
 
-        save_messages(messages)
+        messages.append(
+            new_message
+        )
+
+
+        save_messages(
+            messages
+        )
+
+
+        st.success(
+            "تم إرسال الرسالة."
+        )
 
         st.rerun()
 
