@@ -3,3 +3,4 @@ streamlit-cookies-manager-v2==0.3.1
 supabase
 plotly
 pandas
+streamlit-option-menu
