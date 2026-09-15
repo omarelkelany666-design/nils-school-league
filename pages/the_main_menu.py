@@ -3,10 +3,12 @@ import plotly.express as px
 import pandas as pd
 import json
 import os
+
 from streamlit_option_menu import option_menu
 from supabase import create_client
 
-# ============================================================== 
+
+# ==============================================================
 # SUPABASE
 # ==============================================================
 
@@ -18,7 +20,8 @@ supabase = create_client(
     SUPABASE_SERVICE_ROLE_KEY
 )
 
-# ============================================================== 
+
+# ==============================================================
 # JSON FILE PATHS
 # ==============================================================
 
@@ -36,11 +39,13 @@ ANNOUNCEMENTS_FILE = os.path.join(
     "announcements.json"
 )
 
-# ============================================================== 
+
+# ==============================================================
 # JSON HELPERS
 # ==============================================================
 
 def load_json_file(file_path):
+
     if not os.path.exists(file_path):
         return []
 
@@ -48,11 +53,13 @@ def load_json_file(file_path):
         return []
 
     try:
+
         with open(
             file_path,
             "r",
             encoding="utf-8"
         ) as file:
+
             data = json.load(file)
 
         if isinstance(data, list):
@@ -61,15 +68,18 @@ def load_json_file(file_path):
         return []
 
     except (json.JSONDecodeError, OSError):
+
         return []
 
 
 def save_json_file(file_path, data):
+
     with open(
         file_path,
         "w",
         encoding="utf-8"
     ) as file:
+
         json.dump(
             data,
             file,
@@ -77,71 +87,61 @@ def save_json_file(file_path, data):
             indent=4
         )
 
-# ============================================================== 
-# USER ROLE
-# ==============================================================
-
-user_role = st.session_state.get("role", "guest")
-
-if user_role == "manager":
-    st.sidebar.success("👨‍💼 Manager Mode")
-
-elif user_role == "teacher":
-    st.sidebar.info("👨‍🏫 Normal Teacher")
-
-elif user_role == "student":
-    st.sidebar.info("🎓 Student")
 
 # ==============================================================
 # SIDEBAR
 # ==============================================================
 
-
-
 with st.sidebar:
 
-    # ----------------------------------------------------------
-    # ROLE
-    # ----------------------------------------------------------
-
-
-
     st.markdown("## ⚽ N.I.L.S LEAGUE")
+
 
     # ----------------------------------------------------------
     # MAIN MENU
     # ----------------------------------------------------------
 
     selected_main = option_menu(
+
         menu_title="MAIN MENU",
+
         options=[
             "League States",
             "Rules",
             "Matches Time",
-            "News"
+            "News",
+            "Teams"
         ],
+
         icons=[
             "trophy",
             "book",
             "calendar-event",
-            "newspaper"
+            "newspaper",
+            "people"
         ],
+
         menu_icon="list",
+
         default_index=0,
+
         styles={
             "container": {
                 "padding": "0!important",
                 "background-color": "transparent"
             },
+
             "icon": {
                 "font-size": "18px"
             },
+
             "nav-link": {
                 "font-size": "15px",
                 "text-align": "left",
                 "margin": "4px",
                 "border-radius": "8px"
             },
+
             "nav-link-selected": {
                 "font-size": "15px",
                 "font-weight": "bold"
@@ -149,71 +149,31 @@ with st.sidebar:
         }
     )
 
-    st.divider()
 
     # ----------------------------------------------------------
-    # TEAMS
-    # ----------------------------------------------------------
-
-    selected_team = option_menu(
-        menu_title="TEAMS",
-    options=[
-        "2A",
-        "2B",
-        "2C",
-        "2D"
-    ],
-        icons=[
-            "dash-circle",
-            "1-circle",
-            "2-circle",
-            "3-circle",
-            "4-circle"
-        ],
-        menu_icon="people",
-        default_index=0,
-        styles={
-            "container": {
-                "padding": "0!important",
-                "background-color": "transparent"
-            },
-            "icon": {
-                "font-size": "18px"
-            },
-            "nav-link": {
-                "font-size": "15px",
-                "text-align": "left",
-                "margin": "4px",
-                "border-radius": "8px"
-            },
-            "nav-link-selected": {
-                "font-size": "15px",
-                "font-weight": "bold"
-            }
-        }
-    )
-
-    # ----------------------------------------------------------
-    # CONVERT MENU SELECTIONS TO YOUR OLD VARIABLES
+    # MAIN MENU VARIABLES
     # ----------------------------------------------------------
 
     leage_states = selected_main == "League States"
+
     rules = selected_main == "Rules"
+
     matches_time = selected_main == "Matches Time"
+
     news = selected_main == "News"
 
-    a2 = selected_team == "2A"
-    b2 = selected_team == "2B"
-    c2 = selected_team == "2C"
-    d2 = selected_team == "2D"
+    teams = selected_main == "Teams"
+
+
+    # ==========================================================
+    # SUGGESTIONS
+    # ==========================================================
 
     st.divider()
 
-    # ----------------------------------------------------------
-    # SUGGESTIONS
-    # ----------------------------------------------------------
-
-    st.subheader("💡 الاقتراحات والمشاكل")
+    st.subheader(
+        "💡 الاقتراحات والمشاكل"
+    )
 
     st.write(
         "هل لديك فكرة أو اقتراح لتطوير دوري المدرسة؟ "
@@ -224,7 +184,10 @@ with st.sidebar:
         "اكتب اقتراحك هنا..."
     )
 
-    if st.button("إرسال الاقتراح للمدرسين"):
+
+    if st.button(
+        "إرسال الاقتراح للمدرسين"
+    ):
 
         if student_suggestion.strip():
 
@@ -235,7 +198,9 @@ with st.sidebar:
 
             try:
 
-                supabase.table("suggestions").insert(
+                supabase.table(
+                    "suggestions"
+                ).insert(
                     {
                         "username": username,
                         "idea": student_suggestion.strip()
@@ -257,7 +222,61 @@ with st.sidebar:
             st.warning(
                 "من فضلك اكتب اقتراحك أولاً."
             )
-# ============================================================== 
+
+
+# ==============================================================
+# DEFAULT TEAM VARIABLES
+# ==============================================================
+
+a2 = False
+b2 = False
+c2 = False
+d2 = False
+
+
+# ==============================================================
+# TEAMS
+# ==============================================================
+
+if teams:
+
+    st.title("TEAMS")
+
+
+    selected_team = option_menu(
+
+        menu_title=None,
+
+        options=[
+            "2A",
+            "2B",
+            "2C",
+            "2D"
+        ],
+
+        icons=[
+            "1-circle",
+            "2-circle",
+            "3-circle",
+            "4-circle"
+        ],
+
+        orientation="horizontal",
+
+        default_index=0
+    )
+
+
+    a2 = selected_team == "2A"
+
+    b2 = selected_team == "2B"
+
+    c2 = selected_team == "2C"
+
+    d2 = selected_team == "2D"
+
+
+# ==============================================================
 # RULES
 # ==============================================================
 
@@ -374,34 +393,52 @@ if rules:
 - سلامة الطلاب أهم من نتيجة المباراة.
 - توقف المباراة عند وجود خطر أو إصابة تحتاج إلى تدخل المشرف.
 - يجب احترام جميع اللاعبين والمشرفين.
-
 """
     )
 
-# ============================================================== 
+
+# ==============================================================
 # 2A
 # ==============================================================
 
 if a2:
 
-    st.image("2a_logo.png", width=100)
+    st.image(
+        "2a_logo.png",
+        width=100
+    )
 
     st.header(":yellow[2A] status")
 
-    st.subheader(":yellow[leader:] ######")
+    st.subheader(
+        ":yellow[leader:] ######"
+    )
 
-    st.subheader(":yellow[2 PREP]")
+    st.subheader(
+        ":yellow[2 PREP]"
+    )
 
-    st.caption("made by :green[omar.w.e]")
+    st.caption(
+        "made by :green[omar.w.e]"
+    )
 
-    st.subheader(":yellow[2A] chart:-")
+    st.subheader(
+        ":yellow[2A] chart:-"
+    )
+
 
     data = pd.DataFrame(
         {
-            "Matches Played": [1, 2, 3, 4, 5, 6],
-            "Match Result": [0, 0, 0, 0, 0, 0]
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     fig = px.line(
         data,
@@ -410,11 +447,13 @@ if a2:
         markers=True
     )
 
+
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
+
 
     st.plotly_chart(
         fig,
@@ -425,32 +464,55 @@ if a2:
         }
     )
 
-    st.image("2A_TEAM.png", width=500)
 
-# ============================================================== 
+    st.image(
+        "2A_TEAM.png",
+        width=500
+    )
+
+
+# ==============================================================
 # 2B
 # ==============================================================
 
 if b2:
 
-    st.image("2a_logo.png", width=100)
+    st.image(
+        "2a_logo.png",
+        width=100
+    )
 
     st.header(":yellow[2B] status")
 
-    st.subheader(":yellow[leader:] ######")
+    st.subheader(
+        ":yellow[leader:] ######"
+    )
 
-    st.subheader(":yellow[2 PREP]")
+    st.subheader(
+        ":yellow[2 PREP]"
+    )
 
-    st.caption("made by :green[omar.w.e]")
+    st.caption(
+        "made by :green[omar.w.e]"
+    )
 
-    st.subheader(":yellow[2B] chart:-")
+    st.subheader(
+        ":yellow[2B] chart:-"
+    )
+
 
     data = pd.DataFrame(
         {
-            "Matches Played": [1, 2, 3, 4, 5, 6],
-            "Match Result": [0, 0, 0, 0, 0, 0]
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     fig = px.line(
         data,
@@ -459,11 +521,13 @@ if b2:
         markers=True
     )
 
+
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
+
 
     st.plotly_chart(
         fig,
@@ -474,32 +538,55 @@ if b2:
         }
     )
 
-    st.image("2A_TEAM.png", width=500)
 
-# ============================================================== 
+    st.image(
+        "2A_TEAM.png",
+        width=500
+    )
+
+
+# ==============================================================
 # 2C
 # ==============================================================
 
 if c2:
 
-    st.image("2a_logo.png", width=100)
+    st.image(
+        "2a_logo.png",
+        width=100
+    )
 
     st.header(":yellow[2C] status")
 
-    st.subheader(":yellow[leader:] ######")
+    st.subheader(
+        ":yellow[leader:] ######"
+    )
 
-    st.subheader(":yellow[2 PREP]")
+    st.subheader(
+        ":yellow[2 PREP]"
+    )
 
-    st.caption("made by :green[omar.w.e]")
+    st.caption(
+        "made by :green[omar.w.e]"
+    )
 
-    st.subheader(":yellow[2C] chart:-")
+    st.subheader(
+        ":yellow[2C] chart:-"
+    )
+
 
     data = pd.DataFrame(
         {
-            "Matches Played": [1, 2, 3, 4, 5, 6],
-            "Match Result": [0, 0, 0, 0, 0, 0]
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     fig = px.line(
         data,
@@ -508,11 +595,13 @@ if c2:
         markers=True
     )
 
+
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
+
 
     st.plotly_chart(
         fig,
@@ -523,9 +612,14 @@ if c2:
         }
     )
 
-    st.image("2A_TEAM.png", width=500)
 
-# ============================================================== 
+    st.image(
+        "2A_TEAM.png",
+        width=500
+    )
+
+
+# ==============================================================
 # 2D
 # ==============================================================
 
@@ -538,20 +632,35 @@ if d2:
 
     st.header(":red[2D] status")
 
-    st.subheader(":red[leader:] ######")
+    st.subheader(
+        ":red[leader:] ######"
+    )
 
-    st.subheader(":red[2 PREP]")
+    st.subheader(
+        ":red[2 PREP]"
+    )
 
-    st.caption("made by :green[omar.w.e]")
+    st.caption(
+        "made by :green[omar.w.e]"
+    )
 
-    st.subheader(":red[2D] chart:-")
+    st.subheader(
+        ":red[2D] chart:-"
+    )
+
 
     data = pd.DataFrame(
         {
-            "Matches Played": [1, 2, 3, 4, 5, 6],
-            "Match Result": [0, 0, 0, 0, 0, 0]
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     fig = px.line(
         data,
@@ -560,11 +669,13 @@ if d2:
         markers=True
     )
 
+
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
+
 
     st.plotly_chart(
         fig,
@@ -575,12 +686,14 @@ if d2:
         }
     )
 
+
     st.image(
         "Haramball 😐 @fifaworldcup __@millitakimlar _ @esnetspor __#wordcup #fifaworldcup #esnetspor #millitakım #sondakika.jpg",
         width=500
     )
 
-# ============================================================== 
+
+# ==============================================================
 # LEAGUE STATUS
 # ==============================================================
 
@@ -590,7 +703,10 @@ if leage_states:
         "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
     )
 
-    st.caption("made by :green[omar.w.e]")
+    st.caption(
+        "made by :green[omar.w.e]"
+    )
+
 
     # ----------------------------------------------------------
     # League Table
@@ -598,14 +714,35 @@ if leage_states:
 
     teams_status = pd.DataFrame(
         {
-            "Team": ["2A", "2B", "2C", "2D"],
-            "Played": [0, 0, 0, 0],
-            "Wins": [0, 0, 0, 0],
-            "Draws": [0, 0, 0, 0],
-            "Losses": [0, 0, 0, 0],
-            "Points": [0, 0, 0, 0]
+            "Team": [
+                "2A",
+                "2B",
+                "2C",
+                "2D"
+            ],
+
+            "Played": [
+                0, 0, 0, 0
+            ],
+
+            "Wins": [
+                0, 0, 0, 0
+            ],
+
+            "Draws": [
+                0, 0, 0, 0
+            ],
+
+            "Losses": [
+                0, 0, 0, 0
+            ],
+
+            "Points": [
+                0, 0, 0, 0
+            ]
         }
     )
+
 
     st.header("LEAGUE TABLE")
 
@@ -613,6 +750,7 @@ if leage_states:
         teams_status,
         hide_index=True
     )
+
 
     # ----------------------------------------------------------
     # Best GK
@@ -627,13 +765,29 @@ if leage_states:
                 "2C(mutasim)",
                 "2D(malek)"
             ],
-            "Played": [0, 0, 0, 0, 0],
-            "clean sheet": [0, 0, 0, 0, 0],
-            "saves": [0, 0, 0, 0, 0],
-            "penalty saves": [0, 0, 0, 0, 0],
-            "enterd goals": [0, 0, 0, 0, 0]
+
+            "Played": [
+                0, 0, 0, 0, 0
+            ],
+
+            "clean sheet": [
+                0, 0, 0, 0, 0
+            ],
+
+            "saves": [
+                0, 0, 0, 0, 0
+            ],
+
+            "penalty saves": [
+                0, 0, 0, 0, 0
+            ],
+
+            "enterd goals": [
+                0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     st.header("LEAGUE BEST GK")
 
@@ -641,6 +795,7 @@ if leage_states:
         teams_best_gk,
         hide_index=True
     )
+
 
     # ----------------------------------------------------------
     # Best CB
@@ -655,11 +810,21 @@ if leage_states:
                 "2C(idk)",
                 "2D(all of the team)"
             ],
-            "Played": [0, 0, 0, 0, 0],
-            "takel": [0, 0, 0, 0, 0],
-            "correct pass": [0, 0, 0, 0, 0]
+
+            "Played": [
+                0, 0, 0, 0, 0
+            ],
+
+            "takel": [
+                0, 0, 0, 0, 0
+            ],
+
+            "correct pass": [
+                0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     st.header("LEAGUE BEST CB")
 
@@ -667,6 +832,7 @@ if leage_states:
         teams_best_cb,
         hide_index=True
     )
+
 
     # ----------------------------------------------------------
     # Best AT
@@ -681,12 +847,25 @@ if leage_states:
                 "2C(mohamed)",
                 "2D(all of the team)"
             ],
-            "Played": [0, 0, 0, 0, 0],
-            "scored": [0, 0, 0, 0, 0],
-            "assist": [0, 0, 0, 0, 0],
-            "correct pass": [0, 0, 0, 0, 0]
+
+            "Played": [
+                0, 0, 0, 0, 0
+            ],
+
+            "scored": [
+                0, 0, 0, 0, 0
+            ],
+
+            "assist": [
+                0, 0, 0, 0, 0
+            ],
+
+            "correct pass": [
+                0, 0, 0, 0, 0
+            ]
         }
     )
+
 
     st.header("LEAGUE BEST AT")
 
@@ -695,7 +874,8 @@ if leage_states:
         hide_index=True
     )
 
-# ============================================================== 
+
+# ==============================================================
 # MATCHES TIME
 # ==============================================================
 
@@ -703,13 +883,28 @@ if matches_time:
 
     matches_table = pd.DataFrame(
         {
-            "day": ["#", "#", "#", "#", "#"],
-            "month": ["#", "#", "#", "#", "#"],
-            "year": ["#", "#", "#", "#", "#"],
-            "match(1)": ["#", "#", "#", "#", "#"],
-            "match(2)": ["#", "#", "#", "#", "#"]
+            "day": [
+                "#", "#", "#", "#", "#"
+            ],
+
+            "month": [
+                "#", "#", "#", "#", "#"
+            ],
+
+            "year": [
+                "#", "#", "#", "#", "#"
+            ],
+
+            "match(1)": [
+                "#", "#", "#", "#", "#"
+            ],
+
+            "match(2)": [
+                "#", "#", "#", "#", "#"
+            ]
         }
     )
+
 
     st.header("LEAGUE MATCHES TIME")
 
@@ -727,23 +922,30 @@ if news:
 
     st.title("NEWS")
 
+
     # ----------------------------------------------------------
     # NEWS MENU
     # ----------------------------------------------------------
 
     selected_news = option_menu(
+
         menu_title=None,
+
         options=[
             "League News",
             "Match Analysis"
         ],
+
         icons=[
             "megaphone-fill",
             "graph-up-arrow"
         ],
+
         orientation="horizontal",
+
         default_index=0
     )
+
 
     # ----------------------------------------------------------
     # LEAGUE NEWS
@@ -751,30 +953,44 @@ if news:
 
     if selected_news == "League News":
 
-        st.subheader("📢 League News")
+        st.subheader(
+            "📢 League News"
+        )
+
 
         try:
+
             response = (
                 supabase
                 .table("announcements")
                 .select("*")
-                .order("created_at", desc=True)
+                .order(
+                    "created_at",
+                    desc=True
+                )
                 .execute()
             )
 
             announcements = response.data
 
+
         except Exception as error:
+
             st.error(
                 f"حدث خطأ أثناء تحميل الأخبار: {error}"
             )
+
             announcements = []
+
 
         if announcements:
 
             for announcement in announcements:
 
-                if isinstance(announcement, dict):
+                if isinstance(
+                    announcement,
+                    dict
+                ):
 
                     text = announcement.get(
                         "text",
@@ -785,6 +1001,7 @@ if news:
                         "author",
                         ""
                     )
+
 
                     if author:
 
@@ -805,15 +1022,17 @@ if news:
                 "There is no news for now."
             )
 
+
     # ----------------------------------------------------------
     # MATCH ANALYSIS
     # ----------------------------------------------------------
 
     elif selected_news == "Match Analysis":
 
-        st.subheader("⚽ Match Analysis")
+        st.subheader(
+            "⚽ Match Analysis"
+        )
 
         st.info(
             "🚧 Match Analysis is coming soon!"
         )
-
