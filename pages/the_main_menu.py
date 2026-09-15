@@ -92,56 +92,138 @@ elif user_role == "teacher":
 elif user_role == "student":
     st.sidebar.info("🎓 Student")
 
-# ============================================================== 
+# ==============================================================
 # SIDEBAR
 # ==============================================================
 
-st.sidebar.title(
-    ":red[HELLO], this is :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
-)
+user_role = st.session_state.get("role", "guest")
 
 with st.sidebar:
 
     # ----------------------------------------------------------
-    # Main buttons
+    # ROLE
     # ----------------------------------------------------------
 
-    leage_states = st.button("leage states")
-    rules = st.button("RULES")
-    matches_time = st.button("matches time")
-    news = st.button("NEWS")
+    if user_role == "manager":
+        st.success("👨‍💼 Manager Mode")
+
+    elif user_role == "teacher":
+        st.info("👨‍🏫 Normal Teacher")
+
+    elif user_role == "student":
+        st.info("🎓 Student")
+
+    st.image("2a_logo.png", width=70)
+
+    st.markdown("## ⚽ N.I.L.S LEAGUE")
 
     # ----------------------------------------------------------
-    # 2A
+    # MAIN MENU
     # ----------------------------------------------------------
 
-    a2 = st.button("2A")
-
-    # ----------------------------------------------------------
-    # 2B
-    # ----------------------------------------------------------
-
-    b2 = st.button("2B")
-
-    # ----------------------------------------------------------
-    # 2C
-    # ----------------------------------------------------------
-
-    c2 = st.button("2C")
-
-    # ----------------------------------------------------------
-    # 2D
-    # ----------------------------------------------------------
-
-    d2 = st.button("2D")
+    selected_main = option_menu(
+        menu_title="MAIN MENU",
+        options=[
+            "League States",
+            "Rules",
+            "Matches Time",
+            "News"
+        ],
+        icons=[
+            "trophy",
+            "book",
+            "calendar-event",
+            "newspaper"
+        ],
+        menu_icon="list",
+        default_index=0,
+        styles={
+            "container": {
+                "padding": "0!important",
+                "background-color": "transparent"
+            },
+            "icon": {
+                "font-size": "18px"
+            },
+            "nav-link": {
+                "font-size": "15px",
+                "text-align": "left",
+                "margin": "4px",
+                "border-radius": "8px"
+            },
+            "nav-link-selected": {
+                "font-size": "15px",
+                "font-weight": "bold"
+            }
+        }
+    )
 
     st.divider()
 
-    # ==========================================================
-    # SUGGESTIONS
-    # ==========================================================
+    # ----------------------------------------------------------
+    # TEAMS
+    # ----------------------------------------------------------
 
-    st.subheader("💡 صندوق اقتراحات و المشاكل")
+    selected_team = option_menu(
+        menu_title="TEAMS",
+        options=[
+            "No Team",
+            "2A",
+            "2B",
+            "2C",
+            "2D"
+        ],
+        icons=[
+            "dash-circle",
+            "1-circle",
+            "2-circle",
+            "3-circle",
+            "4-circle"
+        ],
+        menu_icon="people",
+        default_index=0,
+        styles={
+            "container": {
+                "padding": "0!important",
+                "background-color": "transparent"
+            },
+            "icon": {
+                "font-size": "18px"
+            },
+            "nav-link": {
+                "font-size": "15px",
+                "text-align": "left",
+                "margin": "4px",
+                "border-radius": "8px"
+            },
+            "nav-link-selected": {
+                "font-size": "15px",
+                "font-weight": "bold"
+            }
+        }
+    )
+
+    # ----------------------------------------------------------
+    # CONVERT MENU SELECTIONS TO YOUR OLD VARIABLES
+    # ----------------------------------------------------------
+
+    leage_states = selected_main == "League States"
+    rules = selected_main == "Rules"
+    matches_time = selected_main == "Matches Time"
+    news = selected_main == "News"
+
+    a2 = selected_team == "2A"
+    b2 = selected_team == "2B"
+    c2 = selected_team == "2C"
+    d2 = selected_team == "2D"
+
+    st.divider()
+
+    # ----------------------------------------------------------
+    # SUGGESTIONS
+    # ----------------------------------------------------------
+
+    st.subheader("💡 الاقتراحات والمشاكل")
 
     st.write(
         "هل لديك فكرة أو اقتراح لتطوير دوري المدرسة؟ "
@@ -156,18 +238,10 @@ with st.sidebar:
 
         if student_suggestion.strip():
 
-            # --------------------------------------------------
-            # Username
-            # --------------------------------------------------
-
             username = st.session_state.get(
                 "username",
                 "unknown"
             )
-
-            # --------------------------------------------------
-            # Save suggestion to Supabase
-            # --------------------------------------------------
 
             try:
 
@@ -193,7 +267,6 @@ with st.sidebar:
             st.warning(
                 "من فضلك اكتب اقتراحك أولاً."
             )
-
 # ============================================================== 
 # RULES
 # ==============================================================
@@ -655,7 +728,8 @@ if matches_time:
         hide_index=True
     )
 
-# ============================================================== 
+
+# ==============================================================
 # NEWS
 # ==============================================================
 
@@ -664,64 +738,92 @@ if news:
     st.title("NEWS")
 
     # ----------------------------------------------------------
-    # Load announcements from Supabase
+    # NEWS MENU
     # ----------------------------------------------------------
 
-    try:
-
-        response = (
-            supabase
-            .table("announcements")
-            .select("*")
-            .order("created_at", desc=True)
-            .execute()
-        )
-
-        announcements = response.data
-
-    except Exception as error:
-
-        st.error(
-            f"حدث خطأ أثناء تحميل الأخبار: {error}"
-        )
-
-        announcements = []
+    selected_news = option_menu(
+        menu_title=None,
+        options=[
+            "League News",
+            "Match Analysis"
+        ],
+        icons=[
+            "megaphone-fill",
+            "graph-up-arrow"
+        ],
+        orientation="horizontal",
+        default_index=0
+    )
 
     # ----------------------------------------------------------
-    # Display announcements
+    # LEAGUE NEWS
     # ----------------------------------------------------------
 
-    if announcements:
+    if selected_news == "League News":
 
-        for announcement in announcements:
+        st.subheader("📢 League News")
 
-            if isinstance(announcement, dict):
+        try:
+            response = (
+                supabase
+                .table("announcements")
+                .select("*")
+                .order("created_at", desc=True)
+                .execute()
+            )
 
-                text = announcement.get(
-                    "text",
-                    ""
-                )
+            announcements = response.data
 
-                author = announcement.get(
-                    "author",
-                    ""
-                )
+        except Exception as error:
+            st.error(
+                f"حدث خطأ أثناء تحميل الأخبار: {error}"
+            )
+            announcements = []
 
-                if author:
+        if announcements:
 
-                    st.info(
-                        f"📢 {text}\n\n"
-                        f"— {author}"
+            for announcement in announcements:
+
+                if isinstance(announcement, dict):
+
+                    text = announcement.get(
+                        "text",
+                        ""
                     )
 
-                else:
-
-                    st.info(
-                        f"📢 {text}"
+                    author = announcement.get(
+                        "author",
+                        ""
                     )
 
-    else:
+                    if author:
 
-        st.write(
-            "there is no news for now"
+                        st.info(
+                            f"📢 {text}\n\n"
+                            f"— {author}"
+                        )
+
+                    else:
+
+                        st.info(
+                            f"📢 {text}"
+                        )
+
+        else:
+
+            st.write(
+                "There is no news for now."
+            )
+
+    # ----------------------------------------------------------
+    # MATCH ANALYSIS
+    # ----------------------------------------------------------
+
+    elif selected_news == "Match Analysis":
+
+        st.subheader("⚽ Match Analysis")
+
+        st.info(
+            "🚧 Match Analysis is coming soon!"
         )
+
