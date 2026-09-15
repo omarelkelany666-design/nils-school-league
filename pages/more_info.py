@@ -1,6 +1,26 @@
 import streamlit as st
+
 import json
+
 import os
+
+from supabase import create_client
+
+
+# ==========================================================
+# SUPABASE
+# ==========================================================
+
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+
+SUPABASE_SERVICE_ROLE_KEY = st.secrets[
+    "SUPABASE_SERVICE_ROLE_KEY"
+]
+
+supabase = create_client(
+    SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY
+)
 
 
 # ==========================================================
@@ -74,11 +94,13 @@ def load_json_file(
     if not os.path.exists(
         file_path
     ):
+
         return default
 
     if os.path.getsize(
         file_path
     ) == 0:
+
         return default
 
     try:
@@ -163,15 +185,6 @@ with tab1:
         if new_announcement.strip():
 
             # --------------------------------------------------
-            # Load announcements
-            # --------------------------------------------------
-
-            announcements = load_json_file(
-                ANNOUNCEMENTS_FILE,
-                []
-            )
-
-            # --------------------------------------------------
             # Get current username
             # --------------------------------------------------
 
@@ -181,7 +194,7 @@ with tab1:
             )
 
             # --------------------------------------------------
-            # Create announcement
+            # Create announcement in Supabase
             # --------------------------------------------------
 
             new_data = {
@@ -189,28 +202,25 @@ with tab1:
                 "author": username
             }
 
-            # --------------------------------------------------
-            # Add
-            # --------------------------------------------------
+            try:
 
-            announcements.append(
-                new_data
-            )
+                supabase.table(
+                    "announcements"
+                ).insert(
+                    new_data
+                ).execute()
 
-            # --------------------------------------------------
-            # Save
-            # --------------------------------------------------
+                st.success(
+                    "✅ تم نشر الإعلان بنجاح!"
+                )
 
-            save_json_file(
-                ANNOUNCEMENTS_FILE,
-                announcements
-            )
+                st.rerun()
 
-            st.success(
-                "✅ تم نشر الإعلان بنجاح!"
-            )
+            except Exception as error:
 
-            st.rerun()
+                st.error(
+                    f"❌ حدث خطأ أثناء حفظ الإعلان: {error}"
+                )
 
         else:
 
@@ -229,15 +239,34 @@ with tab1:
         "📢 الإعلانات الحالية المنشورة:"
     )
 
-    announcements = load_json_file(
-        ANNOUNCEMENTS_FILE,
-        []
-    )
+    try:
+
+        response = (
+            supabase
+            .table("announcements")
+            .select("*")
+            .order(
+                "created_at",
+                desc=True
+            )
+            .execute()
+        )
+
+        announcements = response.data
+
+    except Exception as error:
+
+        st.error(
+            f"❌ حدث خطأ أثناء تحميل الإعلانات: {error}"
+        )
+
+        announcements = []
+
 
     if announcements:
 
         for i, announcement in enumerate(
-            reversed(announcements)
+            announcements
         ):
 
             if isinstance(
@@ -284,15 +313,34 @@ with tab2:
         "💡 متابعة اقتراحات وأفكار الطلاب"
     )
 
-    suggestions = load_json_file(
-        SUGGESTIONS_FILE,
-        []
-    )
+    try:
+
+        response = (
+            supabase
+            .table("suggestions")
+            .select("*")
+            .order(
+                "created_at",
+                desc=True
+            )
+            .execute()
+        )
+
+        suggestions = response.data
+
+    except Exception as error:
+
+        st.error(
+            f"❌ حدث خطأ أثناء تحميل الاقتراحات: {error}"
+        )
+
+        suggestions = []
+
 
     if suggestions:
 
         for i, suggestion in enumerate(
-            reversed(suggestions)
+            suggestions
         ):
 
             if isinstance(
@@ -300,13 +348,15 @@ with tab2:
                 dict
             ):
 
+                # Supabase uses username
                 user = suggestion.get(
-                    "user",
+                    "username",
                     "unknown"
                 )
 
+                # Supabase uses idea
                 idea = suggestion.get(
-                    "ideas",
+                    "idea",
                     ""
                 )
 
@@ -340,7 +390,9 @@ if st.button(
 ):
 
     st.session_state.logged_in = False
+
     st.session_state.role = "guest"
+
     st.session_state.username = ""
 
     st.switch_page(
