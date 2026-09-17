@@ -115,7 +115,7 @@ with st.sidebar:
 
         icons=[
             "trophy",
-            "book",
+            "game",
             "calendar-event",
             "newspaper",
             "people"
