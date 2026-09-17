@@ -107,7 +107,7 @@ with st.sidebar:
 
         options=[
             "League States",
-            "Rules",
+            "Games",
             "Matches Time",
             "News",
             "Teams"
@@ -156,7 +156,7 @@ with st.sidebar:
 
     leage_states = selected_main == "League States"
 
-    rules = selected_main == "Rules"
+    Games = selected_main == "Games"
 
     matches_time = selected_main == "Matches Time"
 
@@ -277,12 +277,12 @@ if teams:
 
 
 # ==============================================================
-# RULES
+# Games
 # ==============================================================
 
-if rules:
+if Games:
 
-    st.header("RULES")
+    st.header("Games")
 
     st.write(
         """
