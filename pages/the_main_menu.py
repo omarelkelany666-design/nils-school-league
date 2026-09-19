@@ -309,9 +309,7 @@ if a2:
         ":yellow[2 PREP]"
     )
 
-    st.caption(
-        "made by :green[omar.w.e]"
-    )
+
 
     st.subheader(
         ":yellow[2A] chart:-"
@@ -369,7 +367,7 @@ if a2:
 if b2:
 
     st.image(
-        "2a_logo.png",
+        "2b_logo_temporory.png",
         width=100
     )
 
@@ -383,9 +381,7 @@ if b2:
         ":yellow[2 PREP]"
     )
 
-    st.caption(
-        "made by :green[omar.w.e]"
-    )
+
 
     st.subheader(
         ":yellow[2B] chart:-"
@@ -431,7 +427,7 @@ if b2:
 
 
     st.image(
-        "2A_TEAM.png",
+        "idk_team.png",
         width=500
     )
 
@@ -443,7 +439,7 @@ if b2:
 if c2:
 
     st.image(
-        "2a_logo.png",
+        "2c_logo_temporory.png",
         width=100
     )
 
@@ -457,9 +453,7 @@ if c2:
         ":yellow[2 PREP]"
     )
 
-    st.caption(
-        "made by :green[omar.w.e]"
-    )
+
 
     st.subheader(
         ":yellow[2C] chart:-"
@@ -505,7 +499,7 @@ if c2:
 
 
     st.image(
-        "2A_TEAM.png",
+        "idk_team.png",
         width=500
     )
 
@@ -517,7 +511,7 @@ if c2:
 if d2:
 
     st.image(
-        "download (8).jpg",
+        "2d_logo_temporory.png",
         width=100
     )
 
@@ -531,9 +525,7 @@ if d2:
         ":red[2 PREP]"
     )
 
-    st.caption(
-        "made by :green[omar.w.e]"
-    )
+
 
     st.subheader(
         ":red[2D] chart:-"
@@ -579,7 +571,7 @@ if d2:
 
 
     st.image(
-        "Haramball 😐 @fifaworldcup __@millitakimlar _ @esnetspor __#wordcup #fifaworldcup #esnetspor #millitakım #sondakika.jpg",
+        "idk_team.png",
         width=500
     )
 
@@ -594,9 +586,7 @@ if leage_states:
         "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
     )
 
-    st.caption(
-        "made by :green[omar.w.e]"
-    )
+
 
 
     # ----------------------------------------------------------
