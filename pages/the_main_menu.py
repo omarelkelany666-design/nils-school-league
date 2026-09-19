@@ -274,7 +274,7 @@ if thanks_for:
     )
 
     if selected_thanks == "work on menu":
-        st.title("👨‍💻 :orange-backgroun[:red[Work]] on Menu")
+        st.title("👨‍💻 :orange-background[:red[Work]] on Menu")
         st.header("People who :orange-background[:red[worked]] on the :green-backgroun[:blue[N.I.L.S]] League website.")
         st.subheader("frist :orange-background[:red[generation]]")
         st.write("- :orange[omar] who had the idea and bulid all of the website/:blue[2026]")
