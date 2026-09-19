@@ -228,28 +228,46 @@ with st.sidebar:
             st.warning(
                 "من فضلك اكتب اقتراحك أولاً."
             )
+
 # ==================================================================
-#whatsapp
+# WHATSAPP
 # ==================================================================
+
 if whatsapp:
-    st.title(":green[whats app] menu")
-    
-    st.subheader("Enter the [Whatsapp](https://whatsapp.com/channel/0029VbDeuTc7j6g05buuUD0S) Channels")
-    st.info(
-        ":red[============================]"
-        ":green[============================]"
-        "============================"
+
+    st.title("🟢 WhatsApp Channel")
+
+    st.subheader(
+        "📢 Join the "
+        "[WhatsApp Channel](https://whatsapp.com/channel/0029VbDeuTc7j6g05buuUD0S)"
     )
 
-    st.subheader("Why should I join the WhatsApp channel? 🤔❔")
+    st.success(
+        "Join our WhatsApp channel to stay updated with everything "
+        "about the N.I.L.S League!"
+    )
 
-    st.write("- 📢 You will know about the latest website updates.")
-    st.write("- 🔔 You can choose which updates you want to follow.")
-    st.write("- 🌐 You can enter the website directly from WhatsApp.")
-    st.write("- 🏆 You will receive important league news and announcements.")
-    st.write("- 📅 You can stay updated about matches and upcoming events.")
-    st.write("- 💡 You won't miss important information about N.I.L.S League.")
+    st.divider()
 
+    st.header("Why should I join the WhatsApp channel? 🤔")
+
+    st.subheader("📢 **Website Updates**")
+    st.write("- You will know about the latest website updates.")
+
+    st.subheader("🔔 **Choose What You Follow**")
+    st.write("- You can choose which updates you want to follow.")
+
+    st.subheader("🌐 **Easy Website Access**")
+    st.write("- You can enter the website directly from WhatsApp.")
+
+    st.subheader("🏆 **League News**")
+    st.write("- You will receive important league news and announcements.")
+
+    st.subheader("📅 **Match Updates**")
+    st.write("- You can stay updated about matches and upcoming events.")
+
+    st.subheader("💡 **Never Miss Important Information**")
+    st.write("- You won't miss important information about the N.I.L.S League.")
 
 
 # ==================================================================
@@ -258,14 +276,23 @@ if whatsapp:
 
 if thanks_for:
 
+    st.title("❤️ Thanks for")
+
+    st.write(
+        "This section shows the people who helped build and improve "
+        "the N.I.L.S League website."
+    )
+
+    st.divider()
+
     selected_thanks = option_menu(
-        menu_title="thanks for any idea or work on the website",
+        menu_title="Choose a section",
         options=[
-            "work on menu",
-            "accepted suggestion menu"
+            "Work on Menu",
+            "Accepted Suggestions"
         ],
         icons=[
-            "body-text",
+            "people-fill",
             "lightbulb-fill"
         ],
         menu_icon="heart-fill",
@@ -273,17 +300,47 @@ if thanks_for:
         orientation="horizontal",
     )
 
-    if selected_thanks == "work on menu":
-        st.title("👨‍💻 :orange-background[:red[Work]] on Menu")
-        st.header("People who :orange-background[:red[worked]] on the :green-backgroun[:blue[N.I.L.S]] League website.")
-        st.subheader("frist :orange-background[:red[generation]]")
-        st.write("- :orange[omar] who had the idea and bulid all of the website/:blue[2026]")
-        st.write("- :orange[school] thanks for accept the website to be the main website for nils league/:blue[2026]")
-        st.write("- :orange[moaz] who got the game idea and made it/:blue[2026]")
+    # --------------------------------------------------------------
+    # WORK ON MENU
+    # --------------------------------------------------------------
 
-    elif selected_thanks == "accepted suggestion menu":
-        st.title("💡 :red[:orange-background[Accepted] Suggestions]")
-        st.header("Suggestions that were :orange-background[:red[accepted]].")
+    if selected_thanks == "Work on Menu":
+
+        st.header("👨‍💻 People Who Worked on the Website")
+
+        st.info("First Generation — 2026")
+
+        st.subheader("👨‍💻 Omar")
+        st.write(
+            "Had the original idea and built the N.I.L.S League website."
+        )
+
+        st.subheader("🏫 School")
+        st.write(
+            "Thanks to the school for accepting the website "
+            "as the main website for the N.I.L.S League."
+        )
+
+        st.subheader("🎮 Moaz")
+        st.write(
+            "Had the game idea and created the game."
+        )
+
+    # --------------------------------------------------------------
+    # ACCEPTED SUGGESTIONS
+    # --------------------------------------------------------------
+
+    elif selected_thanks == "Accepted Suggestions":
+
+        st.header("💡 Accepted Suggestions")
+
+        st.success(
+            "Suggestions that were accepted and added to the website."
+        )
+
+        st.write("No accepted suggestions yet.")
+
+
 
 # ==============================================================
 # DEFAULT TEAM VARIABLES
