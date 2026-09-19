@@ -93,7 +93,6 @@ def save_json_file(file_path, data):
 # ==============================================================
 
 with st.sidebar:
-
     st.markdown("## ⚽ N.I.L.S LEAGUE")
 
 
@@ -110,7 +109,9 @@ with st.sidebar:
             "Games",
             "Matches Time",
             "News",
-            "Teams"
+            "Teams",
+            "Thanks for",
+            "Whatsapp"
         ],
 
         icons=[
@@ -118,7 +119,9 @@ with st.sidebar:
             "controller",
             "calendar-event",
             "newspaper",
-            "people"
+            "people",
+            "heart",
+            "whatsapp"
         ],
 
         menu_icon="list",
@@ -164,6 +167,9 @@ with st.sidebar:
 
     teams = selected_main == "Teams"
 
+    thanks_for = selected_main == "Thanks for"
+
+    whatsapp = selected_main == "Whatsapp"
 
     # ==========================================================
     # SUGGESTIONS
@@ -222,7 +228,62 @@ with st.sidebar:
             st.warning(
                 "من فضلك اكتب اقتراحك أولاً."
             )
+# ==================================================================
+#whatsapp
+# ==================================================================
+if whatsapp:
+    st.title(":green[whats app] menu")
+    
+    st.subheader("Enter the [Whatsapp](https://whatsapp.com/channel/0029VbDeuTc7j6g05buuUD0S) Channels")
+    st.info(
+        ":red[============================]"
+        ":green[============================]"
+        "============================"
+    )
 
+    st.subheader("Why should I join the WhatsApp channel? 🤔❔")
+
+    st.write("- 📢 You will know about the latest website updates.")
+    st.write("- 🔔 You can choose which updates you want to follow.")
+    st.write("- 🌐 You can enter the website directly from WhatsApp.")
+    st.write("- 🏆 You will receive important league news and announcements.")
+    st.write("- 📅 You can stay updated about matches and upcoming events.")
+    st.write("- 💡 You won't miss important information about N.I.L.S League.")
+
+
+
+# ==================================================================
+# THANKS FOR
+# ==================================================================
+
+if thanks_for:
+
+    selected_thanks = option_menu(
+        menu_title="thanks for any idea or work on the website",
+        options=[
+            "work on menu",
+            "accepted suggestion menu"
+        ],
+        icons=[
+            "body-text",
+            "lightbulb-fill"
+        ],
+        menu_icon="heart-fill",
+        default_index=0,
+        orientation="horizontal",
+    )
+
+    if selected_thanks == "work on menu":
+        st.title("👨‍💻 :orange-backgroun[:red[Work]] on Menu")
+        st.header("People who :orange-background[:red[worked]] on the :green-backgroun[:blue[N.I.L.S]] League website.")
+        st.subheader("frist :orange-background[:red[generation]]")
+        st.write("- :orange[omar] who had the idea and bulid all of the website/:blue[2026]")
+        st.write("- :orange[school] thanks for accept the website to be the main website for nils league/:blue[2026]")
+        st.write("- :orange[moaz] who got the game idea and made it/:blue[2026]")
+
+    elif selected_thanks == "accepted suggestion menu":
+        st.title("💡 :red[:orange-background[Accepted] Suggestions]")
+        st.header("Suggestions that were :orange-background[:red[accepted]].")
 
 # ==============================================================
 # DEFAULT TEAM VARIABLES
@@ -301,9 +362,6 @@ if a2:
 
     st.header(":yellow[2A] status")
 
-    st.subheader(
-        ":yellow[leader:] ######"
-    )
 
     st.subheader(
         ":yellow[2 PREP]"
@@ -371,20 +429,18 @@ if b2:
         width=100
     )
 
-    st.header(":yellow[2B] status")
+    st.header("[2B] status")
+
+
 
     st.subheader(
-        ":yellow[leader:] ######"
+        "[2 PREP]"
     )
 
-    st.subheader(
-        ":yellow[2 PREP]"
-    )
-
 
 
     st.subheader(
-        ":yellow[2B] chart:-"
+        "[2B] chart:-"
     )
 
 
@@ -443,20 +499,18 @@ if c2:
         width=100
     )
 
-    st.header(":yellow[2C] status")
+    st.header(":red[2C] status")
+
+
 
     st.subheader(
-        ":yellow[leader:] ######"
+        ":red[2 PREP]"
     )
 
-    st.subheader(
-        ":yellow[2 PREP]"
-    )
-
 
 
     st.subheader(
-        ":yellow[2C] chart:-"
+        ":red[2C] chart:-"
     )
 
 
@@ -515,20 +569,17 @@ if d2:
         width=100
     )
 
-    st.header(":red[2D] status")
+    st.header(":gray[2D] status")
+
 
     st.subheader(
-        ":red[leader:] ######"
-    )
-
-    st.subheader(
-        ":red[2 PREP]"
+        ":gray[2 PREP]"
     )
 
 
 
     st.subheader(
-        ":red[2D] chart:-"
+        ":gary[2D] chart:-"
     )
 
 
@@ -585,6 +636,9 @@ if leage_states:
     st.title(
         "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
     )
+    st.info(
+        "the nearest match is 2A VS 2B"
+        )
 
 
 
@@ -776,11 +830,11 @@ if matches_time:
                 "#", "#", "#", "#", "#"
             ],
 
-            "match(1)": [
+            "team(1)": [
                 "#", "#", "#", "#", "#"
             ],
 
-            "match(2)": [
+            "team(2)": [
                 "#", "#", "#", "#", "#"
             ]
         }
