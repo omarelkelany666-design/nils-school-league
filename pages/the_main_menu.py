@@ -636,7 +636,7 @@ if d2:
 
 
     st.subheader(
-        ":gary[2D] chart:-"
+        ":gray[2D] chart:-"
     )
 
 
