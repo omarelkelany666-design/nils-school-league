@@ -809,7 +809,7 @@ if b2:
     )
 
     st.image(
-        "idk_team.png",
+        "2b_team.png",
         width=500
     )
 
@@ -870,7 +870,7 @@ if c2:
     )
 
     st.image(
-        "idk_team.png",
+        "2c_team.png",
         width=500
     )
 
@@ -931,7 +931,7 @@ if d2:
     )
 
     st.image(
-        "idk_team.png",
+        "2d_team.png",
         width=500
     )
 
