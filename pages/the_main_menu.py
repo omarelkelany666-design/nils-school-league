@@ -105,7 +105,7 @@ with st.sidebar:
         menu_title="MAIN MENU",
 
         options=[
-            "League States",
+            "Main",
             "Games",
             "Matches Time",
             "News",
@@ -115,7 +115,7 @@ with st.sidebar:
         ],
 
         icons=[
-            "trophy",
+            "bricks",
             "controller",
             "calendar-event",
             "newspaper",
@@ -157,7 +157,7 @@ with st.sidebar:
     # MAIN MENU VARIABLES
     # ----------------------------------------------------------
 
-    leage_states = selected_main == "League States"
+    main = selected_main == "Main"
 
     Games = selected_main == "Games"
 
@@ -308,7 +308,7 @@ if thanks_for:
 
         st.header("👨‍💻 People Who Worked on the Website")
 
-        st.info("First Generation — 2026")
+        st.info("First Generation — 2026 to —NOW ")
 
         st.subheader("👨‍💻 Omar")
         st.write(
@@ -319,6 +319,11 @@ if thanks_for:
         st.write(
             "Thanks to the school for accepting the website "
             "as the main website for the N.I.L.S League."
+        )
+
+        st.subheader("🏫Mr Ahmed")
+        st.write(
+            "Thanks for help us from the begging to the end"
         )
 
         st.subheader("🎮 Moaz")
@@ -341,10 +346,14 @@ if thanks_for:
         st.write("No accepted suggestions yet.")
 
 
-
 # ==============================================================
 # DEFAULT TEAM VARIABLES
 # ==============================================================
+
+a1 = False
+b1 = False
+c1 = False
+d1 = False
 
 a2 = False
 b2 = False
@@ -358,78 +367,123 @@ d2 = False
 
 if teams:
 
-    st.title("TEAMS")
+    import streamlit as st
 
+    # =========================
+    # STAGE SELECTOR
+    # =========================
 
-    selected_team = option_menu(
+    st.markdown("""
+    <style>
+    .stage-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 8px;
+        margin-bottom: 5px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-        menu_title=None,
-
-        options=[
-            "2A",
-            "2B",
-            "2C",
-            "2D"
-        ],
-
-        icons=[
-            "1-circle",
-            "2-circle",
-            "3-circle",
-            "4-circle"
-        ],
-
-        orientation="horizontal",
-
-        default_index=0
+    st.markdown(
+        '<div class="stage-title">Choose Stage</div>',
+        unsafe_allow_html=True
     )
 
+    stage = st.selectbox(
+        "Stage",
+        [
+            "1st Preparatory",
+            "2nd Preparatory"
+        ],
+        label_visibility="collapsed"
+    )
 
-    a2 = selected_team == "2A"
+    st.title("TEAMS")
 
-    b2 = selected_team == "2B"
+    # ==========================================================
+    # 1ST PREPARATORY
+    # ==========================================================
 
-    c2 = selected_team == "2C"
+    if stage == "1st Preparatory":
 
-    d2 = selected_team == "2D"
+        selected_team = option_menu(
+            menu_title=None,
+
+            options=[
+                "1A",
+                "1B",
+                "1C",
+                "1D"
+            ],
+
+            icons=[
+                "1-circle",
+                "2-circle",
+                "3-circle",
+                "4-circle"
+            ],
+
+            orientation="horizontal",
+
+            default_index=0
+        )
+
+        a1 = selected_team == "1A"
+        b1 = selected_team == "1B"
+        c1 = selected_team == "1C"
+        d1 = selected_team == "1D"
+
+
+    # ==========================================================
+    # 2ND PREPARATORY
+    # ==========================================================
+
+    elif stage == "2nd Preparatory":
+
+        selected_team = option_menu(
+            menu_title=None,
+
+            options=[
+                "2A",
+                "2B",
+                "2C",
+                "2D"
+            ],
+
+            icons=[
+                "1-circle",
+                "2-circle",
+                "3-circle",
+                "4-circle"
+            ],
+
+            orientation="horizontal",
+
+            default_index=0
+        )
+
+        a2 = selected_team == "2A"
+        b2 = selected_team == "2B"
+        c2 = selected_team == "2C"
+        d2 = selected_team == "2D"
 
 
 # ==============================================================
-# Games
+# 1A
 # ==============================================================
 
-if Games:
-
-    st.header("Games")
-    st.info("🚧games under work")
-    
-
-
-
-# ==============================================================
-# 2A
-# ==============================================================
-
-if a2:
+if a1:
 
     st.image(
-        "2a_logo.png",
+        "there_is_no_logo.png",
         width=100
     )
 
-    st.header(":yellow[2A] status")
+    st.header("1A status")
 
+    st.subheader("1 PREP")
 
-    st.subheader(
-        ":yellow[2 PREP]"
-    )
-
-
-
-    st.subheader(
-        ":yellow[2A] chart:-"
-    )
-
+    st.subheader("1A chart:-")
 
     data = pd.DataFrame(
         {
@@ -443,7 +497,6 @@ if a2:
         }
     )
 
-
     fig = px.line(
         data,
         x="Matches Played",
@@ -451,13 +504,11 @@ if a2:
         markers=True
     )
 
-
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
-
 
     st.plotly_chart(
         fig,
@@ -468,6 +519,233 @@ if a2:
         }
     )
 
+    st.image(
+        "idk_team.png",
+        width=500
+    )
+
+# ==============================================================
+# 1B
+# ==============================================================
+
+if b1:
+
+    st.image(
+        "there_is_no_logo.png",
+        width=100
+    )
+
+    st.header("1B status")
+
+    st.subheader("1 PREP")
+
+    st.subheader("1B chart:-")
+
+    data = pd.DataFrame(
+        {
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
+        }
+    )
+
+    fig = px.line(
+        data,
+        x="Matches Played",
+        y="Match Result",
+        markers=True
+    )
+
+    fig.update_layout(
+        xaxis_title="Matches Played",
+        yaxis_title="Match Result",
+        dragmode=False
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True,
+        config={
+            "scrollZoom": False,
+            "displayModeBar": False
+        }
+    )
+
+    st.image(
+        "idk_team.png",
+        width=500
+    )
+
+# ==============================================================
+# 1C
+# ==============================================================
+
+if c1:
+
+    st.image(
+        "there_is_no_logo.png",
+        width=100
+    )
+
+    st.header("1C status")
+
+    st.subheader("1 PREP")
+
+    st.subheader("1C chart:-")
+
+    data = pd.DataFrame(
+        {
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
+        }
+    )
+
+    fig = px.line(
+        data,
+        x="Matches Played",
+        y="Match Result",
+        markers=True
+    )
+
+    fig.update_layout(
+        xaxis_title="Matches Played",
+        yaxis_title="Match Result",
+        dragmode=False
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True,
+        config={
+            "scrollZoom": False,
+            "displayModeBar": False
+        }
+    )
+
+    st.image(
+        "idk_team.png",
+        width=500
+    )
+
+# ==============================================================
+# 1D
+# ==============================================================
+
+if d1:
+
+    st.image(
+        "there_is_no_logo.png",
+        width=100
+    )
+
+    st.header("1D status")
+
+    st.subheader("1 PREP")
+
+    st.subheader("1D chart:-")
+
+    data = pd.DataFrame(
+        {
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
+        }
+    )
+
+    fig = px.line(
+        data,
+        x="Matches Played",
+        y="Match Result",
+        markers=True
+    )
+
+    fig.update_layout(
+        xaxis_title="Matches Played",
+        yaxis_title="Match Result",
+        dragmode=False
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True,
+        config={
+            "scrollZoom": False,
+            "displayModeBar": False
+        }
+    )
+
+    st.image(
+        "idk_team.png",
+        width=500
+    )
+    
+# ==============================================================
+# 2A
+# ==============================================================
+
+if a2:
+
+    st.image(
+        "2a_logo.png",
+        width=100
+    )
+
+    st.header(":yellow[2A] status")
+
+    st.subheader(
+        ":yellow[2 PREP]"
+    )
+
+    st.subheader(
+        ":yellow[2A] chart:-"
+    )
+
+    data = pd.DataFrame(
+        {
+            "Matches Played": [
+                1, 2, 3, 4, 5, 6
+            ],
+
+            "Match Result": [
+                0, 0, 0, 0, 0, 0
+            ]
+        }
+    )
+
+    fig = px.line(
+        data,
+        x="Matches Played",
+        y="Match Result",
+        markers=True
+    )
+
+    fig.update_layout(
+        xaxis_title="Matches Played",
+        yaxis_title="Match Result",
+        dragmode=False
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True,
+        config={
+            "scrollZoom": False,
+            "displayModeBar": False
+        }
+    )
 
     st.image(
         "2A_TEAM.png",
@@ -488,18 +766,13 @@ if b2:
 
     st.header("[2B] status")
 
-
-
     st.subheader(
         "[2 PREP]"
     )
 
-
-
     st.subheader(
         "[2B] chart:-"
     )
-
 
     data = pd.DataFrame(
         {
@@ -513,7 +786,6 @@ if b2:
         }
     )
 
-
     fig = px.line(
         data,
         x="Matches Played",
@@ -521,13 +793,11 @@ if b2:
         markers=True
     )
 
-
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
-
 
     st.plotly_chart(
         fig,
@@ -537,7 +807,6 @@ if b2:
             "displayModeBar": False
         }
     )
-
 
     st.image(
         "idk_team.png",
@@ -558,18 +827,13 @@ if c2:
 
     st.header(":red[2C] status")
 
-
-
     st.subheader(
         ":red[2 PREP]"
     )
 
-
-
     st.subheader(
         ":red[2C] chart:-"
     )
-
 
     data = pd.DataFrame(
         {
@@ -583,7 +847,6 @@ if c2:
         }
     )
 
-
     fig = px.line(
         data,
         x="Matches Played",
@@ -591,13 +854,11 @@ if c2:
         markers=True
     )
 
-
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
-
 
     st.plotly_chart(
         fig,
@@ -607,7 +868,6 @@ if c2:
             "displayModeBar": False
         }
     )
-
 
     st.image(
         "idk_team.png",
@@ -628,17 +888,13 @@ if d2:
 
     st.header(":gray[2D] status")
 
-
     st.subheader(
         ":gray[2 PREP]"
     )
 
-
-
     st.subheader(
         ":gray[2D] chart:-"
     )
-
 
     data = pd.DataFrame(
         {
@@ -652,7 +908,6 @@ if d2:
         }
     )
 
-
     fig = px.line(
         data,
         x="Matches Played",
@@ -660,13 +915,11 @@ if d2:
         markers=True
     )
 
-
     fig.update_layout(
         xaxis_title="Matches Played",
         yaxis_title="Match Result",
         dragmode=False
     )
-
 
     st.plotly_chart(
         fig,
@@ -677,194 +930,390 @@ if d2:
         }
     )
 
-
     st.image(
         "idk_team.png",
         width=500
     )
+
+# ==============================================================
+# Games
+# ==============================================================
+
+if Games:
+
+    st.header("Games")
+    st.info("🚧games under work")
+    
+
+
 
 
 # ==============================================================
 # LEAGUE STATUS
 # ==============================================================
 
-if leage_states:
-
-    st.title(
-        "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
+if main:
+    prep_choose = option_menu(
+        menu_title="select prep you want",
+        options=["prep1", "prep2"],
+        orientation="horizontal",
     )
-    st.info(
-        "the nearest match is 2A VS 2B"
+    
+
+    if prep_choose=="prep2":
+
+        st.title(
+            "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
+        )
+        st.info(
+            "the nearest match is 2A VS 2B"
+            )
+
+
+
+
+        # ----------------------------------------------------------
+        # League Table
+        # ----------------------------------------------------------
+
+        teams_status = pd.DataFrame(
+            {
+                "Team": [
+                    "2A",
+                    "2B",
+                    "2C",
+                    "2D"
+                ],
+
+                "Played": [
+                    0, 0, 0, 0
+                ],
+
+                "Wins": [
+                    0, 0, 0, 0
+                ],
+
+                "Draws": [
+                    0, 0, 0, 0
+                ],
+
+                "Losses": [
+                    0, 0, 0, 0
+                ],
+
+                "Points": [
+                    0, 0, 0, 0
+                ]
+            }
         )
 
 
+        st.header("LEAGUE TABLE")
+
+        st.dataframe(
+            teams_status,
+            hide_index=True
+        )
 
 
-    # ----------------------------------------------------------
-    # League Table
-    # ----------------------------------------------------------
+        # ----------------------------------------------------------
+        # Best GK
+        # ----------------------------------------------------------
 
-    teams_status = pd.DataFrame(
-        {
-            "Team": [
-                "2A",
-                "2B",
-                "2C",
-                "2D"
-            ],
+        teams_best_gk = pd.DataFrame(
+            {
+                "GK players": [
+                    "2A(omar)",
+                    "2B()",
+                    "2C(saged)",
+                    "2C(mutasim)",
+                    "2D(malek)"
+                ],
 
-            "Played": [
-                0, 0, 0, 0
-            ],
+                "Played": [
+                    0, 0, 0, 0, 0
+                ],
 
-            "Wins": [
-                0, 0, 0, 0
-            ],
+                "clean sheet": [
+                    0, 0, 0, 0, 0
+                ],
 
-            "Draws": [
-                0, 0, 0, 0
-            ],
+                "saves": [
+                    0, 0, 0, 0, 0
+                ],
 
-            "Losses": [
-                0, 0, 0, 0
-            ],
+                "penalty saves": [
+                    0, 0, 0, 0, 0
+                ],
 
-            "Points": [
-                0, 0, 0, 0
-            ]
-        }
-    )
-
-
-    st.header("LEAGUE TABLE")
-
-    st.dataframe(
-        teams_status,
-        hide_index=True
-    )
+                "enterd goals": [
+                    0, 0, 0, 0, 0
+                ]
+            }
+        )
 
 
-    # ----------------------------------------------------------
-    # Best GK
-    # ----------------------------------------------------------
+        st.header("LEAGUE BEST GK")
 
-    teams_best_gk = pd.DataFrame(
-        {
-            "GK players": [
-                "2A(omar)",
-                "2B()",
-                "2C(saged)",
-                "2C(mutasim)",
-                "2D(malek)"
-            ],
-
-            "Played": [
-                0, 0, 0, 0, 0
-            ],
-
-            "clean sheet": [
-                0, 0, 0, 0, 0
-            ],
-
-            "saves": [
-                0, 0, 0, 0, 0
-            ],
-
-            "penalty saves": [
-                0, 0, 0, 0, 0
-            ],
-
-            "enterd goals": [
-                0, 0, 0, 0, 0
-            ]
-        }
-    )
+        st.dataframe(
+            teams_best_gk,
+            hide_index=True
+        )
 
 
-    st.header("LEAGUE BEST GK")
+        # ----------------------------------------------------------
+        # Best CB
+        # ----------------------------------------------------------
 
-    st.dataframe(
-        teams_best_gk,
-        hide_index=True
-    )
+        teams_best_cb = pd.DataFrame(
+            {
+                "CB players": [
+                    "2A(mazen)",
+                    "2B(mohamed)",
+                    "2C(adam)",
+                    "2C(idk)",
+                    "2D(all of the team)"
+                ],
 
+                "Played": [
+                    0, 0, 0, 0, 0
+                ],
 
-    # ----------------------------------------------------------
-    # Best CB
-    # ----------------------------------------------------------
+                "takel": [
+                    0, 0, 0, 0, 0
+                ],
 
-    teams_best_cb = pd.DataFrame(
-        {
-            "CB players": [
-                "2A(mazen)",
-                "2B(mohamed)",
-                "2C(adam)",
-                "2C(idk)",
-                "2D(all of the team)"
-            ],
-
-            "Played": [
-                0, 0, 0, 0, 0
-            ],
-
-            "takel": [
-                0, 0, 0, 0, 0
-            ],
-
-            "correct pass": [
-                0, 0, 0, 0, 0
-            ]
-        }
-    )
+                "correct pass": [
+                    0, 0, 0, 0, 0
+                ]
+            }
+        )
 
 
-    st.header("LEAGUE BEST CB")
+        st.header("LEAGUE BEST CB")
 
-    st.dataframe(
-        teams_best_cb,
-        hide_index=True
-    )
-
-
-    # ----------------------------------------------------------
-    # Best AT
-    # ----------------------------------------------------------
-
-    teams_best_at = pd.DataFrame(
-        {
-            "AT players": [
-                "2A(moaz)",
-                "2a(awsam)",
-                "2a(ahmed)",
-                "2C(mohamed)",
-                "2D(all of the team)"
-            ],
-
-            "Played": [
-                0, 0, 0, 0, 0
-            ],
-
-            "scored": [
-                0, 0, 0, 0, 0
-            ],
-
-            "assist": [
-                0, 0, 0, 0, 0
-            ],
-
-            "correct pass": [
-                0, 0, 0, 0, 0
-            ]
-        }
-    )
+        st.dataframe(
+            teams_best_cb,
+            hide_index=True
+        )
 
 
-    st.header("LEAGUE BEST AT")
+        # ----------------------------------------------------------
+        # Best AT
+        # ----------------------------------------------------------
 
-    st.dataframe(
-        teams_best_at,
-        hide_index=True
-    )
+        teams_best_at = pd.DataFrame(
+            {
+                "AT players": [
+                    "2A(moaz)",
+                    "2a(awsam)",
+                    "2a(ahmed)",
+                    "2C(mohamed)",
+                    "2D(all of the team)"
+                ],
+
+                "Played": [
+                    0, 0, 0, 0, 0
+                ],
+
+                "scored": [
+                    0, 0, 0, 0, 0
+                ],
+
+                "assist": [
+                    0, 0, 0, 0, 0
+                ],
+
+                "correct pass": [
+                    0, 0, 0, 0, 0
+                ]
+            }
+        )
+
+
+        st.header("LEAGUE BEST AT")
+
+        st.dataframe(
+            teams_best_at,
+            hide_index=True
+        )
+#========================================#
+#prep1 choose#
+#========================================#
+    if prep_choose=="prep1":
+
+        st.title(
+            "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
+        )
+        st.info(
+            "the nearest match is 1A VS 1B"
+            )
+
+
+
+
+        # ----------------------------------------------------------
+        # League Table
+        # ----------------------------------------------------------
+
+        teams_status = pd.DataFrame(
+            {
+                "Team": [
+                    "1A",
+                    "1B",
+                    "1C",
+                    "1D"
+                ],
+
+                "Played": [
+                    0, 0, 0, 0
+                ],
+
+                "Wins": [
+                    0, 0, 0, 0
+                ],
+
+                "Draws": [
+                    0, 0, 0, 0
+                ],
+
+                "Losses": [
+                    0, 0, 0, 0
+                ],
+
+                "Points": [
+                    0, 0, 0, 0
+                ]
+            }
+        )
+
+
+        st.header("LEAGUE TABLE")
+
+        st.dataframe(
+            teams_status,
+            hide_index=True
+        )
+
+
+        # ----------------------------------------------------------
+        # Best GK
+        # ----------------------------------------------------------
+
+        teams_best_gk = pd.DataFrame(
+            {
+                "GK players": [
+                    "1A()",
+                    "1B()",
+                    "1C()",
+                    "1D()"
+                ],
+
+                "Played": [
+                    0, 0, 0, 0
+                ],
+
+                "clean sheet": [
+                    0, 0, 0, 0 
+                ],
+
+                "saves": [
+                    0, 0, 0, 0
+                ],
+
+                "penalty saves": [
+                    0, 0, 0, 0 
+                ],
+
+                "enterd goals": [
+                    0, 0, 0, 0
+                ]
+            }
+        )
+
+
+        st.header("LEAGUE BEST GK")
+
+        st.dataframe(
+            teams_best_gk,
+            hide_index=True
+        )
+
+
+        # ----------------------------------------------------------
+        # Best CB
+        # ----------------------------------------------------------
+
+        teams_best_cb = pd.DataFrame(
+            {
+                "CB players": [
+                    "1A()",
+                    "1B()",
+                    "1C()",
+                    "1D()"
+                ],
+
+                "Played": [
+                    0, 0, 0, 0
+                ],
+
+                "takel": [
+                    0, 0, 0, 0
+                ],
+
+                "correct pass": [
+                    0, 0, 0, 0
+                ]
+            }
+        )
+
+
+        st.header("LEAGUE BEST CB")
+
+        st.dataframe(
+            teams_best_cb,
+            hide_index=True
+        )
+
+
+        # ----------------------------------------------------------
+        # Best AT
+        # ----------------------------------------------------------
+
+        teams_best_at = pd.DataFrame(
+            {
+                "AT players": [
+                    "1a()",
+                    "1b()",
+                    "1C()",
+                    "1D()"
+                ],
+
+                "Played": [
+                    0, 0, 0, 0
+                ],
+
+                "scored": [
+                    0, 0, 0, 0
+                ],
+
+                "assist": [
+                    0, 0, 0, 0
+                ],
+
+                "correct pass": [
+                    0, 0, 0, 0
+                ]
+            }
+        )
+
+
+        st.header("LEAGUE BEST AT")
+
+        st.dataframe(
+            teams_best_at,
+            hide_index=True
+        )
 
 
 # ==============================================================
@@ -873,37 +1322,78 @@ if leage_states:
 
 if matches_time:
 
-    matches_table = pd.DataFrame(
-        {
-            "day": [
-                "#", "#", "#", "#", "#"
-            ],
-
-            "month": [
-                "#", "#", "#", "#", "#"
-            ],
-
-            "year": [
-                "#", "#", "#", "#", "#"
-            ],
-
-            "team(1)": [
-                "#", "#", "#", "#", "#"
-            ],
-
-            "team(2)": [
-                "#", "#", "#", "#", "#"
-            ]
-        }
+    matches_time_choose = option_menu(
+        menu_title="select prep you want",
+        options=["prep1", "prep2"],
+        orientation="horizontal",
     )
+    if matches_time_choose=="prep2":
+        matches_table = pd.DataFrame(
+            {
+                "day": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "month": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "year": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "team(1)": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "team(2)": [
+                    "#", "#", "#", "#", "#","#"
+                ]
+            }
+        )
 
 
-    st.header("LEAGUE MATCHES TIME")
+        st.header("LEAGUE MATCHES TIME PREP2")
 
-    st.dataframe(
-        matches_table,
-        hide_index=True
-    )
+        st.dataframe(
+            matches_table,
+            hide_index=True
+        )
+    #===================================#
+    #choose prep1#
+    #==================================#
+    if matches_time_choose=="prep1":
+        matches_table = pd.DataFrame(
+            {
+                "day": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "month": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "year": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "team(1)": [
+                    "#", "#", "#", "#", "#","#"
+                ],
+
+                "team(2)": [
+                    "#", "#", "#", "#", "#","#"
+                ]
+            }
+        )
+
+
+        st.header("LEAGUE MATCHES TIME PREP1")
+
+        st.dataframe(
+            matches_table,
+            hide_index=True
+        )
 
 
 # ==============================================================
@@ -925,7 +1415,7 @@ if news:
 
         options=[
             "League News",
-            "Match Analysis"
+            "Matchs"
         ],
 
         icons=[
@@ -1019,12 +1509,12 @@ if news:
     # MATCH ANALYSIS
     # ----------------------------------------------------------
 
-    elif selected_news == "Match Analysis":
+    elif selected_news == "Matchs":
 
         st.subheader(
-            "⚽ Match Analysis"
+            "⚽ Matchs"
         )
 
         st.info(
-            "🚧 Match Analysis is coming soon!"
+            "there is no matches for now⏳"
         )
