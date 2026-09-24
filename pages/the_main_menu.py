@@ -583,15 +583,16 @@ if b1:
 if c1:
 
     st.image(
-        "there_is_no_logo.png",
+        "trabzon_1c.jpeg",
         width=100
     )
 
-    st.header(":yellow[1C] status")
+    st.header("1C status")
 
-    st.subheader(":yellow[1 PREP]")
+    st.subheader("1 PREP")
+    st.subheader("color:⬜")
 
-    st.subheader(":yellow[1C] chart:-")
+    st.subheader("1C chart:-")
 
     data = pd.DataFrame(
         {
@@ -628,7 +629,7 @@ if c1:
     )
 
     st.image(
-        "idk_team.png",
+        "1c_team.png",
         width=500
     )
 
@@ -639,7 +640,7 @@ if c1:
 if d1:
 
     st.image(
-        "there_is_no_logo.png",
+        "1d_logo.jpeg",
         width=100
     )
 
@@ -700,6 +701,7 @@ if a2:
     )
 
     st.header(":yellow[2A] status")
+    st.header("color:🟨")
 
     st.subheader(
         ":yellow[2 PREP]"
@@ -761,6 +763,7 @@ if b2:
     )
 
     st.header(":blue[2B] status")
+    st.header("color:🟦")
 
     st.subheader(
         ":blue[2 PREP]"
@@ -822,6 +825,7 @@ if c2:
     )
 
     st.header(":red[2C] status")
+    st.header("color:🟥")
 
     st.subheader(
         ":red[2 PREP]"
@@ -878,11 +882,12 @@ if c2:
 if d2:
 
     st.image(
-        "2d_logo_temporory.png",
+        "2d_logo.jpeg",
         width=100
     )
 
     st.header(":gray[2D] status")
+    st.header("color:⬛")
 
     st.subheader(
         ":gray[2 PREP]"
@@ -936,418 +941,290 @@ if d2:
 # ==============================================================
 
 if main:
-    prep_choose = option_menu(
-        menu_title="select prep you want",
-        options=["prep1", "prep2"],
-        orientation="horizontal",
+    st.title(
+        "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
     )
-    
-
-    if prep_choose=="prep2":
-
-        st.title(
-            "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
-        )
- 
-
-
-
-
-        # ----------------------------------------------------------
-        # League Table
-        # ----------------------------------------------------------
-
-        teams_status = pd.DataFrame(
-            {
-                "Team": [
-                    "2A",
-                    "2B",
-                    "2C",
-                    "2D"
-                ],
-
-                "Played": [
-                    0, 0, 0, 0
-                ],
-
-                "Wins": [
-                    0, 0, 0, 0
-                ],
-
-                "Draws": [
-                    0, 0, 0, 0
-                ],
-
-                "Losses": [
-                    0, 0, 0, 0
-                ],
-
-                "Points": [
-                    0, 0, 0, 0
-                ]
-            }
-        )
-
-
-        st.header("LEAGUE TABLE")
-
-        st.dataframe(
-            teams_status,
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------------
-        # Best GK
-        # ----------------------------------------------------------
-
-        teams_best_gk = pd.DataFrame(
-            {
-                "GK players": [
-                    "2A(omar)",
-                    "2B(baraa)",
-                    "2C(saged)",
-                    "2C(mutasim)",
-                    "2D(malek)"
-                ],
-
-                "Played": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "clean sheet": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "saves": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "penalty saves": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "enterd goals": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        )
-
-
-        st.header("LEAGUE BEST GK")
-
-        st.dataframe(
-            teams_best_gk,
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------------
-        # Best CB
-        # ----------------------------------------------------------
-
-        teams_best_cb = pd.DataFrame(
-            {
-                "CB players": [
-                    "2A(mazen)",
-                    "2B(malek mohamed)",
-                    "2C(adam aref)",
-                    "2C(adam shazely)",
-                    "2D(asser eslam)",
-                    "2D(asser amer)"
-                ],
-
-                "Played": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "takel": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-            }
-        )
-
-
-        st.header("LEAGUE BEST CB")
-
-        st.dataframe(
-            teams_best_cb,
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------------
-        # Best AT
-        # ----------------------------------------------------------
-
-        teams_best_at = pd.DataFrame(
-            {
-                "AT players": [
-                    "2A(moaz)",
-                    "2A(awsam)",
-                    "2A(ahmed)",
-                    "2B(mostafa)",
-                    "2B(ma3rof)",
-                    "2B(shaf3e)",
-                    "2C(mohamed)",
-                    "2C(abed elazez)",
-                    "2D(hassen)",
-                    "2D(yossef)"
-                ],
-
-                "Played": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "scored": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-                "assist": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-
-            }
-        )
-
-
-        st.header("LEAGUE BEST AT")
-
-        st.dataframe(
-            teams_best_at,
-            hide_index=True
-        )
-#========================================#
-#prep1 choose#
-#========================================#
-    if prep_choose=="prep1":
-
-        st.title(
-            "WELCOME TO :green-background[:blue[N.I.L.S]] SCHOOL LEAGE"
-        )
-
-
-
-
-        # ----------------------------------------------------------
-        # League Table
-        # ----------------------------------------------------------
-
-        teams_status = pd.DataFrame(
-            {
-                "Team": [
-                    "1A",
-                    "1B",
-                    "1C",
-                    "1D"
-                ],
-
-                "Played": [
-                    0, 0, 0, 0
-                ],
-
-                "Wins": [
-                    0, 0, 0, 0
-                ],
-
-                "Draws": [
-                    0, 0, 0, 0
-                ],
-
-                "Losses": [
-                    0, 0, 0, 0
-                ],
-
-                "Points": [
-                    0, 0, 0, 0
-                ]
-            }
-        )
-
-
-        st.header("LEAGUE TABLE")
-
-        st.dataframe(
-            teams_status,
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------------
-        # Best GK
-        # ----------------------------------------------------------
-
-        teams_best_gk = pd.DataFrame(
-            {
-                "GK players": [
-                    "1A()",
-                    "1B()",
-                    "1C()",
-                    "1D()"
-                ],
-
-                "Played": [
-                    0, 0, 0, 0
-                ],
-
-                "clean sheet": [
-                    0, 0, 0, 0 
-                ],
-
-                "saves": [
-                    0, 0, 0, 0
-                ],
-
-                "penalty saves": [
-                    0, 0, 0, 0 
-                ],
-
-                "enterd goals": [
-                    0, 0, 0, 0
-                ]
-            }
-        )
-
-
-        st.header("LEAGUE BEST GK")
-
-        st.dataframe(
-            teams_best_gk,
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------------
-        # Best CB
-        # ----------------------------------------------------------
-
-        teams_best_cb = pd.DataFrame(
-            {
-                "CB players": [
-                    "1A()",
-                    "1B()",
-                    "1C()",
-                    "1D()"
-                ],
-
-                "Played": [
-                    0, 0, 0, 0
-                ],
-
-                "takel": [
-                    0, 0, 0, 0
-                ],
-
-                "correct pass": [
-                    0, 0, 0, 0
-                ]
-            }
-        )
-
-
-        st.header("LEAGUE BEST CB")
-
-        st.dataframe(
-            teams_best_cb,
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------------
-        # Best AT
-        # ----------------------------------------------------------
-
-        teams_best_at = pd.DataFrame(
-            {
-                "AT players": [
-                    "1a()",
-                    "1b()",
-                    "1C()",
-                    "1D()"
-                ],
-
-                "Played": [
-                    0, 0, 0, 0
-                ],
-
-                "scored": [
-                    0, 0, 0, 0
-                ],
-
-                "assist": [
-                    0, 0, 0, 0
-                ],
-
-                "correct pass": [
-                    0, 0, 0, 0
-                ]
-            }
-        )
-
-
-        st.header("LEAGUE BEST AT")
-
-        st.dataframe(
-            teams_best_at,
-            hide_index=True
-        )
+
+
+
+
+
+    # ----------------------------------------------------------
+    # League Table
+    # ----------------------------------------------------------
+
+    teams_status = pd.DataFrame(
+        {
+            "Team": [
+                "2A",
+                "2B",
+                "2C",
+                "2D",
+                "1A",
+                "1B",
+                "1C",
+                "1D"
+            ],
+
+            "Played": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "Wins": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "Draws": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "Losses": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "Points": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    )
+
+
+    st.header("LEAGUE TABLE")
+
+    st.dataframe(
+        teams_status,
+        hide_index=True
+    )
+
+
+    # ----------------------------------------------------------
+    # Best GK
+    # ----------------------------------------------------------
+
+    teams_best_gk = pd.DataFrame(
+        {
+            "GK players": [
+                "2A(omar)",
+                "2D(malek)",
+                "2B(baraa)",
+                "2C(saged)",
+                "2C(mutasim)",
+                "1C(yassin youssife)"
+            ],
+
+            "Played": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "clean sheet": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "penalty saves": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "enterd goals": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    )
+
+
+    st.header("LEAGUE BEST GK")
+
+    st.dataframe(
+        teams_best_gk,
+        hide_index=True
+    )
+
+
+    # ----------------------------------------------------------
+    # Best CB
+    # ----------------------------------------------------------
+
+    teams_best_cb = pd.DataFrame(
+        {
+            "CB players": [
+                "2A(mazen)",
+                "2B(malek mohamed)",
+                "2C(adam aref)",
+                "2C(adam shazely)",
+                "2D(asser eslam)",
+                "2D(asser amer)",
+                "1C(ahmed belal)",
+                "1C(omar fadel)"
+            ],
+
+            "Played": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            "clean sheet": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+        }
+    )
+
+
+    st.header("LEAGUE BEST CB")
+
+    st.dataframe(
+        teams_best_cb,
+        hide_index=True
+    )
+
+
+    # ----------------------------------------------------------
+    # Best AT
+    # ----------------------------------------------------------
+
+    teams_best_at = pd.DataFrame(
+        {
+            "AT players": [
+                "2A(moaz)",#1
+                "2A(awsam)",#2
+                "2A(ahmed)",#3
+                "2B(mostafa)",#4
+                "2B(ma3rof)",#5
+                "2B(shaf3e)",#6
+                "2C(mohamed)",#7
+                "2C(abed elazez)",#8
+                "2D(hassen)",#9
+                "2D(yossef)",#10
+                "1C(omar hany)",#11
+                "1C(adham sherif)",#12
+                "1C(malek badran)"#13
+                "1C(mostafa mohamed)"#14
+            ],
+
+            "Played": [
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0,#8
+                0,#9
+                0,#10
+                0,#12
+                0,#13
+                0#14
+            ],
+
+            "scored": [
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0,#8
+                0,#9
+                0,#10
+                0,#12
+                0,#13
+                0#14
+            ],
+
+            "assist": [
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0,#8
+                0,#9
+                0,#10
+                0,#12
+                0,#13
+                0#14
+            ],
+
+        }
+    )
+
+
+    st.header("LEAGUE BEST AT")
+
+    st.dataframe(
+        teams_best_at,
+        hide_index=True
+    )
 
 
 # ==============================================================
@@ -1441,6 +1318,36 @@ if matches_time:
                 "Thursday",
                 "Monday",
                 "Thursday"
+            ],
+            "played": [
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played",
+                "not played"
             ],
         }
     )
