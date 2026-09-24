@@ -942,595 +942,595 @@ if d2:
 if Games:
     import streamlit as st
 
-# ==========================================
-# 🏆 فانتازي دوري المدرسة
-# ==========================================
+    # ==========================================
+    # 🏆 فانتازي دوري المدرسة
+    # ==========================================
 
-st.set_page_config(
-    page_title="فانتازي دوري المدرسة",
-    page_icon="⚽",
-    layout="wide"
-)
-
-# ==========================================
-# اللاعبين والأسعار
-# ==========================================
-
-players = {
-    # =========================
-    # 🧤 الحراس
-    # =========================
-    "عمر وائل": {
-        "position": "حارس",
-        "price": 9
-    },
-
-    "ساجد": {
-        "position": "حارس",
-        "price": 9
-    },
-
-    "ملك إسلام": {
-        "position": "حارس",
-        "price": 7
-    },
-
-    "معتصم": {
-        "position": "حارس",
-        "price": 5
-    },
-
-    # =========================
-    # 🛡️ المدافعين
-    # =========================
-    "آدم عارف": {
-        "position": "مدافع",
-        "price": 9
-    },
-
-    "آدم مصطفى الشاذلي": {
-        "position": "مدافع",
-        "price": 9
-    },
-
-    "مازن محمد علي صايم": {
-        "position": "مدافع",
-        "price": 9
-    },
-
-    "عبدالعزيز": {
-        "position": "مدافع",
-        "price": 7
-    },
-
-    "ملك أحمد عمنة": {
-        "position": "مدافع",
-        "price": 5
-    },
-
-    # =========================
-    # ⚽ المهاجمين
-    # =========================
-    "معاذ": {
-        "position": "مهاجم",
-        "price": 9
-    },
-
-    "أحمد وجيه": {
-        "position": "مهاجم",
-        "price": 9
-    },
-
-    "أوسم أحمد": {
-        "position": "مهاجم",
-        "price": 9
-    },
-
-    "محمد عبدالناصر": {
-        "position": "مهاجم",
-        "price": 7
-    },
-
-    "يوسف أحمد مرسي": {
-        "position": "مهاجم",
-        "price": 7
-    },
-
-    "ياسيم مصطفى": {
-        "position": "مهاجم",
-        "price": 7
-    },
-
-    "ياسين معروف": {
-        "position": "مهاجم",
-        "price": 7
-    },
-
-    "ياسين خيت": {
-        "position": "مهاجم",
-        "price": 5
-    }
-}
-
-
-# ==========================================
-# إعدادات الفانتازي
-# ==========================================
-
-BUDGET = 50
-STARTING_PLAYERS = 5
-SUBSTITUTES = 3
-TOTAL_PLAYERS = STARTING_PLAYERS + SUBSTITUTES
-
-
-# ==========================================
-# Session State
-# ==========================================
-
-if "team" not in st.session_state:
-    st.session_state.team = []
-
-if "points" not in st.session_state:
-    st.session_state.points = {}
-
-if "page" not in st.session_state:
-    st.session_state.page = "اختيار الفريق"
-
-
-# ==========================================
-# العنوان
-# ==========================================
-
-st.title("🏆 فانتازي دوري المدرسة")
-
-st.write(
-    "كوّن فريقك من 5 لاعبين أساسيين + 3 احتياط "
-    "بميزانية قدرها 50 مليون."
-)
-
-st.divider()
-
-
-# ==========================================
-# حساب السعر
-# ==========================================
-
-def team_cost(team):
-
-    total = 0
-
-    for player in team:
-        total += players[player]["price"]
-
-    return total
-
-
-# ==========================================
-# الشريط الجانبي
-# ==========================================
-
-st.sidebar.title("🏆 القائمة")
-
-page = st.sidebar.radio(
-    "انتقل إلى:",
-    [
-        "اختيار الفريق",
-        "فريقي",
-        "النقاط"
-    ]
-)
-
-st.sidebar.divider()
-
-current_cost = team_cost(st.session_state.team)
-
-st.sidebar.write(
-    f"💰 الميزانية: **{BUDGET} مليون**"
-)
-
-st.sidebar.write(
-    f"💸 المصروف: **{current_cost} مليون**"
-)
-
-st.sidebar.write(
-    f"💵 المتبقي: **{BUDGET - current_cost} مليون**"
-)
-
-st.sidebar.write(
-    f"👥 اللاعبين: **{len(st.session_state.team)}/{TOTAL_PLAYERS}**"
-)
-
-
-# ==========================================
-# صفحة اختيار الفريق
-# ==========================================
-
-if page == "اختيار الفريق":
-
-    st.header("👥 اختيار اللاعبين")
-
-    st.info(
-        "اختار 8 لاعبين: "
-        "5 أساسي + 3 احتياط."
+    st.set_page_config(
+        page_title="فانتازي دوري المدرسة",
+        page_icon="⚽",
+        layout="wide"
     )
 
-    # --------------------------
-    # اختيار اللاعب
-    # --------------------------
+    # ==========================================
+    # اللاعبين والأسعار
+    # ==========================================
 
-    available_players = [
-        player
-        for player in players
-        if player not in st.session_state.team
-    ]
+    players = {
+        # =========================
+        # 🧤 الحراس
+        # =========================
+        "عمر وائل": {
+            "position": "حارس",
+            "price": 9
+        },
 
-    if len(st.session_state.team) < TOTAL_PLAYERS:
+        "ساجد": {
+            "position": "حارس",
+            "price": 9
+        },
 
-        selected_player = st.selectbox(
-            "اختر لاعبًا:",
-            ["-- اختر لاعبًا --"] + available_players
-        )
+        "ملك إسلام": {
+            "position": "حارس",
+            "price": 7
+        },
 
-        if selected_player != "-- اختر لاعبًا --":
+        "معتصم": {
+            "position": "حارس",
+            "price": 5
+        },
 
-            player_info = players[selected_player]
+        # =========================
+        # 🛡️ المدافعين
+        # =========================
+        "آدم عارف": {
+            "position": "مدافع",
+            "price": 9
+        },
 
-            st.write(
-                f"**المركز:** {player_info['position']}"
-            )
+        "آدم مصطفى الشاذلي": {
+            "position": "مدافع",
+            "price": 9
+        },
 
-            st.write(
-                f"**السعر:** {player_info['price']} مليون"
-            )
+        "مازن محمد علي صايم": {
+            "position": "مدافع",
+            "price": 9
+        },
 
-            if st.button(
-                "➕ إضافة اللاعب",
-                use_container_width=True
-            ):
+        "عبدالعزيز": {
+            "position": "مدافع",
+            "price": 7
+        },
 
-                new_cost = (
-                    current_cost
-                    + player_info["price"]
-                )
+        "ملك أحمد عمنة": {
+            "position": "مدافع",
+            "price": 5
+        },
 
-                if new_cost > BUDGET:
+        # =========================
+        # ⚽ المهاجمين
+        # =========================
+        "معاذ": {
+            "position": "مهاجم",
+            "price": 9
+        },
 
-                    st.error(
-                        "❌ لا توجد ميزانية كافية!"
-                    )
+        "أحمد وجيه": {
+            "position": "مهاجم",
+            "price": 9
+        },
 
-                else:
+        "أوسم أحمد": {
+            "position": "مهاجم",
+            "price": 9
+        },
 
-                    st.session_state.team.append(
-                        selected_player
-                    )
+        "محمد عبدالناصر": {
+            "position": "مهاجم",
+            "price": 7
+        },
 
-                    st.success(
-                        f"✅ تم إضافة {selected_player}"
-                    )
+        "يوسف أحمد مرسي": {
+            "position": "مهاجم",
+            "price": 7
+        },
 
-                    st.rerun()
+        "ياسيم مصطفى": {
+            "position": "مهاجم",
+            "price": 7
+        },
 
-    else:
+        "ياسين معروف": {
+            "position": "مهاجم",
+            "price": 7
+        },
 
-        st.success(
-            "✅ اكتمل فريقك: 5 أساسي + 3 احتياط"
-        )
+        "ياسين خيت": {
+            "position": "مهاجم",
+            "price": 5
+        }
+    }
+
+
+    # ==========================================
+    # إعدادات الفانتازي
+    # ==========================================
+
+    BUDGET = 50
+    STARTING_PLAYERS = 5
+    SUBSTITUTES = 3
+    TOTAL_PLAYERS = STARTING_PLAYERS + SUBSTITUTES
+
+
+    # ==========================================
+    # Session State
+    # ==========================================
+
+    if "team" not in st.session_state:
+        st.session_state.team = []
+
+    if "points" not in st.session_state:
+        st.session_state.points = {}
+
+    if "page" not in st.session_state:
+        st.session_state.page = "اختيار الفريق"
+
+
+    # ==========================================
+    # العنوان
+    # ==========================================
+
+    st.title("🏆 فانتازي دوري المدرسة")
+
+    st.write(
+        "كوّن فريقك من 5 لاعبين أساسيين + 3 احتياط "
+        "بميزانية قدرها 50 مليون."
+    )
 
     st.divider()
 
-    # --------------------------
-    # الفريق الحالي
-    # --------------------------
 
-    st.subheader("📋 فريقك الحالي")
+    # ==========================================
+    # حساب السعر
+    # ==========================================
 
-    if len(st.session_state.team) == 0:
+    def team_cost(team):
 
-        st.warning(
-            "لم تختر أي لاعب حتى الآن."
+        total = 0
+
+        for player in team:
+            total += players[player]["price"]
+
+        return total
+
+
+    # ==========================================
+    # الشريط الجانبي
+    # ==========================================
+
+    st.sidebar.title("🏆 القائمة")
+
+    page = st.sidebar.radio(
+        "انتقل إلى:",
+        [
+            "اختيار الفريق",
+            "فريقي",
+            "النقاط"
+        ]
+    )
+
+    st.sidebar.divider()
+
+    current_cost = team_cost(st.session_state.team)
+
+    st.sidebar.write(
+        f"💰 الميزانية: **{BUDGET} مليون**"
+    )
+
+    st.sidebar.write(
+        f"💸 المصروف: **{current_cost} مليون**"
+    )
+
+    st.sidebar.write(
+        f"💵 المتبقي: **{BUDGET - current_cost} مليون**"
+    )
+
+    st.sidebar.write(
+        f"👥 اللاعبين: **{len(st.session_state.team)}/{TOTAL_PLAYERS}**"
+    )
+
+
+    # ==========================================
+    # صفحة اختيار الفريق
+    # ==========================================
+
+    if page == "اختيار الفريق":
+
+        st.header("👥 اختيار اللاعبين")
+
+        st.info(
+            "اختار 8 لاعبين: "
+            "5 أساسي + 3 احتياط."
         )
 
-    else:
+        # --------------------------
+        # اختيار اللاعب
+        # --------------------------
 
-        for i, player in enumerate(
-            st.session_state.team
-        ):
+        available_players = [
+            player
+            for player in players
+            if player not in st.session_state.team
+        ]
 
-            info = players[player]
+        if len(st.session_state.team) < TOTAL_PLAYERS:
 
-            col1, col2, col3 = st.columns(
-                [4, 2, 1]
+            selected_player = st.selectbox(
+                "اختر لاعبًا:",
+                ["-- اختر لاعبًا --"] + available_players
             )
 
-            with col1:
+            if selected_player != "-- اختر لاعبًا --":
+
+                player_info = players[selected_player]
+
                 st.write(
-                    f"**{player}**"
+                    f"**المركز:** {player_info['position']}"
                 )
 
-            with col2:
                 st.write(
-                    f"{info['position']} - "
-                    f"{info['price']}M"
+                    f"**السعر:** {player_info['price']} مليون"
                 )
-
-            with col3:
 
                 if st.button(
-                    "❌",
-                    key=f"remove_{player}"
+                    "➕ إضافة اللاعب",
+                    use_container_width=True
                 ):
 
-                    st.session_state.team.remove(
-                        player
+                    new_cost = (
+                        current_cost
+                        + player_info["price"]
                     )
 
-                    st.rerun()
+                    if new_cost > BUDGET:
 
+                        st.error(
+                            "❌ لا توجد ميزانية كافية!"
+                        )
 
-# ==========================================
-# صفحة فريقي
-# ==========================================
+                    else:
 
-elif page == "فريقي":
+                        st.session_state.team.append(
+                            selected_player
+                        )
 
-    st.header("⚽ فريقي")
+                        st.success(
+                            f"✅ تم إضافة {selected_player}"
+                        )
 
-    if len(st.session_state.team) == 0:
+                        st.rerun()
 
-        st.warning(
-            "لم تقم باختيار لاعبين بعد."
-        )
+        else:
 
-    else:
-
-        st.subheader("⭐ الأساسيون")
-
-        # أول 5 = أساسي
-        starters = st.session_state.team[:5]
-
-        for i, player in enumerate(starters):
-
-            info = players[player]
-
-            st.write(
-                f"**{i + 1}. {player}** — "
-                f"{info['position']} — "
-                f"{info['price']} مليون"
+            st.success(
+                "✅ اكتمل فريقك: 5 أساسي + 3 احتياط"
             )
 
         st.divider()
 
-        st.subheader("🪑 الاحتياط")
+        # --------------------------
+        # الفريق الحالي
+        # --------------------------
 
-        # من اللاعب السادس للثامن
-        substitutes = st.session_state.team[5:8]
+        st.subheader("📋 فريقك الحالي")
 
-        if len(substitutes) == 0:
+        if len(st.session_state.team) == 0:
 
-            st.write(
-                "لا يوجد احتياط حتى الآن."
+            st.warning(
+                "لم تختر أي لاعب حتى الآن."
             )
 
         else:
 
             for i, player in enumerate(
-                substitutes
+                st.session_state.team
             ):
 
                 info = players[player]
 
+                col1, col2, col3 = st.columns(
+                    [4, 2, 1]
+                )
+
+                with col1:
+                    st.write(
+                        f"**{player}**"
+                    )
+
+                with col2:
+                    st.write(
+                        f"{info['position']} - "
+                        f"{info['price']}M"
+                    )
+
+                with col3:
+
+                    if st.button(
+                        "❌",
+                        key=f"remove_{player}"
+                    ):
+
+                        st.session_state.team.remove(
+                            player
+                        )
+
+                        st.rerun()
+
+
+    # ==========================================
+    # صفحة فريقي
+    # ==========================================
+
+    elif page == "فريقي":
+
+        st.header("⚽ فريقي")
+
+        if len(st.session_state.team) == 0:
+
+            st.warning(
+                "لم تقم باختيار لاعبين بعد."
+            )
+
+        else:
+
+            st.subheader("⭐ الأساسيون")
+
+            # أول 5 = أساسي
+            starters = st.session_state.team[:5]
+
+            for i, player in enumerate(starters):
+
+                info = players[player]
+
                 st.write(
-                    f"**احتياط {i + 1}: {player}** — "
+                    f"**{i + 1}. {player}** — "
                     f"{info['position']} — "
                     f"{info['price']} مليون"
                 )
 
-        st.divider()
+            st.divider()
 
-        # --------------------------
-        # ملخص الفريق
-        # --------------------------
+            st.subheader("🪑 الاحتياط")
 
-        st.subheader("📊 ملخص الفريق")
+            # من اللاعب السادس للثامن
+            substitutes = st.session_state.team[5:8]
 
-        goalkeeper_count = 0
-        defender_count = 0
-        attacker_count = 0
+            if len(substitutes) == 0:
 
-        for player in st.session_state.team:
-
-            position = players[player]["position"]
-
-            if position == "حارس":
-                goalkeeper_count += 1
-
-            elif position == "مدافع":
-                defender_count += 1
-
-            elif position == "مهاجم":
-                attacker_count += 1
-
-        col1, col2, col3, col4 = st.columns(4)
-
-        with col1:
-            st.metric(
-                "👥 اللاعبين",
-                len(st.session_state.team)
-            )
-
-        with col2:
-            st.metric(
-                "🧤 الحراس",
-                goalkeeper_count
-            )
-
-        with col3:
-            st.metric(
-                "🛡️ المدافعين",
-                defender_count
-            )
-
-        with col4:
-            st.metric(
-                "⚽ المهاجمين",
-                attacker_count
-            )
-
-        st.divider()
-
-        st.metric(
-            "💰 تكلفة الفريق",
-            f"{current_cost} مليون"
-        )
-
-        st.metric(
-            "💵 الميزانية المتبقية",
-            f"{BUDGET - current_cost} مليون"
-        )
-
-
-# ==========================================
-# صفحة النقاط
-# ==========================================
-
-elif page == "النقاط":
-
-    st.header("⭐ نقاط اللاعبين")
-
-    if len(st.session_state.team) == 0:
-
-        st.warning(
-            "اختار لاعبين أولًا."
-        )
-
-    else:
-
-        st.write(
-            "أدخل أحداث كل لاعب لحساب نقاطه."
-        )
-
-        for player in st.session_state.team:
-
-            info = players[player]
-
-            st.subheader(
-                f"⚽ {player}"
-            )
-
-            st.write(
-                f"المركز: {info['position']}"
-            )
-
-            total_points = 0
-
-            # الفوز
-            win = st.checkbox(
-                "🏆 فوز الفريق (+4)",
-                key=f"win_{player}"
-            )
-
-            if win:
-                total_points += 4
-
-            # رجل المباراة
-            motm = st.checkbox(
-                "⭐ رجل المباراة (+5)",
-                key=f"motm_{player}"
-            )
-
-            if motm:
-                total_points += 5
-
-            # --------------------------
-            # المهاجم
-            # --------------------------
-
-            if info["position"] == "مهاجم":
-
-                goals = st.number_input(
-                    "⚽ الأهداف (+5 لكل هدف)",
-                    min_value=0,
-                    step=1,
-                    key=f"goals_{player}"
+                st.write(
+                    "لا يوجد احتياط حتى الآن."
                 )
 
-                assists = st.number_input(
-                    "🎯 التمريرات الحاسمة (+3 لكل أسيست)",
-                    min_value=0,
-                    step=1,
-                    key=f"assists_{player}"
-                )
+            else:
 
-                total_points += goals * 5
-                total_points += assists * 3
+                for i, player in enumerate(
+                    substitutes
+                ):
 
-            # --------------------------
-            # الحارس
-            # --------------------------
+                    info = players[player]
 
-            elif info["position"] == "حارس":
-
-                clean_sheet = st.checkbox(
-                    "🧤 Clean Sheet (+4)",
-                    key=f"clean_{player}"
-                )
-
-                if clean_sheet:
-                    total_points += 4
-
-                penalty_saves = st.number_input(
-                    "🧤 تصديات ركلات الجزاء (+5 لكل تصدي)",
-                    min_value=0,
-                    step=1,
-                    key=f"penalty_{player}"
-                )
-
-                total_points += penalty_saves * 5
-
-            # --------------------------
-            # المدافع
-            # --------------------------
-
-            elif info["position"] == "مدافع":
-
-                clean_sheet = st.checkbox(
-                    "🛡️ Clean Sheet (+4)",
-                    key=f"clean_{player}"
-                )
-
-                if clean_sheet:
-                    total_points += 4
-
-                clearances = st.number_input(
-                    "🛡️ إبعاد كرة خطيرة من على الخط (+3 لكل مرة)",
-                    min_value=0,
-                    step=1,
-                    key=f"clearance_{player}"
-                )
-
-                total_points += clearances * 3
-
-            # حفظ النقاط
-            st.session_state.points[player] = total_points
-
-            st.success(
-                f"⭐ نقاط {player}: {total_points}"
-            )
+                    st.write(
+                        f"**احتياط {i + 1}: {player}** — "
+                        f"{info['position']} — "
+                        f"{info['price']} مليون"
+                    )
 
             st.divider()
 
-        # ==================================
-        # مجموع نقاط الفريق
-        # ==================================
+            # --------------------------
+            # ملخص الفريق
+            # --------------------------
 
-        total_team_points = sum(
-            st.session_state.points.values()
-        )
+            st.subheader("📊 ملخص الفريق")
 
-        st.header(
-            f"🏆 إجمالي نقاط الفريق: {total_team_points}"
-        )
+            goalkeeper_count = 0
+            defender_count = 0
+            attacker_count = 0
+
+            for player in st.session_state.team:
+
+                position = players[player]["position"]
+
+                if position == "حارس":
+                    goalkeeper_count += 1
+
+                elif position == "مدافع":
+                    defender_count += 1
+
+                elif position == "مهاجم":
+                    attacker_count += 1
+
+            col1, col2, col3, col4 = st.columns(4)
+
+            with col1:
+                st.metric(
+                    "👥 اللاعبين",
+                    len(st.session_state.team)
+                )
+
+            with col2:
+                st.metric(
+                    "🧤 الحراس",
+                    goalkeeper_count
+                )
+
+            with col3:
+                st.metric(
+                    "🛡️ المدافعين",
+                    defender_count
+                )
+
+            with col4:
+                st.metric(
+                    "⚽ المهاجمين",
+                    attacker_count
+                )
+
+            st.divider()
+
+            st.metric(
+                "💰 تكلفة الفريق",
+                f"{current_cost} مليون"
+            )
+
+            st.metric(
+                "💵 الميزانية المتبقية",
+                f"{BUDGET - current_cost} مليون"
+            )
+
+
+    # ==========================================
+    # صفحة النقاط
+    # ==========================================
+
+    elif page == "النقاط":
+
+        st.header("⭐ نقاط اللاعبين")
+
+        if len(st.session_state.team) == 0:
+
+            st.warning(
+                "اختار لاعبين أولًا."
+            )
+
+        else:
+
+            st.write(
+                "أدخل أحداث كل لاعب لحساب نقاطه."
+            )
+
+            for player in st.session_state.team:
+
+                info = players[player]
+
+                st.subheader(
+                    f"⚽ {player}"
+                )
+
+                st.write(
+                    f"المركز: {info['position']}"
+                )
+
+                total_points = 0
+
+                # الفوز
+                win = st.checkbox(
+                    "🏆 فوز الفريق (+4)",
+                    key=f"win_{player}"
+                )
+
+                if win:
+                    total_points += 4
+
+                # رجل المباراة
+                motm = st.checkbox(
+                    "⭐ رجل المباراة (+5)",
+                    key=f"motm_{player}"
+                )
+
+                if motm:
+                    total_points += 5
+
+                # --------------------------
+                # المهاجم
+                # --------------------------
+
+                if info["position"] == "مهاجم":
+
+                    goals = st.number_input(
+                        "⚽ الأهداف (+5 لكل هدف)",
+                        min_value=0,
+                        step=1,
+                        key=f"goals_{player}"
+                    )
+
+                    assists = st.number_input(
+                        "🎯 التمريرات الحاسمة (+3 لكل أسيست)",
+                        min_value=0,
+                        step=1,
+                        key=f"assists_{player}"
+                    )
+
+                    total_points += goals * 5
+                    total_points += assists * 3
+
+                # --------------------------
+                # الحارس
+                # --------------------------
+
+                elif info["position"] == "حارس":
+
+                    clean_sheet = st.checkbox(
+                        "🧤 Clean Sheet (+4)",
+                        key=f"clean_{player}"
+                    )
+
+                    if clean_sheet:
+                        total_points += 4
+
+                    penalty_saves = st.number_input(
+                        "🧤 تصديات ركلات الجزاء (+5 لكل تصدي)",
+                        min_value=0,
+                        step=1,
+                        key=f"penalty_{player}"
+                    )
+
+                    total_points += penalty_saves * 5
+
+                # --------------------------
+                # المدافع
+                # --------------------------
+
+                elif info["position"] == "مدافع":
+
+                    clean_sheet = st.checkbox(
+                        "🛡️ Clean Sheet (+4)",
+                        key=f"clean_{player}"
+                    )
+
+                    if clean_sheet:
+                        total_points += 4
+
+                    clearances = st.number_input(
+                        "🛡️ إبعاد كرة خطيرة من على الخط (+3 لكل مرة)",
+                        min_value=0,
+                        step=1,
+                        key=f"clearance_{player}"
+                    )
+
+                    total_points += clearances * 3
+
+                # حفظ النقاط
+                st.session_state.points[player] = total_points
+
+                st.success(
+                    f"⭐ نقاط {player}: {total_points}"
+                )
+
+                st.divider()
+
+            # ==================================
+            # مجموع نقاط الفريق
+            # ==================================
+
+            total_team_points = sum(
+                st.session_state.points.values()
+            )
+
+            st.header(
+                f"🏆 إجمالي نقاط الفريق: {total_team_points}"
+            )    
 
 
     
