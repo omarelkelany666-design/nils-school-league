@@ -471,7 +471,7 @@ if teams:
 if a1:
 
     st.image(
-        "there_is_no_logo.png",
+        "1a_logo.jpeg",
         width=100
     )
 
@@ -515,8 +515,12 @@ if a1:
         }
     )
 
+    st.header("الاحطيات")
+    st.write("- ")
+    st.write("- ")
+
     st.image(
-        "idk_team.png",
+        "1a_team.png",
         width=500
     )
 
@@ -571,8 +575,12 @@ if b1:
         }
     )
 
+    st.header("الاحطيات")
+    st.write("- ")
+    st.write("- ")
+
     st.image(
-        "idk_team.png",
+        "1b_team.png",
         width=500
     )
 
@@ -627,6 +635,11 @@ if c1:
             "displayModeBar": False
         }
     )
+
+    st.header("الاحطيات")
+    st.write("- malek badran")
+    st.write("- omar fadel")
+    st.write("- hamza sherif")
 
     st.image(
         "1c_team.png",
@@ -683,6 +696,10 @@ if d1:
             "displayModeBar": False
         }
     )
+
+    st.header("الاحطيات")
+    st.write("- ")
+    st.write("- ")
 
     st.image(
         "idk_team.png",
@@ -745,6 +762,11 @@ if a2:
         }
     )
 
+    st.header("الاحطيات")
+    st.write("- انس عبد الهادي")
+    st.write("- احمد عبد العزيز")
+    st.write("- عمر احمد ")
+
     st.image(
         "2A_TEAM.png",
         width=500
@@ -806,6 +828,10 @@ if b2:
             "displayModeBar": False
         }
     )
+    st.caption("thanks for yassen shaf3e for help me and made the squade for me")
+    st.header("الاحطيات")
+    st.write("- ")
+    st.write("- ")
 
     st.image(
         "2b_team_blue.jpeg",
@@ -869,6 +895,13 @@ if c2:
         }
     )
 
+    st.header("الاحطيات")
+    st.write("- yassen khaled")
+    st.write("- ziad ibrahim")
+    st.write("- mahmoud mohamed")
+    st.write("- ادم جمعه")
+    st.write("- moazen mostafa")
+
     st.image(
         "2c_team.png",
         width=500
@@ -930,9 +963,12 @@ if d2:
             "displayModeBar": False
         }
     )
+    st.header("البدلاء")
+    st.write("- youssef ahmed")
+    st.write("- malek ahmed")
 
     st.image(
-        "2d_team.png",
+        "2D_team.jpeg",
         width=500
     )
 
@@ -1159,7 +1195,7 @@ if main:
                 "2B(shaf3e)",#6
                 "2C(mohamed)",#7
                 "2C(abed elazez)",#8
-                "2D(hassen)",#9
+                "2D(hassan)",#9
                 "2D(yossef)",#10
                 "1C(omar hany)",#11
                 "1C(adham sherif)",#12
@@ -1477,83 +1513,84 @@ if news:
 
     elif news:
 
-        col1, col2, col3,= st.columns([3, 3, 3])
+        st.title("⚽ NEWS")
+
+        # =========================
+        # 2A vs 2C
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("🟨 2A")
+            st.write("Team 1")
+            st.write("—")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match didn't play yet**")
+            st.write("28 September 2026")
+
+            st.divider()
+
+            st.subheader("🟥 2C")
+            st.write("Team 2")
+            st.write("—")
+
+        col1, col2, col3 = st.columns(3)
 
         with col1:
             with st.container(border=True):
-                st.title("🟨2A")
-                st.header("Team 1")
-                st.subheader("—")
+                st.subheader("🟨Best Player")
+                st.write("—")
 
         with col2:
             with st.container(border=True):
-                st.subheader("⚽ Match")
-                st.write("**The match didn't play yet**")
-                st.write("28 September 2026")
-
-        with col3:
-            with st.container(border=True):
-                st.title("🟥 2C")
-                st.header("Team 2")
-                st.subheader("—")
-        col1, col2, col3,= st.columns([2, 3, 2])
-
-        with col1:
-            with st.container(border=True):
-                st.header("best player")
-                st.subheader("—")
-
-        with col2:
-            with st.container(border=True):
-                st.title("⚽ Match")
-                st.write("🟨man of the match🟥")
+                st.subheader("🟨Best Player🟥")
                 st.write("—")
 
         with col3:
             with st.container(border=True):
-                st.header("best player")
-                st.subheader("—")
+                st.subheader("🟥Best Player")
+                st.write("—")
 
-        # Separator
         st.divider()
 
-        col1, col2, col3,= st.columns([3, 3, 3])
+        # =========================
+        # 2B vs 2D
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("🟦 2B")
+            st.write("Team 1")
+            st.write("—")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match didn't play yet**")
+            st.write("1 October 2026")
+
+            st.divider()
+
+            st.subheader("⬛ 2D")
+            st.write("Team 2")
+            st.write("—")
+
+        col1, col2, col3 = st.columns(3)
 
         with col1:
             with st.container(border=True):
-                st.title("🟦2B")
-                st.header("Team 1")
-                st.subheader("—")
-
-        with col2:
-            with st.container(border=True):
-                st.subheader("⚽ Match")
-                st.write("**The match didn't play yet**")
-                st.write("1 october 2026")
-
-        with col3:
-            with st.container(border=True):
-                st.title("⬛ 2D")
-                st.header("Team 2")
-                st.subheader("—")
-        col1, col2, col3,= st.columns([2, 3, 2])
-
-        with col1:
-            with st.container(border=True):
-                st.header("best player")
-                st.subheader("—")
-
-        with col2:
-            with st.container(border=True):
-                st.title("⚽ Match")
-                st.write("🟦man of the match⬛")
+                st.subheader("🟦Best Player")
                 st.write("—")
 
+        with col2:
+            with st.container(border=True):
+                st.subheader("⬛Best Player🟦")
+                st.write("—")
         with col3:
             with st.container(border=True):
-                st.header("best player")
-                st.subheader("—")
+                st.subheader("⬛Best Player")
+                st.write("—")
 
-        # Separator
         st.divider()
 
