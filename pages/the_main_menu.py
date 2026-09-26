@@ -322,10 +322,10 @@ if thanks_for:
             "Thanks for help us from the begging to the end"
         )
 
-        st.subheader("🎮 Moaz")
-        st.write(
-            "Had the game idea and created the game."
-        )
+#        st.subheader("🎮 Moaz")
+#        st.write(
+#            "Had the game idea and created the game."
+#        )
 
     # --------------------------------------------------------------
     # ACCEPTED SUGGESTIONS
@@ -475,11 +475,14 @@ if a1:
         width=100
     )
 
-    st.header("1A status")
+    st.header(":green[1A] status")
 
-    st.subheader("1 PREP")
+    st.subheader(":green[1 PREP]")
 
-    st.subheader("1A chart:-")
+    st.subheader("color:🟩")
+
+
+    st.subheader(":green[1A] chart:-")
 
     data = pd.DataFrame(
         {
@@ -531,15 +534,16 @@ if a1:
 if b1:
 
     st.image(
-        "there_is_no_logo.png",
+        "1b_logo.png",
         width=100
     )
 
-    st.header("1B status")
+    st.header(":red[1]:blue[B] status")
 
-    st.subheader("1 PREP")
+    st.subheader(":red[1] :blue[PREP]")
+    st.subheader("color: :red[ba]:blue[rca] 🟦🟥")
 
-    st.subheader("1B chart:-")
+    st.subheader(":red[1]:blue[B] chart:-")
 
     data = pd.DataFrame(
         {
@@ -660,6 +664,7 @@ if d1:
     st.header("1D status")
 
     st.subheader("1 PREP")
+    st.subheader("color:")
 
     st.subheader("1D chart:-")
 
@@ -697,14 +702,8 @@ if d1:
         }
     )
 
-    st.header("الاحطيات")
-    st.write("- ")
-    st.write("- ")
+    st.info("التشكيله متغيره غير محدده")
 
-    st.image(
-        "idk_team.png",
-        width=500
-    )
     
 # ==============================================================
 # 2A
