@@ -661,12 +661,13 @@ if d1:
         width=100
     )
 
-    st.header("1D status")
+    st.header(":blue[1D] status")
 
-    st.subheader("1 PREP")
-    st.subheader("color:")
+    st.subheader(":blue[1 PREP]")
+    st.subheader("color :blue[main]:🟦")
+    st.subheader("color :red[second]:🟥")
 
-    st.subheader("1D chart:-")
+    st.subheader(":blue[1D] chart:-")
 
     data = pd.DataFrame(
         {
@@ -991,69 +992,69 @@ if main:
     teams_status = pd.DataFrame(
         {
             "Team": [
-                "2A",
-                "2B",
-                "2C",
-                "2D",
-                "1A",
-                "1B",
-                "1C",
-                "1D"
+                "2A",#1
+                "2B",#2
+                "2C",#3
+                "2D",#4
+                "1A",#5
+                "1B",#6
+                "1C",#7
+                "1D"#8
             ],
 
             "Played": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "Wins": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "Draws": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "Losses": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "Points": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ]
         }
     )
@@ -1074,109 +1075,85 @@ if main:
     teams_best_gk = pd.DataFrame(
         {
             "GK players": [
-                "2A(omar)",
-                "2D(malek)",
-                "2B(baraa)",
-                "2C(saged)",
-                "2C(mutasim)",
-                "1C(yassin youssife)"
+                "2A(omar)",#1
+                "2D(malek)",#2
+                "2B(baraa)",#3
+                "2C(saged)",#4
+                "2C(mutasim)",#5
+                "1C(yassin youssife)",#6
+                "1A(hamza mahmoud)",#7
+                "1B(moaz mohamed)",#8
             ],
 
             "Played": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "clean sheet": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "penalty saves": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ],
 
             "enterd goals": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
+            ],
+            "rate":[
+                0,#1
+                0,#2
+                0,#3
+                0,#4
+                0,#5
+                0,#6
+                0,#7
+                0#8
             ]
         }
     )
 
 
     st.header("LEAGUE BEST GK")
+    st.write("the rates dont mean you good or bad its only ai opinion")
 
     st.dataframe(
         teams_best_gk,
         hide_index=True
     )
+    st.divider()
+    st.header("NO CB SORRY")
+    st.divider()
 
 
-    # ----------------------------------------------------------
-    # Best CB
-    # ----------------------------------------------------------
-
-    teams_best_cb = pd.DataFrame(
-        {
-            "CB players": [
-                "2A(mazen)",
-                "2B(malek mohamed)",
-                "2C(adam aref)",
-                "2C(adam shazely)",
-                "2D(asser eslam)",
-                "2D(asser amer)",
-                "1C(ahmed belal)",
-                "1C(omar fadel)"
-            ],
-
-            "Played": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-
-            "clean sheet": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-        }
-    )
-
-
-    st.header("LEAGUE BEST CB")
-
-    st.dataframe(
-        teams_best_cb,
-        hide_index=True
-    )
 
 
     # ----------------------------------------------------------
@@ -1198,8 +1175,14 @@ if main:
                 "2D(yossef)",#10
                 "1C(omar hany)",#11
                 "1C(adham sherif)",#12
-                "1C(malek badran)"#13
-                "1C(mostafa mohamed)"#14
+                "1C(malek badran)",#13
+                "1C(mostafa mohamed)",#14
+                "1a(yehia)",#15
+                "1a(rayan)",#16
+                "1b(عمر جلال)",#17
+                "1b(مالك فكري)",#18
+                "1b(محمد مصطفي)",#19
+                
             ],
 
             "Played": [
@@ -1213,9 +1196,15 @@ if main:
                 0,#8
                 0,#9
                 0,#10
+                0,#11
                 0,#12
                 0,#13
-                0#14
+                0,#14
+                0,#15
+                0,#16
+                0,#17
+                0,#18
+                0#19
             ],
 
             "scored": [
@@ -1229,9 +1218,15 @@ if main:
                 0,#8
                 0,#9
                 0,#10
+                0,#11
                 0,#12
                 0,#13
-                0#14
+                0,#14
+                0,#15
+                0,#16
+                0,#17
+                0,#18
+                0#19
             ],
 
             "assist": [
@@ -1245,9 +1240,15 @@ if main:
                 0,#8
                 0,#9
                 0,#10
+                0,#11
                 0,#12
                 0,#13
-                0#14
+                0,#14
+                0,#15
+                0,#16
+                0,#17
+                0,#18
+                0#19
             ],
 
         }
