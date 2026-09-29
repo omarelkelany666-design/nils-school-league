@@ -992,9 +992,9 @@ if main:
     teams_status = pd.DataFrame(
         {
             "Team": [
-                "2A",#1
-                "2B",#2
-                "2C",#3
+                "2C",#1
+                "2A",#2
+                "2B",#3
                 "2D",#4
                 "1A",#5
                 "1B",#6
@@ -1003,8 +1003,8 @@ if main:
             ],
 
             "Played": [
-                0,#1
-                0,#2
+                1,#1
+                1,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1014,7 +1014,7 @@ if main:
             ],
 
             "Wins": [
-                0,#1
+                1,#1
                 0,#2
                 0,#3
                 0,#4
@@ -1037,7 +1037,7 @@ if main:
 
             "Losses": [
                 0,#1
-                0,#2
+                1,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1047,7 +1047,7 @@ if main:
             ],
 
             "Points": [
-                0,#1
+                3,#1
                 0,#2
                 0,#3
                 0,#4
@@ -1075,19 +1075,19 @@ if main:
     teams_best_gk = pd.DataFrame(
         {
             "GK players": [
-                "2A(omar)",#1
-                "2D(malek)",#2
-                "2B(baraa)",#3
-                "2C(saged)",#4
-                "2C(mutasim)",#5
+                "2C(mutasim)",#1
+                "2A(omar)",#2
+                "2D(malek)",#3
+                "2B(baraa)",#4
+                "2C(saged)",#5
                 "1C(yassin youssife)",#6
                 "1A(hamza mahmoud)",#7
                 "1B(moaz mohamed)",#8
             ],
 
             "Played": [
-                0,#1
-                0,#2
+                1,#1
+                1,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1097,7 +1097,7 @@ if main:
             ],
 
             "clean sheet": [
-                0,#1
+                1,#1
                 0,#2
                 0,#3
                 0,#4
@@ -1120,7 +1120,7 @@ if main:
 
             "enterd goals": [
                 0,#1
-                0,#2
+                2,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1129,8 +1129,8 @@ if main:
                 0#8
             ],
             "rate":[
-                0,#1
-                0,#2
+                8.5,#1
+                6.5,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1163,31 +1163,32 @@ if main:
     teams_best_at = pd.DataFrame(
         {
             "AT players": [
-                "2A(moaz)",#1
-                "2A(awsam)",#2
-                "2A(ahmed)",#3
-                "2B(mostafa)",#4
-                "2B(ma3rof)",#5
-                "2B(shaf3e)",#6
-                "2C(mohamed)",#7
-                "2C(abed elazez)",#8
-                "2D(hassan)",#9
-                "2D(yossef)",#10
-                "1C(omar hany)",#11
-                "1C(adham sherif)",#12
-                "1C(malek badran)",#13
-                "1C(mostafa mohamed)",#14
-                "1a(yehia)",#15
-                "1a(rayan)",#16
-                "1b(عمر جلال)",#17
-                "1b(مالك فكري)",#18
-                "1b(محمد مصطفي)",#19
+                "2c adam aref",#1
+                "2C(mohamed)",#2
+                "2A(moaz)",#3
+                "2A(awsam)",#4
+                "2A(ahmed)",#5
+                "2B(mostafa)",#6
+                "2B(ma3rof)",#7
+                "2B(shaf3e)",#8
+                "2C(abed elazez)",#9
+                "2D(hassan)",#10
+                "2D(yossef)",#11
+                "1C(omar hany)",#12
+                "1C(adham sherif)",#13
+                "1C(malek badran)",#14
+                "1C(mostafa mohamed)",#15
+                "1a(yehia)",#16
+                "1a(rayan)",#17
+                "1b(عمر جلال)",#18
+                "1b(مالك فكري)",#19
+                "1b(محمد مصطفي)",#20
                 
             ],
 
             "Played": [
-                0,#1
-                0,#2
+                1,#1
+                1,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1204,12 +1205,13 @@ if main:
                 0,#16
                 0,#17
                 0,#18
-                0#19
+                0,#19
+                0#20
             ],
 
             "scored": [
-                0,#1
-                0,#2
+                1,#1
+                1,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1226,12 +1228,13 @@ if main:
                 0,#16
                 0,#17
                 0,#18
-                0#19
+                0,#19
+                0#20
             ],
 
             "assist": [
-                0,#1
-                0,#2
+                1,#1
+                1,#2
                 0,#3
                 0,#4
                 0,#5
@@ -1248,7 +1251,8 @@ if main:
                 0,#16
                 0,#17
                 0,#18
-                0#19
+                0,#19
+                0#20
             ],
 
         }
@@ -1356,7 +1360,7 @@ if matches_time:
                 "Thursday"
             ],
             "played": [
-                "not played",
+                "played",
                 "not played",
                 "not played",
                 "not played",
@@ -1522,36 +1526,36 @@ if news:
         with st.container(border=True):
             st.subheader("🟨 2A")
             st.write("Team 1")
-            st.write("—")
+            st.write("0")
 
             st.divider()
 
             st.subheader("⚽ Match")
-            st.write("**The match didn't play yet**")
+            st.write("**The match played**")
             st.write("28 September 2026")
 
             st.divider()
 
             st.subheader("🟥 2C")
             st.write("Team 2")
-            st.write("—")
+            st.write("2")
 
         col1, col2, col3 = st.columns(3)
 
         with col1:
             with st.container(border=True):
                 st.subheader("🟨Best Player")
-                st.write("—")
+                st.write("awsam")
 
         with col2:
             with st.container(border=True):
                 st.subheader("🟨Best Player🟥")
-                st.write("—")
+                st.write("adam aref")
 
         with col3:
             with st.container(border=True):
                 st.subheader("🟥Best Player")
-                st.write("—")
+                st.write("adam aref")
 
         st.divider()
 
