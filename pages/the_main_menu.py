@@ -1602,7 +1602,7 @@ if news:
         with col2:
             with st.container(border=True):
                 st.subheader("⬛Best Player🟦")
-                st.write("—")
+                st.write("مرسي")
         with col3:
             with st.container(border=True):
                 st.subheader("⬛Best Player")
@@ -1610,7 +1610,8 @@ if news:
 
         with st.container(border=True):
             st.subheader("card🟨")
-            st.write("yassin mostafa")
+            st.write("- yassin mostafa")
+            st.write("- ياسين معروف")
 
         with st.container(border=True):
             st.subheader("card🟥")
@@ -1655,6 +1656,55 @@ if news:
         with col3:
             with st.container(border=True):
                 st.subheader("🟥🟦 Best Player")
+                st.write("—")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one")
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
+        st.divider()
+
+        # =========================
+        # 1C vs 1D
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("⬜1C")
+            st.write("Team 1")
+            st.write("1")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+            st.write("8 October 2026")
+
+            st.divider()
+
+            st.subheader("🟦1D")
+            st.write("Team 2")
+            st.write("1")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("⬜ Best Player")
+                st.write("—")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader("⬜ Best Player 🟦")
+                st.write("—")
+        with col3:
+            with st.container(border=True):
+                st.subheader("🟦 Best Player")
                 st.write("—")
 
         with st.container(border=True):
