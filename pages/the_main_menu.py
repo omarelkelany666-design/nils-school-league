@@ -595,7 +595,7 @@ if b1:
 if c1:
 
     st.image(
-        "trabzon_1c.jpeg",
+        "1c_logo.jpeg",
         width=100
     )
 
@@ -802,7 +802,7 @@ if b2:
             ],
 
             "Match Result": [
-                0, 0, 0, 0, 0, 0
+                1, 0, 0, 0, 0, 0
             ]
         }
     )
@@ -868,7 +868,7 @@ if c2:
             ],
 
             "Match Result": [
-                0, 0, 0, 0, 0, 0
+                3, 0, 0, 0, 0, 0
             ]
         }
     )
@@ -937,7 +937,7 @@ if d2:
             ],
 
             "Match Result": [
-                0, 0, 0, 0, 0, 0
+                1, 0, 0, 0, 0, 0
             ]
         }
     )
@@ -993,9 +993,9 @@ if main:
         {
             "Team": [
                 "2C",#1
-                "2A",#2
-                "2B",#3
-                "2D",#4
+                "2B",#2
+                "2D",#3
+                "2A",#4
                 "1A",#5
                 "1B",#6
                 "1C",#7
@@ -1005,8 +1005,8 @@ if main:
             "Played": [
                 1,#1
                 1,#2
-                0,#3
-                0,#4
+                1,#3
+                1,#4
                 0,#5
                 0,#6
                 0,#7
@@ -1026,8 +1026,8 @@ if main:
 
             "Draws": [
                 0,#1
-                0,#2
-                0,#3
+                1,#2
+                1,#3
                 0,#4
                 0,#5
                 0,#6
@@ -1037,9 +1037,9 @@ if main:
 
             "Losses": [
                 0,#1
-                1,#2
+                0,#2
                 0,#3
-                0,#4
+                1,#4
                 0,#5
                 0,#6
                 0,#7
@@ -1048,8 +1048,8 @@ if main:
 
             "Points": [
                 3,#1
-                0,#2
-                0,#3
+                1,#2
+                1,#3
                 0,#4
                 0,#5
                 0,#6
@@ -1076,24 +1076,26 @@ if main:
         {
             "GK players": [
                 "2C(mutasim)",#1
-                "2A(omar)",#2
-                "2D(malek)",#3
-                "2B(baraa)",#4
-                "2C(saged)",#5
-                "1C(yassin youssife)",#6
-                "1A(hamza mahmoud)",#7
-                "1B(moaz mohamed)",#8
+                "2D(malek)",#2
+                "2B(asser)",#3
+                "2A(omar)",#4
+                "2B(baraa)",#5
+                "2C(saged)",#6
+                "1C(yassin youssife)",#7
+                "1A(hamza mahmoud)",#8
+                "1B(moaz mohamed)",#9
             ],
 
             "Played": [
                 1,#1
                 1,#2
-                0,#3
-                0,#4
+                1,#3
+                1,#4
                 0,#5
                 0,#6
                 0,#7
-                0#8
+                0,#8
+                0#9
             ],
 
             "clean sheet": [
@@ -1104,7 +1106,8 @@ if main:
                 0,#5
                 0,#6
                 0,#7
-                0#8
+                0,#8
+                0#9
             ],
 
             "penalty saves": [
@@ -1115,28 +1118,31 @@ if main:
                 0,#5
                 0,#6
                 0,#7
-                0#8
+                0,#8
+                0#9
             ],
 
             "enterd goals": [
-                0,#1
-                2,#2
+                1,#1
+                1,#2
                 0,#3
                 0,#4
                 0,#5
                 0,#6
                 0,#7
-                0#8
+                0,#8
+                0#9
             ],
             "rate":[
                 8.5,#1
-                6.5,#2
+                0,#2
                 0,#3
-                0,#4
+                6.5,#4
                 0,#5
                 0,#6
                 0,#7
-                0#8
+                0,#8
+                0#9
             ]
         }
     )
@@ -1163,17 +1169,17 @@ if main:
     teams_best_at = pd.DataFrame(
         {
             "AT players": [
-                "2c adam aref",#1
+                "2c(adam aref)",#1
                 "2C(mohamed)",#2
-                "2A(moaz)",#3
-                "2A(awsam)",#4
-                "2A(ahmed)",#5
-                "2B(mostafa)",#6
-                "2B(ma3rof)",#7
-                "2B(shaf3e)",#8
-                "2C(abed elazez)",#9
-                "2D(hassan)",#10
-                "2D(yossef)",#11
+                "2B(mostafa)",#3
+                "2D(yossef)",#4
+                "2A(moaz)",#5
+                "2A(awsam)",#6
+                "2A(ahmed)",#7
+                "2B(ma3rof)",#8
+                "2B(shaf3e)",#9
+                "2C(abed elazez)",#10
+                "2D(hassan)",#11
                 "1C(omar hany)",#12
                 "1C(adham sherif)",#13
                 "1C(malek badran)",#14
@@ -1189,15 +1195,15 @@ if main:
             "Played": [
                 1,#1
                 1,#2
-                0,#3
-                0,#4
-                0,#5
-                0,#6
-                0,#7
-                0,#8
-                0,#9
-                0,#10
-                0,#11
+                1,#3
+                1,#4
+                1,#5
+                1,#6
+                1,#7
+                1,#8
+                1,#9
+                1,#10
+                1,#11
                 0,#12
                 0,#13
                 0,#14
@@ -1212,8 +1218,8 @@ if main:
             "scored": [
                 1,#1
                 1,#2
-                0,#3
-                0,#4
+                1,#3
+                1,#4
                 0,#5
                 0,#6
                 0,#7
@@ -1361,7 +1367,7 @@ if matches_time:
             ],
             "played": [
                 "played",
-                "not played",
+                "played",
                 "not played",
                 "not played",
                 "not played",
@@ -1507,10 +1513,6 @@ if news:
                 "There is no news for now."
             )
 
-
-        st.subheader(
-            "⚽ Matchs"
-        )
     # ----------------------------------------------------------
     # MATCHS
     # ----------------------------------------------------------
@@ -1557,6 +1559,14 @@ if news:
                 st.subheader("🟥Best Player")
                 st.write("adam aref")
 
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one")
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
         st.divider()
 
         # =========================
@@ -1566,26 +1576,28 @@ if news:
         with st.container(border=True):
             st.subheader("🟦 2B")
             st.write("Team 1")
-            st.write("—")
+            st.write("1")
 
             st.divider()
 
             st.subheader("⚽ Match")
-            st.write("**The match didn't play yet**")
+            st.write("**The match played**")
             st.write("1 October 2026")
 
             st.divider()
 
             st.subheader("⬛ 2D")
             st.write("Team 2")
-            st.write("—")
+            st.write("1")
+
+
 
         col1, col2, col3 = st.columns(3)
 
         with col1:
             with st.container(border=True):
                 st.subheader("🟦Best Player")
-                st.write("—")
+                st.write("ياسين مصطفي")
 
         with col2:
             with st.container(border=True):
@@ -1594,7 +1606,64 @@ if news:
         with col3:
             with st.container(border=True):
                 st.subheader("⬛Best Player")
+                st.write("مرسي")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("yassin mostafa")
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
+        st.divider()
+
+        # =========================
+        # 1B vs 1A
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("🟥🟦 1B")
+            st.write("Team 1")
+            st.write("1")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+            st.write("5 October 2026")
+
+            st.divider()
+
+            st.subheader("🟩1A")
+            st.write("Team 2")
+            st.write("1")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("🟩 Best Player")
                 st.write("—")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader("🟩 Best Player 🟥🟦")
+                st.write("—")
+        with col3:
+            with st.container(border=True):
+                st.subheader("🟥🟦 Best Player")
+                st.write("—")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one")
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
 
         st.divider()
 
