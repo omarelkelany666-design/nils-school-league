@@ -1183,7 +1183,7 @@ if main:
                 "1C(malek badran)",       #6
                 "2D(yossef)",             #7
                 "1A(اسر عبد العليم)",     #8
-                "1b(محمد خالد)",          #9
+                "1D(محمد خالد)",          #9
                 "2A(moaz)",               #10
                 "2A(awsam)",              #11
                 "2A(ahmed)",              #12
@@ -1230,7 +1230,7 @@ if main:
                 1,   #5
                 1,   #6
                 1,   #7
-                0,   #8
+                1,   #8
                 0,   #9
                 0,   #10
                 0,   #11
@@ -1376,28 +1376,34 @@ if matches_time:
             "played": [
                 "played",
                 "played",
+                "played",
+                "played",
+                #==========stage1========#
                 "not played",
                 "not played",
                 "not played",
                 "not played",
+                #==========stage2========#
                 "not played",
                 "not played",
                 "not played",
                 "not played",
+                #==========stage3========#
                 "not played",
                 "not played",
                 "not played",
                 "not played",
+                #==========stage4========#
                 "not played",
                 "not played",
                 "not played",
                 "not played",
+                #==========stage5========#
                 "not played",
                 "not played",
                 "not played",
                 "not played",
-                "not played",
-                "not played",
+                #==========stage6========#
                 "not played",
                 "not played",
                 "not played",
