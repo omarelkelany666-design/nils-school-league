@@ -985,80 +985,39 @@ if main:
 
 
 
+
     # ----------------------------------------------------------
-    # League Table
+    # League Table - Supabase
     # ----------------------------------------------------------
 
-    teams_status = pd.DataFrame(
-        {
-            "Team": [
-                "2D",#1
-                "2B",#2
-                "1A",#3
-                "1B",#4
-                "2A",#5
-                "2C",#6
-                "1D",#7
-                "1C",#8
-            ],
-
-            "Played": [
-                2,#1
-                2,#2
-                2,#3
-                2,#4
-                2,#5
-                2,#6
-                2,#7
-                2#8
-            ],
-
-            "Wins": [
-                1,#1
-                1,#2
-                1,#3
-                1,#4
-                1,#5
-                1,#6
-                0,#7
-                0#8
-            ],
-
-            "Draws": [
-                1,#1
-                1,#2
-                1,#3
-                1,#4
-                0,#5
-                0,#6
-                1,#7
-                1#8
-            ],
-
-            "Losses": [
-                0,#1
-                0,#2
-                1,#3
-                1,#4
-                1,#5
-                1,#6
-                1,#7
-                1#8
-            ],
-
-            "Points": [
-                4,#1
-                4,#2
-                4,#3
-                4,#4
-                3,#5
-                3,#6
-                1,#7
-                1#8
-            ]
-        }
+    teams_response = (
+        supabase.table("teams")
+        .select("*")
+        .execute()
     )
 
+    teams_status = pd.DataFrame(teams_response.data)
+
+    if not teams_status.empty:
+        teams_status = teams_status.rename(
+            columns={
+                "team_name": "Team",
+                "played": "Played",
+                "wins": "Wins",
+                "draws": "Draws",
+                "losses": "Losses",
+                "points": "Points",
+            }
+        )
+
+        teams_status = teams_status.sort_values(
+            by=["Points", "Wins", "rank"],
+            ascending=[False, False, True]
+        )
+
+        teams_status = teams_status[
+            ["Team", "Played", "Wins", "Draws", "Losses", "Points"]
+        ]
 
     st.header("LEAGUE TABLE")
 
@@ -1068,91 +1027,48 @@ if main:
     )
 
 
-    # ----------------------------------------------------------
-    # Best GK
-    # ----------------------------------------------------------
 
-    teams_best_gk = pd.DataFrame(
-        {
-            "GK players": [
-                "2C(mutasim)",#1
-                "2D(malek)",#2
-                "2A(omar)",#7
-                "2B(asser)",#3
-                "1C(yassin youssife)",#4
-                "1A(hamza mahmoud)",#5
-                "1D(ahmed mohamed)",#6
-                "1B(moaz mohamed)",#8
-                "2C(saged)",#9
-                "2B(baraa)",#10
-            ],
 
-            "Played": [
-                2,#1
-                2,#2
-                2,#3
-                2,#4
-                2,#5
-                2,#6
-                2,#7
-                2,#8
-                2,#9
-                2#10
-            ],
+# ----------------------------------------------------------
+# Best GK - Supabase
+# ----------------------------------------------------------
 
-            "clean sheet": [
-                1,#1
-                0,#2
-                0,#3
-                0,#4
-                0,#5
-                0,#6
-                0,#7
-                0,#8
-                0,#9
-                0#10
-            ],
-
-            "penalty saves": [
-                0,#1
-                0,#2
-                0,#3
-                0,#4
-                0,#5
-                0,#6
-                0,#7
-                0,#8
-                0,#9
-                0#10
-            ],
-
-            "enterd goals": [
-                0,#1
-                1,#2
-                1,#3
-                1,#4
-                1,#5
-                1,#6
-                2,#7
-                3,#8
-                0,#9
-                0#10
-            ],
-            "rate":[
-                8.5,#1  mutasim
-                7.0,#2  malek
-                7.0,#3  asser
-                6.5,#4  yassin youssife
-                6.5,#5  hamza mahmoud
-                6.5,#6  ahmed mohamed
-                5.0,#7  omar
-                4.5,#8  moaz mohamed
-                0,#9   saged
-                0 #10  baraa
-            ]
-        }
+    gk_response = (
+        supabase.table("goalkeepers")
+        .select("*")
+        .execute()
     )
 
+    teams_best_gk = pd.DataFrame(gk_response.data)
+
+    if not teams_best_gk.empty:
+        teams_best_gk["GK players"] = (
+            teams_best_gk["team"].astype(str)
+            + "("
+            + teams_best_gk["name"].astype(str)
+            + ")"
+        )
+
+        teams_best_gk = teams_best_gk.rename(
+            columns={
+                "played": "Played",
+                "clean_sheet": "clean sheet",
+                "penalty_saves": "penalty saves",
+                "goals_conceded": "enterd goals",
+                "rate": "rate",
+            }
+        )
+
+        teams_best_gk = teams_best_gk[
+            [
+                "GK players",
+                "Played",
+                "clean sheet",
+                "penalty saves",
+                "enterd goals",
+                "rate",
+            ]
+        ]
 
     st.header("LEAGUE BEST GK")
     st.write("the rates dont mean you good or bad its only ai opinion")
@@ -1161,117 +1077,49 @@ if main:
         teams_best_gk,
         hide_index=True
     )
+    #=======================================#
+    #                   CB                  #
+    #=======================================#
     st.divider()
     st.header("NO CB SORRY")
     st.divider()
 
-
-
-
     # ----------------------------------------------------------
-    # Best AT
+    # Best AT - Supabase
     # ----------------------------------------------------------
 
-    teams_best_at = pd.DataFrame(
-        {
-            "AT players": [
-                "2C(adam aref)",          #1
-                "2C(mohamed)",            #2
-                "1A(yehia)",              #3
-                "1A(rayan)",              #4
-                "2B(mostafa)",            #5
-                "1C(malek badran)",       #6
-                "2D(yossef)",             #7
-                "1A(اسر عبد العليم)",     #8
-                "1D(محمد خالد)",          #9
-                "2A(moaz)",               #10
-                "2A(awsam)",              #11
-                "2A(ahmed)",              #12
-                "2B(ma3rof)",             #13
-                "2B(shaf3e)",             #14
-                "2C(abed elazez)",        #15
-                "2D(hassan)",             #16
-                "1C(omar hany)",          #17
-                "1C(adham sherif)",       #18
-                "1C(mostafa mohamed)",    #19
-                "1b(عمر جلال)",           #20
-                "1b(مالك فكري)",          #21
-            ],
-
-            "Played": [
-                2,   #1
-                2,   #2
-                2,   #3
-                2,   #4
-                2,   #5
-                2,   #6
-                2,   #7
-                2,   #8
-                2,   #9
-                2,   #10
-                2,   #11
-                2,   #12
-                2,   #13
-                2,   #14
-                2,   #15
-                2,   #16
-                2,   #17
-                2,   #18
-                2,   #19
-                2,   #20
-                2,   #21
-            ],
-
-            "scored": [
-                1,   #1
-                1,   #2
-                1,   #3
-                1,   #4
-                1,   #5
-                1,   #6
-                1,   #7
-                1,   #8
-                0,   #9
-                0,   #10
-                0,   #11
-                0,   #12
-                0,   #13
-                0,   #14
-                0,   #15
-                0,   #16
-                0,   #17
-                0,   #18
-                0,   #19
-                0,   #20
-                0,   #21
-            ],
-
-            "assist": [
-                1,   #1
-                1,   #2
-                1,   #3
-                1,   #4
-                0,   #5
-                0,   #6
-                0,   #7
-                1,   #8
-                1,   #9
-                0,   #10
-                0,   #11
-                0,   #12
-                0,   #13
-                0,   #14
-                0,   #15
-                0,   #16
-                0,   #17
-                0,   #18
-                0,   #19
-                0,   #20
-                0,   #21
-            ],
-        }
+    at_response = (
+        supabase.table("attackers")
+        .select("*")
+        .execute()
     )
 
+    teams_best_at = pd.DataFrame(at_response.data)
+
+    if not teams_best_at.empty:
+        teams_best_at["AT players"] = (
+            teams_best_at["team"].astype(str)
+            + "("
+            + teams_best_at["name"].astype(str)
+            + ")"
+        )
+
+        teams_best_at = teams_best_at.rename(
+            columns={
+                "played": "Played",
+                "goals": "scored",
+                "assists": "assist",
+            }
+        )
+
+        teams_best_at = teams_best_at.sort_values(
+            by=["scored", "assist", "rank"],
+            ascending=[False, False, True]
+        )
+
+        teams_best_at = teams_best_at[
+            ["AT players", "Played", "scored", "assist"]
+        ]
 
     st.header("LEAGUE BEST AT")
 
