@@ -1065,8 +1065,7 @@ if main:
                 "Played",
                 "clean sheet",
                 "penalty saves",
-                "enterd goals",
-                "rate",
+                "enterd goals"
             ]
         ]
 
@@ -1113,7 +1112,7 @@ if main:
         )
 
         teams_best_at = teams_best_at.sort_values(
-            by=["scored", "assist", "rank"],
+            by=["scored", "assist"],
             ascending=[False, False, True]
         )
 
