@@ -1113,7 +1113,7 @@ if main:
 
         teams_best_at = teams_best_at.sort_values(
             by=["scored", "assist"],
-            ascending=[False, False, True]
+            ascending=[False, False]
         )
 
         teams_best_at = teams_best_at[
