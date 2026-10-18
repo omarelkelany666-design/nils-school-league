@@ -1070,7 +1070,6 @@ if main:
         ]
 
     st.header("LEAGUE BEST GK")
-    st.write("the rates dont mean you good or bad its only ai opinion")
 
     st.dataframe(
         teams_best_gk,
@@ -1754,16 +1753,16 @@ if news:
         with col1:
             with st.container(border=True):
                 st.subheader("1B Best Player")
-                st.write("-")
+                st.write("hassen")
 
         with col2:
             with st.container(border=True):
                 st.subheader(" Best Player ")
-                st.write("-")
+                st.write("sigo")
         with col3:
             with st.container(border=True):
-                st.subheader("2B Best Player")
-                st.write("-")
+                st.subheader("2C Best Player")
+                st.write("saged/sigo")
 
         with st.container(border=True):
             st.subheader("card🟨")
