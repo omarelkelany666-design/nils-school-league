@@ -12,7 +12,7 @@ from supabase import create_client
 
 st.set_page_config(
     page_title="N.I.L.S League",
-    page_icon="⚽"
+    page_icon="league_logo.png"
 )
 
 
