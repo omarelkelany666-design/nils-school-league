@@ -1,1 +1,13 @@
-
+{
+  "name": "N.I.L.S School League",
+  "short_name": "N.I.L.S League",
+  "start_url": "https://nils-league.streamlit.app",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "league_logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
