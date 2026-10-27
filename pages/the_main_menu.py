@@ -998,37 +998,41 @@ if main:
 
     teams_status = pd.DataFrame(teams_response.data)
 
-    if not teams_status.empty:
-        teams_status = teams_status.rename(
-            columns={
-                "team_name": "Team",
-                "played": "Played",
-                "wins": "Wins",
-                "draws": "Draws",
-                "losses": "Losses",
-                "points": "Points",
-            }
-        )
 
-        teams_status = teams_status.sort_values(
-            by=["Points", "Wins", "rank"],
-            ascending=[False, False, True]
-        )
+teams_status = pd.DataFrame(teams_response.data)
 
-        teams_status = teams_status[
-            ["Team", "Played", "Wins", "Draws", "Losses", "Points"]
-        ]
+if not teams_status.empty:
+    teams_status["points"] = pd.to_numeric(
+        teams_status["points"], errors="coerce"
+    ).fillna(0)
 
-    st.header("LEAGUE TABLE")
-
-    st.dataframe(
-        teams_status,
-        hide_index=True
+    teams_status = teams_status.rename(
+        columns={
+            "team_name": "Team",
+            "played": "Played",
+            "wins": "Wins",
+            "draws": "Draws",
+            "losses": "Losses",
+            "points": "Points",
+        }
     )
 
+    teams_status = teams_status.sort_values(
+        by=["Points", "Wins", "rank"],
+        ascending=[False, False, True]
+    )
+
+    teams_status = teams_status[
+        ["Team", "Played", "Wins", "Draws", "Losses", "Points"]
+    ]
 
 
-
+# ----------------------------------------------------------
+# Best GK - Supabase
+# ----------------------------------------------------------
+    st.divider()
+    st.subheader("NO CB SORRY")
+    st.divider()
 
 # ----------------------------------------------------------
 # Best GK - Supabase
@@ -1055,7 +1059,7 @@ if not teams_best_gk.empty:
         teams_best_gk[col] = pd.to_numeric(
             teams_best_gk[col], errors="coerce"
         ).fillna(0)
-        
+
     # Automatic goalkeeper points:
     teams_best_gk["Points"] = teams_best_gk["points"]
 
@@ -1063,7 +1067,7 @@ if not teams_best_gk.empty:
         columns={
             "played": "Played",
             "clean_sheet": "Clean Sheets",
-            "penalty_saves": "Penalty Saves",
+
             "goals_conceded": "Goals Conceded",
         }
     )
@@ -1073,7 +1077,7 @@ if not teams_best_gk.empty:
             "GK players",
             "Played",
             "Clean Sheets",
-            "Penalty Saves",
+
             "Goals Conceded",
             "Points",
 
@@ -1116,18 +1120,20 @@ if not teams_best_at.empty:
     teams_best_at = teams_best_at.rename(
         columns={
             "played": "Played",
-            "goals": "scored",
-            "assists": "assist",
+            "goals": "Scored",
+            "assists": "Assists",
         }
     )
 
+    teams_best_at["Points"] = teams_best_at["points"]
+
     teams_best_at = teams_best_at.sort_values(
-        by=["scored", "assist"],
-        ascending=[False, False]
+        by="Points",
+        ascending=False
     )
 
     teams_best_at = teams_best_at[
-        ["AT players", "Played", "scored", "assist"]
+        ["AT players", "Played", "Scored", "Assists", "Points"]
     ]
 
 st.header("LEAGUE BEST AT")
