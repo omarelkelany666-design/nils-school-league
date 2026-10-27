@@ -982,14 +982,7 @@ if main:
     )
 
 
-
-
-
-
-    # ----------------------------------------------------------
     # League Table - Supabase
-    # ----------------------------------------------------------
-
     teams_response = (
         supabase.table("teams")
         .select("*")
@@ -998,14 +991,10 @@ if main:
 
     teams_status = pd.DataFrame(teams_response.data)
 
-
-teams_status = pd.DataFrame(teams_response.data)
-
-if not teams_status.empty:
-    teams_status["points"] = pd.to_numeric(
-        teams_status["points"], errors="coerce"
-    ).fillna(0)
-
+    if not teams_status.empty:
+        teams_status["points"] = pd.to_numeric(
+            teams_status["points"], errors="coerce"
+        ).fillna(0)
     teams_status = teams_status.rename(
         columns={
             "team_name": "Team",
@@ -1038,110 +1027,110 @@ if not teams_status.empty:
 # Best GK - Supabase
 # ----------------------------------------------------------
 
-gk_response = (
-    supabase.table("goalkeepers")
-    .select("*")
-    .execute()
-)
-
-teams_best_gk = pd.DataFrame(gk_response.data)
-
-if not teams_best_gk.empty:
-    teams_best_gk["GK players"] = (
-        teams_best_gk["team"].astype(str)
-        + "("
-        + teams_best_gk["name"].astype(str)
-        + ")"
+    gk_response = (
+        supabase.table("goalkeepers")
+        .select("*")
+        .execute()
     )
 
-    # Convert statistics to numbers
-    for col in ["played", "clean_sheet", "goals_conceded"]:
-        teams_best_gk[col] = pd.to_numeric(
-            teams_best_gk[col], errors="coerce"
-        ).fillna(0)
+    teams_best_gk = pd.DataFrame(gk_response.data)
 
-    # Automatic goalkeeper points:
-    teams_best_gk["Points"] = teams_best_gk["points"]
+    if not teams_best_gk.empty:
+        teams_best_gk["GK players"] = (
+            teams_best_gk["team"].astype(str)
+            + "("
+            + teams_best_gk["name"].astype(str)
+            + ")"
+        )
 
-    teams_best_gk = teams_best_gk.rename(
-        columns={
-            "played": "Played",
-            "clean_sheet": "Clean Sheets",
+        # Convert statistics to numbers
+        for col in ["played", "clean_sheet", "goals_conceded"]:
+            teams_best_gk[col] = pd.to_numeric(
+                teams_best_gk[col], errors="coerce"
+            ).fillna(0)
 
-            "goals_conceded": "Goals Conceded",
-        }
-    )
+        # Automatic goalkeeper points:
+        teams_best_gk["Points"] = teams_best_gk["points"]
 
-    teams_best_gk = teams_best_gk[
-        [
-            "GK players",
-            "Played",
-            "Clean Sheets",
+        teams_best_gk = teams_best_gk.rename(
+            columns={
+                "played": "Played",
+                "clean_sheet": "Clean Sheets",
 
-            "Goals Conceded",
-            "Points",
+                "goals_conceded": "Goals Conceded",
+            }
+        )
 
+        teams_best_gk = teams_best_gk[
+            [
+                "GK players",
+                "Played",
+                "Clean Sheets",
+
+                "Goals Conceded",
+                "Points",
+
+            ]
         ]
-    ]
 
-    teams_best_gk = teams_best_gk.sort_values(
-        by=["Points", "Played"],
-        ascending=[False, False]
+        teams_best_gk = teams_best_gk.sort_values(
+            by=["Points", "Played"],
+            ascending=[False, False]
+        )
+
+    st.header("LEAGUE BEST GK")
+
+    st.dataframe(
+        teams_best_gk,
+        hide_index=True
     )
-
-st.header("LEAGUE BEST GK")
-
-st.dataframe(
-    teams_best_gk,
-    hide_index=True
-)
 
 
 # ----------------------------------------------------------
 # Best AT - Supabase
 # ----------------------------------------------------------
 
-at_response = (
-    supabase.table("attackers")
-    .select("*")
-    .execute()
-)
-
-teams_best_at = pd.DataFrame(at_response.data)
-
-if not teams_best_at.empty:
-    teams_best_at["AT players"] = (
-        teams_best_at["team"].astype(str)
-        + "("
-        + teams_best_at["name"].astype(str)
-        + ")"
+    at_response = (
+        supabase.table("attackers")
+        .select("*")
+        .execute()
     )
 
-    teams_best_at = teams_best_at.rename(
-        columns={
-            "played": "Played",
-            "goals": "Scored",
-            "assists": "Assists",
-        }
+    teams_best_at = pd.DataFrame(at_response.data)
+
+    if not teams_best_at.empty:
+        teams_best_at["AT players"] = (
+            teams_best_at["team"].astype(str)
+            + "("
+            + teams_best_at["name"].astype(str)
+            + ")"
+        )
+
+        teams_best_at = teams_best_at.rename(
+            columns={
+                "played": "Played",
+                "goals": "Scored",
+                "assists": "Assists",
+            }
+        )
+
+        teams_best_at["Points"] = teams_best_at["points"]
+
+        teams_best_at = teams_best_at.sort_values(
+            by="Points",
+            ascending=False
+        )
+
+        teams_best_at = teams_best_at[
+            ["AT players", "Played", "Scored", "Assists", "Points"]
+        ]
+
+    st.header("LEAGUE BEST AT")
+
+    st.dataframe(
+        teams_best_at,
+        hide_index=True
     )
-
-    teams_best_at["Points"] = teams_best_at["points"]
-
-    teams_best_at = teams_best_at.sort_values(
-        by="Points",
-        ascending=False
-    )
-
-    teams_best_at = teams_best_at[
-        ["AT players", "Played", "Scored", "Assists", "Points"]
-    ]
-
-st.header("LEAGUE BEST AT")
-
-st.dataframe(
-    teams_best_at,
-    hide_index=True
-)
 
 # ==============================================================
 # MATCHES TIME
