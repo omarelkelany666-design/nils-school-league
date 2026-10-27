@@ -1029,103 +1029,113 @@ if main:
 
 
 
+
 # ----------------------------------------------------------
 # Best GK - Supabase
 # ----------------------------------------------------------
 
-    gk_response = (
-        supabase.table("goalkeepers")
-        .select("*")
-        .execute()
+gk_response = (
+    supabase.table("goalkeepers")
+    .select("*")
+    .execute()
+)
+
+teams_best_gk = pd.DataFrame(gk_response.data)
+
+if not teams_best_gk.empty:
+    teams_best_gk["GK players"] = (
+        teams_best_gk["team"].astype(str)
+        + "("
+        + teams_best_gk["name"].astype(str)
+        + ")"
     )
 
-    teams_best_gk = pd.DataFrame(gk_response.data)
+    # Convert statistics to numbers
+    for col in ["played", "clean_sheet", "goals_conceded"]:
+        teams_best_gk[col] = pd.to_numeric(
+            teams_best_gk[col], errors="coerce"
+        ).fillna(0)
+        
+    # Automatic goalkeeper points:
+    teams_best_gk["Points"] = teams_best_gk["points"]
 
-    if not teams_best_gk.empty:
-        teams_best_gk["GK players"] = (
-            teams_best_gk["team"].astype(str)
-            + "("
-            + teams_best_gk["name"].astype(str)
-            + ")"
-        )
+    teams_best_gk = teams_best_gk.rename(
+        columns={
+            "played": "Played",
+            "clean_sheet": "Clean Sheets",
+            "penalty_saves": "Penalty Saves",
+            "goals_conceded": "Goals Conceded",
+        }
+    )
 
-        teams_best_gk = teams_best_gk.rename(
-            columns={
-                "played": "Played",
-                "clean_sheet": "clean sheet",
-                "penalty_saves": "penalty saves",
-                "goals_conceded": "enterd goals",
-                "rate": "rate",
-            }
-        )
+    teams_best_gk = teams_best_gk[
+        [
+            "GK players",
+            "Played",
+            "Clean Sheets",
+            "Penalty Saves",
+            "Goals Conceded",
+            "Points",
 
-        teams_best_gk = teams_best_gk[
-            [
-                "GK players",
-                "Played",
-                "clean sheet",
-                "penalty saves",
-                "enterd goals"
-            ]
         ]
+    ]
 
-    st.header("LEAGUE BEST GK")
-
-    st.dataframe(
-        teams_best_gk,
-        hide_index=True
-    )
-    #=======================================#
-    #                   CB                  #
-    #=======================================#
-    st.divider()
-    st.header("NO CB SORRY")
-    st.divider()
-
-    # ----------------------------------------------------------
-    # Best AT - Supabase
-    # ----------------------------------------------------------
-
-    at_response = (
-        supabase.table("attackers")
-        .select("*")
-        .execute()
+    teams_best_gk = teams_best_gk.sort_values(
+        by=["Points", "Played"],
+        ascending=[False, False]
     )
 
-    teams_best_at = pd.DataFrame(at_response.data)
+st.header("LEAGUE BEST GK")
 
-    if not teams_best_at.empty:
-        teams_best_at["AT players"] = (
-            teams_best_at["team"].astype(str)
-            + "("
-            + teams_best_at["name"].astype(str)
-            + ")"
-        )
+st.dataframe(
+    teams_best_gk,
+    hide_index=True
+)
 
-        teams_best_at = teams_best_at.rename(
-            columns={
-                "played": "Played",
-                "goals": "scored",
-                "assists": "assist",
-            }
-        )
 
-        teams_best_at = teams_best_at.sort_values(
-            by=["scored", "assist"],
-            ascending=[False, False]
-        )
+# ----------------------------------------------------------
+# Best AT - Supabase
+# ----------------------------------------------------------
 
-        teams_best_at = teams_best_at[
-            ["AT players", "Played", "scored", "assist"]
-        ]
+at_response = (
+    supabase.table("attackers")
+    .select("*")
+    .execute()
+)
 
-    st.header("LEAGUE BEST AT")
+teams_best_at = pd.DataFrame(at_response.data)
 
-    st.dataframe(
-        teams_best_at,
-        hide_index=True
+if not teams_best_at.empty:
+    teams_best_at["AT players"] = (
+        teams_best_at["team"].astype(str)
+        + "("
+        + teams_best_at["name"].astype(str)
+        + ")"
     )
 
+    teams_best_at = teams_best_at.rename(
+        columns={
+            "played": "Played",
+            "goals": "scored",
+            "assists": "assist",
+        }
+    )
+
+    teams_best_at = teams_best_at.sort_values(
+        by=["scored", "assist"],
+        ascending=[False, False]
+    )
+
+    teams_best_at = teams_best_at[
+        ["AT players", "Played", "scored", "assist"]
+    ]
+
+st.header("LEAGUE BEST AT")
+
+st.dataframe(
+    teams_best_at,
+    hide_index=True
+)
 
 # ==============================================================
 # MATCHES TIME
@@ -1220,25 +1230,21 @@ if matches_time:
                 "Thursday"
             ],
             "played": [
-                "played",
-                "played",
-                "played",
-                "played",
                 #==========stage1========#
                 "played",
                 "played",
                 "played",
-                "xplayed",
+                "played",
                 #==========stage2========#
-                "not played",
-                "not played",
-                "not played",
-                "not played",
+                "played",
+                "played",
+                "played",
+                "played",
                 #==========stage3========#
-                "not played",
-                "not played",
-                "not played",
-                "not played",
+                "played",
+                "played",
+                "played",
+                "played",
                 #==========stage4========#
                 "not played",
                 "not played",
@@ -1253,7 +1259,50 @@ if matches_time:
                 "not played",
                 "not played",
                 "not played",
+                "not played",
+                #==========stage7========#
+                "not played",
+                "not played",
+                "not played",
                 "not played"
+            ],
+    
+            "stage": [
+                #==========stage1========#
+                "stage1",
+                "stage1",
+                "stage1",
+                "stage1",
+                #==========stage2========#
+                "stage2",
+                "stage2",
+                "stage2",
+                "stage2",
+                #==========stage3========#
+                "stage3",
+                "stage3",
+                "stage3",
+                "stage3",
+                #==========stage4========#
+                "stage4",
+                "stage4",
+                "stage4",
+                "stage4",
+                #==========stage6========#
+                "stage5",
+                "stage5",
+                "stage5",
+                "stage5",
+                #==========stage6========#
+                "stage6",
+                "stage6",
+                "stage6",
+                "stage6",
+                #==========stage7========#
+                "stage7",
+                "stage7",
+                "stage7",
+                "stage7",
             ],
         }
     )
@@ -1724,6 +1773,8 @@ if news:
             st.write("no one")
 
         st.divider()
+        st.divider()
+        st.divider()
 
         # =========================
         # 2C vs 1B
@@ -1775,5 +1826,108 @@ if news:
             st.subheader("card🟥")
             st.write("no one")
 
+        st.divider()
+        st.divider()
+        st.divider()
+        # =========================
+        # 2A vs 1B
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("1B")
+            st.write("Team 1")
+            st.write("0")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+
+
+            st.divider()
+
+            st.subheader("2A")
+            st.write("Team 2")
+            st.write("4")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("1C Best Player")
+                st.write("malek")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("moaz")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2C Best Player")
+                st.write("moaz")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one")
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
+        st.divider()
+        st.divider()
+        st.divider()
+        # =========================
+        # 2C vs 1B
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("1C")
+            st.write("Team 1")
+            st.write("1")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+
+
+            st.divider()
+
+            st.subheader("2D")
+            st.write("Team 2")
+            st.write("1")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("1C Best Player")
+                st.write("omar")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("omar")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2C Best Player")
+                st.write("youssef")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("asser eslam (2D)")
+            st.write("omar (1C)") 
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
+        st.divider()
+        st.divider()
         st.divider()
 
