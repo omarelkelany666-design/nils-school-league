@@ -1015,13 +1015,13 @@ if main:
         ["Team", "Played", "Wins", "Draws", "Losses", "Points"]
     ]
 
+    st.header("LEAGUE TABLE")
 
-# ----------------------------------------------------------
-# Best GK - Supabase
-# ----------------------------------------------------------
-    st.divider()
-    st.subheader("NO CB SORRY")
-    st.divider()
+    st.dataframe(
+        teams_status,
+        hide_index=True,
+        use_container_width=True
+    )
 
 # ----------------------------------------------------------
 # Best GK - Supabase
@@ -1084,7 +1084,12 @@ if main:
         teams_best_gk,
         hide_index=True
     )
-
+    #========================================#
+    #CB
+    #========================================#
+    st.divider()
+    st.subheader("NO CB SORRY")
+    st.divider()
 
 # ----------------------------------------------------------
 # Best AT - Supabase
@@ -1851,7 +1856,7 @@ if news:
 
         with col1:
             with st.container(border=True):
-                st.subheader("1C Best Player")
+                st.subheader("2A Best Player")
                 st.write("malek")
 
         with col2:
@@ -1860,7 +1865,7 @@ if news:
                 st.write("moaz")
         with col3:
             with st.container(border=True):
-                st.subheader("2C Best Player")
+                st.subheader("1B Best Player")
                 st.write("moaz")
 
         with st.container(border=True):
@@ -1872,14 +1877,66 @@ if news:
             st.write("no one")
 
         st.divider()
+        st.subheader("next match")
         st.divider()
-        st.divider()
+        
         # =========================
-        # 2C vs 1B
+        # 2C vs 1D
         # =========================
 
         with st.container(border=True):
-            st.subheader("1C")
+            st.subheader("2C")
+            st.write("Team 1")
+            st.write("2")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+
+
+            st.divider()
+
+            st.subheader("1D")
+            st.write("Team 2")
+            st.write("0")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("2C Best Player")
+                st.write("saged/sigo")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("saged/sigo")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1D Best Player")
+                st.write("youssef mohamed")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one") 
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 2B vs 1A
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("2B")
             st.write("Team 1")
             st.write("1")
 
@@ -1891,9 +1948,9 @@ if news:
 
             st.divider()
 
-            st.subheader("2D")
+            st.subheader("1A")
             st.write("Team 2")
-            st.write("1")
+            st.write("0")
 
 
 
@@ -1901,28 +1958,27 @@ if news:
 
         with col1:
             with st.container(border=True):
-                st.subheader("1C Best Player")
-                st.write("omar")
+                st.subheader("2B Best Player")
+                st.write("yassen mostafa")
 
         with col2:
             with st.container(border=True):
                 st.subheader(" Best Player ")
-                st.write("omar")
+                st.write("yassen mostafa")
         with col3:
             with st.container(border=True):
-                st.subheader("2C Best Player")
-                st.write("youssef")
+                st.subheader("1A Best Player")
+                st.write("يحيي")
 
         with st.container(border=True):
             st.subheader("card🟨")
-            st.write("asser eslam (2D)")
-            st.write("omar (1C)") 
+            st.write("no one") 
 
         with st.container(border=True):
             st.subheader("card🟥")
-            st.write("no one")
+            st.write("ahmed(2B)")
 
         st.divider()
-        st.divider()
+        st.subheader(":red-background[:red[next match]]")
         st.divider()
 
