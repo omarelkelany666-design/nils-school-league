@@ -1982,3 +1982,202 @@ if news:
         st.subheader(":red-background[:red[next match]]")
         st.divider()
 
+
+        # =========================
+        # 2A vs 2B
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("2B")
+            st.write("Team 1")
+            st.write("2")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+
+
+            st.divider()
+
+            st.subheader("2A")
+            st.write("Team 2")
+            st.write("5")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("2B Best Player")
+                st.write("yassen mostafa")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("omar/el gajar")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2A Best Player")
+                st.write("el gajar")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("awsam(2A)") 
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no onw")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 2C vs 2D
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("2C")
+            st.write("Team 1")
+            st.write("1")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+
+
+            st.divider()
+
+            st.subheader("2D")
+            st.write("Team 2")
+            st.write("0")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("2C Best Player")
+                st.write("adam aref")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("adam aref")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2D Best Player")
+                st.write("youssef")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one") 
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("aser eslam(2D)")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 1C vs 1A
+        # =========================
+
+        with st.container(border=True):
+            st.subheader("1C")
+            st.write("Team 1")
+            st.write("2")
+
+            st.divider()
+
+            st.subheader("⚽ Match")
+            st.write("**The match played**")
+
+
+            st.divider()
+
+            st.subheader("1A")
+            st.write("Team 2")
+            st.write("1")
+
+
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("1C Best Player")
+                st.write("mostafa")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("yassen mostafa")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1A Best Player")
+                st.write("hamza")
+
+        with st.container(border=True):
+            st.subheader("card🟨")
+            st.write("no one") 
+
+        with st.container(border=True):
+            st.subheader("card🟥")
+            st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 1B vs 1D
+        # =========================
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.container(border=True):
+                st.subheader("1B")
+                st.write("Team 1")
+                st.write("0")
+        with col2:
+            with st.container(border=True):
+                st.subheader("⚽ Match")
+                st.write("**The match played**")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1D")
+                st.write("Team 2")
+                st.write("2")
+
+
+        col1, col2, col3, = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("1B Best Player")
+                st.write("malek fekry")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("yassen khaled")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1A Best Player")
+                st.write("yassen khaled")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.container(border=True):
+                st.subheader("card🟨")
+                st.write("no one") 
+        with col2:
+            with st.container(border=True):
+                st.subheader("card🟥")
+                st.write("no one")
