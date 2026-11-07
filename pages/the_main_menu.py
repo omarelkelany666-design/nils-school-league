@@ -2153,7 +2153,7 @@ if news:
             with st.container(border=True):
                 st.subheader("1D")
                 st.write("Team 2")
-                st.write("2")
+                st.write("3")
 
 
         col1, col2, col3, = st.columns(3)
