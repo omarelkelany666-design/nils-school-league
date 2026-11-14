@@ -1148,14 +1148,22 @@ if matches_time:
     matches_table = pd.DataFrame(
         {
             "": [
-                "1", "2", "3", "4", "5", "6", "7",
+                "1",
+                "2",
+                "3",
+                "4","5", "6", "7",
                 "8", "9", "10", "11", "12", "13", "14",
                 "15", "16", "17", "18", "19", "20", "21",
                 "22", "23", "24", "25", "26", "27", "28"
             ],
 
             "team(1)": [
-                "2A", "2B", "1A", "1C", "2A", "2B", "2C",
+                "2A", 
+                "2B", 
+                "1A", 
+                "1C", 
+                "2A",
+                 "2B", "2C",
                 "2D", "2A", "2B", "2C", "2D", "1A", "1B",
                 "2A", "2C", "1A", "1B", "1C", "1D", "1A",
                 "1B", "2A", "2B", "1A", "1B", "1C", "1D"
@@ -1168,67 +1176,12 @@ if matches_time:
                 "1C", "2D", "2C", "2A", "2B", "2C", "2D"
             ],
 
-            "date": [
-                "28 September 2026",
-                "1 October 2026",
-                "5 October 2026",
-                "8 October 2026",
-                "12 October 2026",
-                "15 October 2026",
-                "19 October 2026",
-                "22 October 2026",
-                "26 October 2026",
-                "29 October 2026",
-                "2 November 2026",
-                "5 November 2026",
-                "9 November 2026",
-                "12 November 2026",
-                "16 November 2026",
-                "19 November 2026",
-                "23 November 2026",
-                "26 November 2026",
-                "30 November 2026",
-                "3 December 2026",
-                "7 December 2026",
-                "10 December 2026",
-                "14 December 2026",
-                "17 December 2026",
-                "21 December 2026",
-                "24 December 2026",
-                "28 December 2026",
-                "31 December 2026"
-            ],
+#            "date": [
+#            ],
 
-            "day": [
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday",
-                "Monday",
-                "Thursday"
-            ],
+
+#            "day": [
+#            ],
             "played": [
                 #==========stage1========#
                 "played",
@@ -1246,15 +1199,15 @@ if matches_time:
                 "played",
                 "played",
                 #==========stage4========#
-                "not played",
-                "not played",
-                "not played",
-                "not played",
+                "played",
+                "played",
+                "played",
+                "played",
                 #==========stage5========#
-                "not played",
-                "not played",
-                "not played",
-                "not played",
+                "played",
+                "played",
+                "played",
+                "played",
                 #==========stage6========#
                 "not played",
                 "not played",
@@ -2169,7 +2122,7 @@ if news:
                 st.write("yassen khaled")
         with col3:
             with st.container(border=True):
-                st.subheader("1A Best Player")
+                st.subheader("1D Best Player")
                 st.write("yassen khaled")
 
         col1, col2 = st.columns(2)
@@ -2181,3 +2134,208 @@ if news:
             with st.container(border=True):
                 st.subheader("card🟥")
                 st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 2A vs 2D
+        # =========================
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.container(border=True):
+                st.subheader("2A")
+                st.write("Team 1")
+                st.write("1")
+        with col2:
+            with st.container(border=True):
+                st.subheader("⚽ Match")
+                st.write("**The match played**")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2D")
+                st.write("Team 2")
+                st.write("0")
+
+
+        col1, col2, col3, = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("2A Best Player")
+                st.write("awsam")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("awsam")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2D Best Player")
+                st.write("asser amer")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.container(border=True):
+                st.subheader("card🟨")
+                st.write("awsam") 
+        with col2:
+            with st.container(border=True):
+                st.subheader("card🟥")
+                st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 2C vs 2B
+        # =========================
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.container(border=True):
+                st.subheader("2C")
+                st.write("Team 1")
+                st.write("3")
+        with col2:
+            with st.container(border=True):
+                st.subheader("⚽ Match")
+                st.write("**The match played**")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2B")
+                st.write("Team 2")
+                st.write("2")
+
+
+        col1, col2, col3, = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("2C Best Player")
+                st.write("saged/sigo")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("sigo")
+        with col3:
+            with st.container(border=True):
+                st.subheader("2D Best Player")
+                st.write("yassen mostafa")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.container(border=True):
+                st.subheader("card🟨")
+                st.write("adam shazly") 
+                st.write("mohamed abed elnaser") 
+        with col2:
+            with st.container(border=True):
+                st.subheader("card🟥")
+                st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 1D vs 1A
+        # =========================
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.container(border=True):
+                st.subheader("1A")
+                st.write("Team 1")
+                st.write("3")
+        with col2:
+            with st.container(border=True):
+                st.subheader("⚽ Match")
+                st.write("**The match played**")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1D")
+                st.write("Team 2")
+                st.write("0")
+
+
+        col1, col2, col3, = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("1A Best Player")
+                st.write("rayan")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("rayan")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1D Best Player")
+                st.write("mohamed kaled")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.container(border=True):
+                st.subheader("card🟨")
+                st.write("no one") 
+        with col2:
+            with st.container(border=True):
+                st.subheader("card🟥")
+                st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
+
+        # =========================
+        # 1C vs 1B
+        # =========================
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.container(border=True):
+                st.subheader("1c")
+                st.write("Team 1")
+                st.write("1")
+        with col2:
+            with st.container(border=True):
+                st.subheader("⚽ Match")
+                st.write("**The match played**")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1D")
+                st.write("Team 2")
+                st.write("0")
+
+
+        col1, col2, col3, = st.columns(3)
+
+        with col1:
+            with st.container(border=True):
+                st.subheader("1C Best Player")
+                st.write("mostafa")
+
+        with col2:
+            with st.container(border=True):
+                st.subheader(" Best Player ")
+                st.write("mostafa")
+        with col3:
+            with st.container(border=True):
+                st.subheader("1B Best Player")
+                st.write("malek fekry")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.container(border=True):
+                st.subheader("card🟨")
+                st.write("malek badran") 
+        with col2:
+            with st.container(border=True):
+                st.subheader("card🟥")
+                st.write("no one")
+
+        st.divider()
+        st.subheader(":red-background[:red[next match]]")
+        st.divider()
